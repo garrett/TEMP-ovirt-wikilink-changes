@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+Serial Console Setup &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/documentation/">Documentation</a></li>
+<li><a href="/documentation/admin-guide/">Admin-guide</a></li>
+<li class='active'>Serial Console Setup</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>Serial Console Setup</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>fromani</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>Serial Console Setup</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>22</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2015-10-12</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/Serial_Console_Setup' target='_blank'>
+Serial Console Setup
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="serial-console-setup">Serial Console Setup</h1>
+
+<h2 id="general">General</h2>
+
+<p>The purpose of this page is to document how to properly setup and troubleshoot the <a href="Serial_Console">Serial_Console</a> feature, available in oVirt 3.6.0.</p>
+
+<h2 id="setup">Setup</h2>
+
+<p>The Serial Console can be setup either automatically, using engine-setup, or manually (not recommended). In both cases, the ovirt-vmconsole-proxy services must run on the same host on which Engine runs. This requirement will be lifted in a future release. The following sections documents fresh install of oVirt 3.6.x. For upgrading from 3.5.x, please see <strong>upgrade notes</strong> and <strong>troubleshooting</strong> below.</p>
+
+<h3 id="automatic-setup">Automatic Setup</h3>
+
+<ol>
+  <li>make sure you have all the required package installed. Alongside ovirt-engine and ovirt-engine setup, you must make sure you have the <em>ovirt-vmconsole-proxy</em> package installed in the same host on which ovirt-engine runs.</li>
+  <li>to make ovirt-vmconsole-proxy host accessible, make sure the port "2222" is open. The setup procedure will setup "firewalld" accordingly.</li>
+  <li>run engine-setup and follow instructions provided interactively. Please note that the vmconsole proxy setup is disabled if the <em>ovirt-vmconsole-proxy</em> package is NOT detected when the setup runs.</li>
+  <li>once the setup succesfully run, and once ovirt-engine is running, you can log in and register a SSH key. (TODO: add picture)</li>
+  <li>when you install an hypervisor host, the deploy procedure will automatically install and setup the "ovirt-vmconsole-host" package.</li>
+  <li>make sure the user which want to use the serial console feature has permissions on the VM on which he wants to connect.</li>
+  <li>make sure the relevant VM have the "Virtio Console Device" enabled</li>
+  <li>congratulations! setup is now done. Please check <strong>Connecting to consoles</strong> below.</li>
+</ol>
+
+<h3 id="manual-setup">Manual Setup</h3>
+
+<p><strong>This is NOT the recommended way</strong>. The setup is a complex procedure. Use automatic setup whenever possible, and report bugs! Consider the following more like a checklist for troubleshooting rather than an HOWTO!</p>
+
+<h4 id="step-1-proxy-and-engine-setup">step 1: proxy and Engine setup</h4>
+
+<p><strong>TODO: verify the steps</strong></p>
+
+<p>You need to have ovirt-engine installed. "password", below, is the ovirt-engine PKI password. As usual, "#" represents the root prompt. Since you need to leverage Engine's PKI, execute the following on the host on which Engine runs:</p>
+
+<p>First, create certificates and keys for the vmconsole proxy helper:</p>
+
+<pre class="highlight plaintext"><code>   # /usr/share/ovirt-engine/bin/pki-enroll-pkcs12.sh --name=vmconsole-proxy-helper --password=password --subject="/C=COUNTRY/O=ORG/CN=FQDN" --ku=digitalSignature --eku=1.3.6.1.4.1.2312.13.1.2.1.1&#x000A;   # /usr/share/ovirt-engine/bin/pki-pkcs12-extract.sh --name=vmconsole-proxy-helper --password=password&#x000A;   # chown ovirt-vmconsole:ovirt-vmconsole /etc/pki/ovirt-engine/certs/vmconsole-proxy-helper.cert&#x000A;   # chown ovirt-vmconsole:ovirt-vmconsole /etc/pki/ovirt-engine/keys/vmconsole-proxy-helper.key.nopass&#x000A;   # chmod 0600 /etc/pki/ovirt-engine/keys/vmconsole-proxy-helper.key.nopass&#x000A;</code></pre>
+
+<p>Now configure the helper:</p>
+
+<ul>
+  <li>edit the helper configuration file $PREFIX/etc/ovirt-engine/ovirt-vmconsole-proxy-helper.conf.d/10-setup.conf</li>
+  <li>
+    <p>add content:</p>
+
+    <p> ENGINE_BASE_URL=<code>[</code>https://$ENGINE_IP<code>](https://$ENGINE_IP)</code>:$ENGINE_PORT/ovirt-engine
+   TOKEN_CERTIFICATE=$PREFIX/etc/pki/ovirt-engine/certs/vmconsole-proxy-helper.cer
+   TOKEN_KEY=$PREFIX/etc/pki/ovirt-engine/keys/vmconsole-proxy-helper.key.nopass</p>
+  </li>
+</ul>
+
+<p><strong>please note:</strong> there is no shell variable expansion support. Here $PREFIX and $ENGINE_ADDRESS and $ENGINE_PORT are just a placeholders for the actual values you should use. The reminder are the default paths assumed.</p>
+
+<p>Full example:</p>
+
+<p><code> ENGINE_BASE_URL=</code><a href="https://sercon.test.lan:8443/ovirt-engine/"><code>https://sercon.test.lan:8443/ovirt-engine/</code></a>
+       TOKEN_CERTIFICATE=/usr/local/etc/pki/ovirt-engine/certs/vmconsole-proxy-helper.cer
+       TOKEN_KEY=/usr/local/etc/pki/ovirt-engine/keys/vmconsole-proxy-helper.key.nopass</p>
+
+<p>Now, configure the ovirt-vmconsole-proxy package to use the helper.</p>
+
+<ul>
+  <li>edit the proxy configuration file /etc/ovirt-vmconsole/ovirt-vmconsole-proxy/conf.d/10-engine-setup.conf</li>
+  <li>
+    <p>add content:</p>
+
+    <p> [proxy]
+   key_list = exec $PREFIX/libexec/ovirt-vmconsole-proxy-helper/ovirt-vmconsole-list.py –version {version} keys
+   console_list = exec $PREFIX/libexec/ovirt-vmconsole-proxy-helper/ovirt-vmconsole-list.py –version {version} consoles –entityid {entityid}"</p>
+  </li>
+</ul>
+
+<p><strong>please note:</strong> ovirt-vmconsole package expands {version} and {entityid}, not $PREFIX. Here $PREFIX is just a placeholder for the actual prefix on which you installed ovirt-engine. For example if you installed ovirt-engine with PREFIX=/usr/local, the above should read</p>
+
+<pre class="highlight plaintext"><code>   [proxy]&#x000A;   key_list = exec /usr/local/libexec/ovirt-vmconsole-proxy-helper/ovirt-vmconsole-list.py --version {version} keys&#x000A;   console_list = exec /usr/local/libexec/ovirt-vmconsole-proxy-helper/ovirt-vmconsole-list.py --version {version} consoles --entityid {entityid}"&#x000A;</code></pre>
+
+<p>That should be it! Now you can verify the helper is running OK</p>
+
+<pre class="highlight plaintext"><code>   # developer installation&#x000A;   [root@sercon ~]# /usr/local/ovirt/sercon/libexec/ovirt-vmconsole-proxy-helper/ovirt-vmconsole-list.py --version 1 keys&#x000A;    {"content": "key_list", "keys": [{"username": "admin", "entityid": "fdfc627c-d875-11e0-90f0-83df133b58cc", "key": "ssh-rsa AAAB3NzaC1yc2EAAAADAQABAAABAQDSosmEQPVsPPysLmAJQy5vfbb8qf2x8+3jLQAqYc7Zhp4kIasHZ2lLOxFJ5hZR3ajaB/JsdMmblMMMkxZlv9YPZhd+1rHsjt85AS+Yt1AGRFK5KK9f3MIyj8nlOERr+N96L7nCRJ4y0r+Wtnrs5b6iYhciohpexVUBXAcu4LTrqw4kvm67lvTv0CgTxTQAMcrIgAhvdqNy4VfWmprKj0zTIWC5A4Hw4WFRftri3cJZL/onl/z+3WZjMcbApKXw6Ir7aFwFOgwDK8eqLQLt8ZGcevchYnS6XUyYbWyFQxxwCxpRea3M+/s2LCAyKQsCID+HRvT+1CWHW7nJnw3eMs59 fromani@musashi.rokugan.lan", "entity": "user-id"}], "version": 1}&#x000A;</code></pre>
+
+<p>And that the proxy package is working OK as well:</p>
+
+<pre class="highlight plaintext"><code>   [root@sercon ~]# su - ovirt-vmconsole -c 'ovirt-vmconsole-proxy-keys list'&#x000A;   command="exec "/usr/sbin/ovirt-vmconsole-proxy-shell"  accept --entityid="fdfc627c-d875-11e0-90f0-83df133b58cc" --entity="user-id"",no-agent-forwarding,no-port-forwarding,no-user-rc,no-X11-forwarding ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSosmEQPVsPPysLmAJQy5vfbb8qf2x8+3jLQAqYc7Zhp4kIasHZ2lLOxFJ5hZR3ajaB/JsdMmblMMMkxZlv9YPZhd+1rHsjt85AS+Yt1AGRFK5KK9f3MIyj8nlOERr+N96L7nCRJ4y0r+Wtnrs5b6iYhciohpexVUBXAcu4LTrqw4kvm67lvTv0CgTxTQAMcrIgAhvdqNy4VfWmprKj0zTIWC5A4Hw4WFRftri3cJZL/onl/z+3WZjMcbApKXw6Ir7aFwFOgwDK8eqLQLt8ZGcevchYnS6XUyYbWyFQxxwCxpRea3M+/s2LCAyKQsCID+HRvT+1CWHW7nJnw3eMs59 fromani@musashi.rokugan.lan[root@sercon ~]#&#x000A;</code></pre>
+
+<h4 id="step-2-host-connection-setup">step 2: host connection setup</h4>
+
+<p>Install the needed packages on the hypervisor hosts:</p>
+
+<pre class="highlight plaintext"><code>   ovirt-vmconsole&#x000A;   ovirt-vmconsole-host&#x000A;</code></pre>
+
+<p>Make sure the port 2223 is open on the hypervisor hosts</p>
+
+<p>You need to have ovirt-engine installed. "password", below, is the ovirt-engine PKI password. As usual, "#" represents the root prompt. Since you need to leverage Engine's PKI, execute the following on the host on which Engine runs:</p>
+
+<pre class="highlight plaintext"><code>   # /usr/share/ovirt-engine/bin/pki-enroll-pkcs12.sh --name=proxy1-host --password=password --subject="/CN=proxy1"&#x000A;   # /usr/share/ovirt-engine/bin/pki-enroll-pkcs12.sh --name=proxy1-user --password=password --subject="/CN=proxy1"&#x000A;   # /usr/share/ovirt-engine/bin/pki-enroll-openssh-cert.sh --name=proxy1-host --id=proxy1 --host --principals=@PROXY_FQDN@&#x000A;   # /usr/share/ovirt-engine/bin/pki-enroll-openssh-cert.sh --name=proxy1-user --id=proxy1 --principals=ovirt-vmconsole-proxy&#x000A;   # cp /etc/pki/ovirt-engine/certs/proxy1-host-cert.pub /etc/pki/ovirt-vmconsole/proxy-ssh_host_rsa-cert.pub&#x000A;   # cp /etc/pki/ovirt-engine/certs/proxy1-user-cert.pub /etc/pki/ovirt-vmconsole/proxy-ssh_user_rsa-cert.pub&#x000A;   # openssl pkcs12 -passin password -in /etc/pki/ovirt-engine/keys/proxy1-host.p12 -nodes -nocerts &gt; /etc/pki/ovirt-vmconsole/proxy-ssh_host_rsa&#x000A;   # openssl pkcs12 -passin password -in /etc/pki/ovirt-engine/keys/proxy1-user.p12 -nodes -nocerts &gt; /etc/pki/ovirt-vmconsole/proxy-ssh_user_rsa&#x000A;   # chown ovirt-vmconsole:ovirt-vmconsole /etc/pki/ovirt-vmconsole/proxy-ssh_host_rsa /etc/pki/ovirt-vmconsole/proxy-ssh_user_rsa&#x000A;   # chmod 0600 /etc/pki/ovirt-vmconsole/proxy-ssh_host_rsa /etc/pki/ovirt-vmconsole/proxy-ssh_user_rsa&#x000A;</code></pre>
+
+<h2 id="connecting-to-consoles">Connecting to consoles</h2>
+
+<p>Access to proxy by user is perform using the following command, a menu with the available consoles will be presented:</p>
+
+<pre class="highlight plaintext"><code>   $ ssh -t -p 2222 ovirt-vmconsole@proxy-host connect&#x000A;</code></pre>
+
+<p>Access to specify console can be done using the following command:</p>
+
+<pre class="highlight plaintext"><code>   $ ssh -t -p 2222 ovirt-vmconsole@proxy-host connect --vm-id=1E12DF323&#x000A;</code></pre>
+
+<p>List available consoles:</p>
+
+<pre class="highlight plaintext"><code>   $ ssh -t -p 2222 ovirt-vmconsole@proxy-host list&#x000A;</code></pre>
+
+<p>Usage:</p>
+
+<pre class="highlight plaintext"><code>   $ ssh -t  -p 2222 ovirt-vmconsole@proxy-host -- --help&#x000A;</code></pre>
+
+<h3 id="serial-console-on-boot">Serial console on boot</h3>
+
+<p>It's possible to use serial console immediately from the virtual machine startup with recent development versions of Engine and VDSM, if the BIOS of the virtual machine supports serial console. Then you can see BIOS bootup messages, select booting method, choose GRUB menu items, etc. on the console.</p>
+
+<p>Just note that serial console is not a very powerful editing tool. For instance, when using arrow keys or Escape you may need to press them multiple times to take effect. Also the screen output may not be pretty and some things may be hard to achieve.</p>
+
+<p>When you want to use serial console on boot, it may be a good idea to start the virtual machine in paused mode. Then you can connect to the console before the machine actually starts.</p>
+
+<p>One of the features the recent Engine versions provide to make serial console available on boot is switching from hv0 to ttyS0 console device. So make sure your getty process runs on ttyS0. This is not important to see the bootup messages but it is important to be able to log into your system using serial console.</p>
+
+<h2 id="upgrade-notes">Upgrade Notes</h2>
+
+<p>If you are upgrading fro oVirt 3.5.x, to use the serial consone feature you must perform engine-setup and key registration in Engine exactly as per fresh start. Hoever, additional care is needed.</p>
+
+<ol>
+  <li>the upgrade procedure <strong>will automatically upgrade the existing VM to use the new Serial Console Device</strong>. Please see "Troubleshooting" below if you still need to manually connect to your consoles. Otherwise, the upgrade</li>
+  <li>to use the new Serial Console Device, you must redeploy all existing host, to make sure the correct setup is performed.</li>
+</ol>
+
+<p>Please note that installing the needed package on your hypervisor hosts (ovirt-vmconsole, ovirt-vmconsole-host), is necessary, but not sufficient to use the feature. You also must enroll keys and certificates, and this is what reinstall will do.</p>
+
+<h2 id="how-to-change-the-serial-console-tcp-port">How to change the serial console TCP port</h2>
+
+<p>In some special cases, you may need to change the TCP port the serial-console infrastructure uses
+to connect to emulated serial ports. This can be done manually, but it is not recommended way
+since it may easily broken by updates.</p>
+
+<p>It is worth reminding that the serial console infrastructure uses special-configured standard ssh
+tools so it boils down to change those ssh options and fix the selinux policy.</p>
+
+<ol>
+  <li>
+    <p>The sshd options can be overridden using OPTIONS variable at:</p>
+
+    <p>/etc/sysconfig/ovirt-vmconsole-host-sshd</p>
+  </li>
+</ol>
+
+<p>This has to be done on each virtualization host.
+On the proxy host, you will need to edit</p>
+
+<pre class="highlight plaintext"><code>/etc/sysconfig/ovirt-vmconsole-proxy-sshd&#x000A;</code></pre>
+
+<p>On the proxy host, you will also need to override the <em>ssh</em> options using</p>
+
+<p>/etc/ovirt-vmconsole/ovirt-vmconsole-proxy/conf.d/90-custom-options.conf</p>
+
+<p>Look for the</p>
+
+<p>console_attach_ssh_args=""</p>
+
+<p>Option.</p>
+
+<p>Finally, the SELinux should be customized:
+On the proxy host:</p>
+
+<p># semanage port -a -t ovirt_vmconsole_proxy_port_t -p tcp XXX</p>
+
+<p>On <em>each</em> virtualization host:</p>
+
+<p># semanage port -a -t ovirt_vmconsole_host_port_t -p tcp XXX</p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="cannot-connect-to-vmvm-not-present-in-the-available-consoles-list">Cannot connect to VM/VM not present in the available consoles list</h3>
+
+<p>Make sure the user has the permissions on the VM (s)he wants to connect to. In webadmin: VM panel -&gt; permissions subpanel.</p>
+
+<h3 id="i-need-to-access-the-console-the-old-way">I need to access the console the old way</h3>
+
+<p>Starting 3.6.x. the VM console are no longer connected to PTYs, but to unix domain socket. In 3.5.x days, the way to connect to VM consoles was something like</p>
+
+<pre class="highlight plaintext"><code>   ssh hypervisor-host&#x000A;   virsh console $VM_NAME&#x000A;</code></pre>
+
+<p>in 3.6.x, if you need to manually connect to console, you can connect to unix domain socket:</p>
+
+<pre class="highlight plaintext"><code>   ssh hypervisor-host&#x000A;   minicom -D unix#$VM_SOCKET&#x000A;</code></pre>
+
+<p>Please note that the user which runs minicom must be part of the <strong>ovirt-vmconsole</strong> group the socket will have paths like</p>
+
+<pre class="highlight plaintext"><code>   /var/run/ovirt-vmconsole-console/$VM_UUID.sock&#x000A;</code></pre>
+
+<p>another option is using socat:</p>
+
+<pre class="highlight plaintext"><code>   socat -,raw,echo=0,escape=1 UNIX-LISTEN:/var/run/ovirt-vmconsole-console/$VM_UUID.sock,user=ovirt-vmconsole&#x000A;</code></pre>
+
+<h3 id="selinux-denials-running-ovirt-vmconsole-listpy">SELinux denials running ovirt-vmconsole-list.py</h3>
+
+<p>This should be handled by packaging, so it is highly unlikley you ever encounter this. If it happens, however, please make sure that</p>
+
+<ul>
+  <li>You have this patch applied:</li>
+</ul>
+
+<p><code> </code><a href="https://gerrit.ovirt.org/#/c/43655/"><code>https://gerrit.ovirt.org/#/c/43655/</code></a></p>
+
+<ul>
+  <li>
+    <p>the ovirt-vmconsole-list.py helper has the right SELinux label:</p>
+
+    <p> # chcon -t bin_t $PREFIX/libexec/ovirt-vmconsole-proxy-helper/ovirt-vmconsole-list.py</p>
+  </li>
+  <li>
+    <p>As last resort, on Fedora/RHEL/Centos/Scientifix Linux, please make sure this boolean is enabled:</p>
+
+    <p> # setsebool -P nis_enabled 1
+   This was reported to help, and it is only slightly better than disabling selinux alltogether.</p>
+  </li>
+</ul>
+
+<p>if you still get SELinux denials after checking the above, please file a bug.</p>
+
+<h3 id="i-succesfully-selected-a-console-but-now-i-get-just-a-blank-screen">I succesfully selected a console, but now I get just a blank screen</h3>
+
+<p>This most likely means that the system set up the connection properly, but nothing is listening on the guest side of the connection. You need to make sure the a getty is spawned on the guest, so something is actually listening.</p>
+
+<p>For example, in CentOS 7.x, you need to make sure the serial-getty is running</p>
+
+<pre class="highlight plaintext"><code>   # systemctl status serial-getty@hvc0.service&#x000A;</code></pre>
+
+<p>and start it if not</p>
+
+<pre class="highlight plaintext"><code>   # systemctl start serial-getty@hvc0.service&#x000A;</code></pre>
+
+<p>You may also want to enable the serial console emulation. This boils down to set the console type to "serial" instead of "virtio" (This is going to be fixed in oVirt 3.6.0-final thanks to <a href="https://gerrit.ovirt.org/#/c/46700/">this patch</a>) for greater compatibility. In modern systems, like CentOS 7, this will likely make the getty listen on the console automatically.</p>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/documentation/admin-guide/serial-console-setup.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Thu 19 May 2016 12:16 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

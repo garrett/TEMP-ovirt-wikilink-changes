@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+ovs &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/networking/">Networking</a></li>
+<li class='active'>ovs</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>ovs</td>
+</tr>
+<tr>
+<th>category</th>
+<td>networking</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>phoracek</td>
+</tr>
+<tr>
+<th>wiki_category</th>
+<td>Networking</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>VDSM-Hooks/ovs</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>5</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2016-01-14</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/VDSM-Hooks/ovs' target='_blank'>
+VDSM-Hooks/ovs
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="ovs">ovs</h1>
+
+<h2 id="summary">Summary</h2>
+
+<p>This hook enables us to create selected networks and bonds as Open vSwitch devices.</p>
+
+<h2 id="contact">Contact</h2>
+
+<ul>
+  <li>Name: <span class='broken-link link-mediawiki' data-href='User:Phoracek' title='Special MediaWiki link: original pointed to: User:Phoracek'> Petr Horacek</span></li>
+  <li>Email: phoracek aT redhat.com</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="host">Host</h3>
+
+<p>This hook is dependent on openvswitch package. If you use RHEL/CentOS you might install an extra repository or the package itself.</p>
+
+<p><code>yum install </code><a href="https://repos.fedorapeople.org/repos/openstack/openstack-kilo/rdo-release-kilo-1.noarch.rpm"><code>https://repos.fedorapeople.org/repos/openstack/openstack-kilo/rdo-release-kilo-1.noarch.rpm</code></a></p>
+
+<p>The hook can be installed from oVirt 3.6 Nightly repo or newer.</p>
+
+<pre class="highlight plaintext"><code>  yum install vdsm-hook-ovs&#x000A;  systemctl start openvswitch&#x000A;  systemctl enable openvswitch&#x000A;</code></pre>
+
+<h3 id="engine">Engine</h3>
+
+<p>Add custom vNic device property.</p>
+
+<pre class="highlight plaintext"><code>  engine-config -s CustomDeviceProperties="{type=interface;prop={ovs=.*}}"&#x000A;</code></pre>
+
+<p>Add custom property for network setup, so we can mark a network as OVS network.</p>
+
+<pre class="highlight plaintext"><code>  engine-config -s 'UserDefinedNetworkCustomProperties=ovs=.*;ovs_aa_sid=.*'&#x000A;</code></pre>
+
+<p>Don't forget to include the names of other custom network properties you may want to use, such as 'ethtool_opts'.</p>
+
+<p>Restart engine to apply changes.</p>
+
+<pre class="highlight plaintext"><code>  systemctl restart ovirt-engine&#x000A;</code></pre>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="create-ovs-network">Create OVS network</h3>
+
+<p>In the oVirt UI open 'Networks' tab and create a new network. Then select the network, open its 'vNIC Profiles' tab and click 'Edit'. Now select custom 'ovs' parameter in the bottom of opened dialog and set it value to 'true'.</p>
+
+<h3 id="setup-network">Setup network</h3>
+
+<p>In the oVirt UI open the 'Setup Host Networks' dialog. Proceed to editing a desired logical network's properties. Among them you will find 'ovs', set it to 'true' or '1' to mark is as a OVS Network.</p>
+
+<h3 id="setup-bonding">Setup bonding</h3>
+
+<p>In the oVirt UI open the 'Setup Host Networks' dialog. Merge two networks. In opened 'Create New Bond' dialog select 'Bonding Mode' 'Custom' and set it to 'ovs=True'.</p>
+
+<h3 id="dummy-interfaces">Dummy interfaces</h3>
+
+<p>If you want to use Open vSwitch to connect several VMs without internet connectivity (and physical nic), you could use a dummy interface.</p>
+
+<p>On the host, create a dummy interface:</p>
+
+<pre class="highlight plaintext"><code>  ip link add dummy_1 type dummy&#x000A;</code></pre>
+
+<p>Then select the host in oVirt UI and click on 'Refresh Capabilities' button. Created nic should appear in Host's 'Network Interfaces' tab and you should be able to attach a OVS network to it.</p>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+  <li>OVS to non-OVS and non-OVS to OVS network changes are not possible in one editation. It is necessary to first remove old network and then add a new one. Because of this, we are not able to change management network to OVS.</li>
+  <li>Only one untagged network</li>
+  <li>STP only on untagged network</li>
+  <li>All networks are bridged</li>
+  <li>Tested only with ifcfg configurator. OVS rollback probably won't be working with iproute2 or pyroute2 configurators</li>
+</ul>
+
+<h2 id="todo">TODO</h2>
+
+<h3 id="test-vlans">Test vlans</h3>
+
+<p>Test if we do proper trunking.</p>
+
+<h3 id="configure-selinux">Configure SELinux</h3>
+
+<p>SELinux in Enforcing mode on Fedora 22 causes OVS problems. That can be temporally ignored with Permissive mode.</p>
+
+<pre class="highlight plaintext"><code>  setenforce 0&#x000A;</code></pre>
+
+<h3 id="faster-rollback">Faster rollback</h3>
+
+<p>Now in case of a rollback, we remove all OVS networks and bonds and then recreate them. This could be improved with changing just what have to be changed as we do in iproute2 rollback.</p>
+
+<h3 id="implement-qos">Implement QoS</h3>
+
+<p>Linux HFSC QoS is supported by OVS and could be set up via ovs-vsctl as described <a href="http://openvswitch.org/ovs-vswitchd.conf.db.5.pdf">here</a></p>
+
+<h3 id="implement-multicastrouter-and-multicastsnooping">Implement 'multicast_router' and 'multicast_snooping'</h3>
+
+<p>This feature is not supported by openvswitch until 2.4.0 We need to be able to set and get those values. It should be possible via 'mcast_snooping_enable' records, described <a href="http://openvswitch.org/ovs-vswitchd.conf.db.5.pdf">here</a></p>
+
+<h3 id="define-multiple-ovs-bridge-instances">Define multiple OVS Bridge instances</h3>
+
+<p>Now custom network property 'ovs' is passing only True, we could change it to pass an integer and then create OVS network under 'ovsbr$INT' OVS Bridge instance.</p>
+
+<h3 id="fix-networktestsovspy-dependencies">Fix networkTestsOVS.py dependencies</h3>
+
+<p>It is possible that this test fail would cause problems when vdsm-hook-ovs package is installed without vdsm-tests.</p>
+
+<h3 id="better-ovs-command-logging">Better OVS command logging</h3>
+
+<p>Now we log created OVS command as one long string. It would be nice to split commands with new lines and add 'comment' about what was done with certain sub-command.</p>
+
+<h3 id="allow-non-ovs-to-ovs-and-ovs-to-non-ovs-changes">Allow non-OVS to OVS and OVS to non-OVS changes</h3>
+
+<p>Now we do not handle the situation when OVS network is changed into non-OVS and vice versa. non-OVS=&gt;OVS editation should be easy, we could handle it within a before_network_setup hook. OVS=&gt;non-OVS editation is harder, while we have to first remove non-OVS network and then create OVS network after_network_setup.</p>
+
+<h3 id="network-persistence">Network persistence</h3>
+
+<p>An easy way would be to remove all OVS networks on startup (as we do in rollback) and then let persistence restoration to recreate it all.</p>
+
+<h3 id="call-sysctl-enable-openvswitch-on-initial-configuration">Call `sysctl enable openvswitch` on initial configuration</h3>
+
+<h3 id="report-bridge-options-like-netinfobridgeoptions">Report bridge options (like netinfo._bridge_options)</h3>
+
+<p>We need to report at least some of bridge options. It is not possible to read them the same way as with native Linux bridges.</p>
+
+<h3 id="better-dhclient-handling">Better dhclient handling</h3>
+
+<p>When we configure dhclient over a network and then setup fails, dhclient is not rolled back. We also should handle dhclient return code.</p>
+
+<category:networking>
+</category:networking>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/networking/ovs.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Thu 14 Jan 2016 14:48 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

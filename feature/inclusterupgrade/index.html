@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+InClusterUpgrade &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/feature/">Feature</a></li>
+<li class='active'>InClusterUpgrade</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>InClusterUpgrade</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>rmohr</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>Features/InClusterUpgrade</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>47</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2016-04-21</td>
+</tr>
+<tr>
+<th>feature_name</th>
+<td>In Cluster Upgrade</td>
+</tr>
+<tr>
+<th>feature_modules</th>
+<td>engine</td>
+</tr>
+<tr>
+<th>feature_status</th>
+<td>Completed. Since 3.6.6</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/Features/InClusterUpgrade' target='_blank'>
+Features/InClusterUpgrade
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="inclusterupgrade">InClusterUpgrade</h1>
+
+<ul>
+  <li>Owner: Roman Mohr</li>
+  <li>Email: <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#114;&#109;&#111;&#104;&#114;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;">&#114;&#109;&#111;&#104;&#114;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;</a></li>
+  <li>Bugzilla: <a href="//bugzilla.redhat.com/show_bug.cgi?id=1241149">1241149</a></li>
+</ul>
+
+<h3 id="upgrade-policy">Upgrade policy</h3>
+
+<p>The upgrade flow is centered arount a new cluster upgrade policy called <em>' InClusterPolicy</em>' which consists of the <strong>InClusterUpgradeFilterPolicyUnit</strong> and the <strong>InClusterUpgradeWeightPolicyUnit</strong>. When these two policy units are activated, it should be save to mix different major host OS versions. VMs will only migrate to newer hosts and will not migrate back. To allow the activation of these policy units, some preconditions have to be met which are described later.</p>
+
+<h4 id="filter---inclusterupgradefilterpolicyunit">Filter - InClusterUpgradeFilterPolicyUnit</h4>
+
+<p>The filter is responsible for filtering out all hosts which run older OS versions than the host the VM is currently running on. In other words, the filter forbids downgrades. So a VM which is running on Fedora 22 can migrate to Fedora 22 or Fedora 23 but not to Fedora 21. Once it is on a Fedora 23 host, only other Fedora 23 hosts are viable targets. When a VM was shut down, it can start on any host in the cluster.</p>
+
+<h4 id="weight---inclusterupgradeweightpolicyunit">Weight - InClusterUpgradeWeightPolicyUnit</h4>
+
+<p>The weight policy unit gives an OS which is newer than the OS where the VM is currently running on no penalty. It penalizes OS versions significantly which are running the same OS versions. Finally older OS versions are penalized even more. The policy makes sure that hosts with newer major versions of an OS will be preferred when a VM is migrating or started.</p>
+
+<h3 id="overview-of-activated-and-deactivated-features">Overview of activated and deactivated features</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>PolicyUnit</th>
+      <th>Considerations</th>
+      <th>UUID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EmulatedMachineFilter</td>
+      <td>keep</td>
+      <td>Has no fixed uuid</td>
+    </tr>
+    <tr>
+      <td>NoneBalance</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>EvenDistributionBalance</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>HaReservationWeight</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PowerSavingWeight</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>EvenDistributionWeight</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>HostedEngineHAClusterFilter</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>HaReservationBalance</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CpuAndMemoryBalancing</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PowerSavingBalance</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>EvenGuestDistributionWeight</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Network</td>
+      <td>keep?</td>
+      <td>72163d1c-9468-4480-99d9-0888664eb143</td>
+    </tr>
+    <tr>
+      <td>EvenGuestDistributionBalance</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>HostedEngineHAClusterWeight</td>
+      <td>disabled, HE is out of scope</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Migration</td>
+      <td>keep</td>
+      <td>e659c871-0bf1-4ccc-b748-f28f5d08ddda</td>
+    </tr>
+    <tr>
+      <td>NoneWeight</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Memory</td>
+      <td>keep</td>
+      <td>c9ddbb34-0e1d-4061-a8d7-b0893fa80932</td>
+    </tr>
+    <tr>
+      <td>CPU</td>
+      <td>keep</td>
+      <td>6d636bf6-a35c-4f9d-b68d-0731f720cddc</td>
+    </tr>
+    <tr>
+      <td>VmAffinityFilter</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>VmAffinityWeight</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PinToHost</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>HostDeviceFilter</td>
+      <td>disabled</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CpuLevelFilter</td>
+      <td>keep</td>
+      <td>438b052c-90ab-40e8-9be0-a22560202ea6</td>
+    </tr>
+    <tr>
+      <td>CpuPinningPolicy</td>
+      <td>disabled (not yet merged)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>NumaPinningPolicy</td>
+      <td>disabled (not yet merged)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>InClusterUpgradeFilter</td>
+      <td>mandatory</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>InClusterUpgradeWeight</td>
+      <td>mandatory</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="preconditions-to-allow-policy-activation">Preconditions to allow policy activation</h4>
+
+<ul>
+  <li>No suspended VMs are allowed in the cluster</li>
+  <li>No CPU pinning on any VM in the cluster</li>
+  <li>No NUMA pinning on any VM in the cluster</li>
+  <li>No preferred hosts with migration strategy "No migrations allowed" on any VM in the cluster</li>
+  <li>No PCI pass through on any VM in the cluster</li>
+</ul>
+
+<h4 id="limitations-during-upgrade">Limitations during upgrade</h4>
+
+<ul>
+  <li>Suspending VMs is forbidden</li>
+  <li>HA reservation for VMs is disabled. But the engine will still try to restart HA VMs if they are failing</li>
+  <li>Affinity Groups will not be respected. After the upgrade is done the Affiniy Rules Enforcement Manager will reestablish them</li>
+  <li>No load balancing will happen</li>
+  <li>Migrating a VM back to an older OS version is not possible during upgrade. To run a VM on an older host OS, the VM hast to be stopped first.</li>
+</ul>
+
+<p>Since affinity will be ignored through the upgrade process, the affinity rules enforcement manager will be disabled.</p>
+
+<h3 id="upgrade-flow-from-35-to-36">Upgrade Flow from 3.5 to 3.6</h3>
+
+<ol>
+  <li>Enable the upgrade mode with <code>engine-config -s CheckMixedRhelVersions=false --cver=3.5</code> (This allows to set the InClusterUpgrade policy).</li>
+  <li>Restart the engine</li>
+  <li>Set the InClusterUpgrade Policy on the desired cluster (this allows mixing different major host OS versions)
+    <ol>
+      <li>When saving this cluster configuration change a lot of checks are happening. They are making sure that all preconditions as described above are met</li>
+      <li>If setting the policy fails, resolve the mentioned issue and try again</li>
+    </ol>
+  </li>
+  <li>Move a host X to maintenance (If this is the 2nd+ host some VMs will move to el7 machines)
+    <ol>
+      <li>If needed, pre-migrate VMs manually as a precaution</li>
+    </ol>
+  </li>
+  <li>Upgrade host in place (fedup style) to el7 and reboot to get the new kernel or just install a new image</li>
+  <li>Activate (fedup) or Reinstall (new image) the host in the engine (should move to ‘up’).</li>
+  <li>Go to step 4 until all hosts upgraded for this cluster and then reset the scheduling policy.</li>
+  <li>Increase cluster level to 3.6.</li>
+  <li>Go to step 3 and repeat for all clusters.</li>
+  <li>Disable the config from step 1 with <code>engine-config -s CheckMixedRhelVersions=true --cver=3.5</code>.</li>
+  <li>Restart the engine</li>
+</ol>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/feature/inclusterupgrade.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Fri 20 May 2016 05:44 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

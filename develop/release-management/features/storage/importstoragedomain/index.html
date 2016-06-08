@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+ImportStorageDomain &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/develop/">Develop</a></li>
+<li><a href="/develop/release-management/">Release-management</a></li>
+<li><a href="/develop/release-management/features/">Feature</a></li>
+<li><a href="/develop/release-management/features/storage/">Storage</a></li>
+<li class='active'>ImportStorageDomain</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>ImportStorageDomain</td>
+</tr>
+<tr>
+<th>category</th>
+<td>feature</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>derez, mlipchuk, sandrobonazzola, vered</td>
+</tr>
+<tr>
+<th>wiki_category</th>
+<td>Feature|ImportStorageDomain</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>Features/ImportStorageDomain</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>184</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2015-11-01</td>
+</tr>
+<tr>
+<th>feature_name</th>
+<td>Import Storage Domain</td>
+</tr>
+<tr>
+<th>feature_modules</th>
+<td>engine/vdsm</td>
+</tr>
+<tr>
+<th>feature_status</th>
+<td>Released</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/Features/ImportStorageDomain' target='_blank'>
+Features/ImportStorageDomain
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<section class='feature'>
+<section class='feature-sidebar col-md-4'>
+<h1>Features</h1>
+<form class='hide' id='feature-search'>
+<div class='form-group'>
+<input autocomplete='off' class='form-control' id='feature-search-input' placeholder='Filter features'>
+<div class='checkbox'>
+<label>
+</label>
+</div>
+</div>
+</form>
+<h2>Unclassified</h2>
+<ul class='feature-list'>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/affinity-rules-enforcement-manager' title='Status: QA'>Affinity Rules Enforcement Manager</a>
+
+</li>
+<li class=' status-partially-implemented'>
+<a href='/develop/release-management/features/backupawareness' title='Status: Partially-implemented'>Adding Backup Awareness to oVirt</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/boot' title='Status: WIP'>Boot oVirt.org</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/cinderglance-docker-integration' title='Status: QA'>Cinder and Glance integration via Docker</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/cockpit' title='Status: WIP'>Cockpit-oVirt Plugin</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/debian-support-for-hosts' title='Status: QA'>Debian support for hosts</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/doctor-rest' title='Status: Unknown'>Doctor REST</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine-command-changes' title='Status: Unknown'>Engine Command changes</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/extension-tester-tool' title='Status: Unknown'>Extension tester tool</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/external-network-provider' title='Status: Development'>External Network Providers</a>
+
+</li>
+<li class=' status-merged'>
+<a href='/develop/release-management/features/genericregistration' title='Status: Merged'>Generic Registration</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/gluster-self-heal-monitoring' title='Status: WIP'>Gluster Self-Heal Monitoring</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/heapplianceflow' title='Status: WIP'>oVirt hosted-engine appliance flow</a>
+
+</li>
+<li class=' status-new'>
+<a href='/develop/release-management/features/hosted-engine-add-hosts-with-web-ui' title='Status: NEW'>Hosted Engine: add hosts with Web UI</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/hosted-engine-configuration-on-shared-storage' title='Status: QA'>Hosted Engine configuration on shared storage</a>
+
+</li>
+<li class=' status-design-&amp;-research'>
+<a href='/develop/release-management/features/hosted-engine-vm-management' title='Status: Design-&amp;-research'>Hosted engine VM management enhancements</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/hot-plug-memory' title='Status: Done'>Hot plug memory</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/iothreads-support' title='Status: Unknown'>IOThreads Support</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/katellointegration' title='Status: Done'>Katello Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/kernel-cmdline' title='Status: Unknown'>kernel cmdline</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/linux-bridges-libvirt-management' title='Status: Design'>Manage oVirt bridges with libvirt</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/live-rebase-on-centos-7' title='Status: QA'>oVirt Live Rebase on CentOS 7</a>
+
+</li>
+<li class=' status-draft'>
+<a href='/develop/release-management/features/memorybasedbalancing' title='Status: Draft'>CPU and Memory based cluster auto balancing</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/migration-enhancements' title='Status: Unknown'>Migration Enhancements</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/numaawareksmsupport' title='Status: Design'>NUMA aware KSM support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ovmf' title='Status: Unknown'>OVMF</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/patternfly-tooltips' title='Status: Development'>PatternFly tooltips</a>
+
+</li>
+<li class=' status-draft'>
+<a href='/develop/release-management/features/pendingresourcemanager' title='Status: Draft'>Pending Resource Manager</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/resolveactiveinterface' title='Status: Development'>Resolve Active Interface</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/scheduler-policies' title='Status: Unknown'>oVirt Scheduler Policies</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/serial-console-in-cli' title='Status: Unknown'>Serial Console in CLI</a>
+
+</li>
+<li class=' status-planning'>
+<a href='/develop/release-management/features/splash' title='Status: Planning'>Backup Awareness UI - Splash Screen</a>
+
+</li>
+<li class=' status-planning'>
+<a href='/develop/release-management/features/ui' title='Status: Planning'>Backup Awareness UI</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/virt-sparsify' title='Status: Design'>Sparse VM disks</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/virt-sysprep' title='Status: Design'>Virtual Sysprep</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vmdevices-rework' title='Status: Unknown'>VMDevices rework</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/vmpinningtomultiplehosts' title='Status: Development'>VM pinning to multiple hosts</a>
+
+</li>
+</ul>
+<h2>3.6 Proposed Feature</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/3.6-proposed-feature/blank-to-defaults' title='Status: Unknown'>Blank to Defaults</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/3.6-proposed-feature/iothreads-support' title='Status: Unknown'>IOThreads Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/3.6-proposed-feature/ppc64le-support' title='Status: Unknown'>ppc64le support</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/3.6-proposed-feature/upgrademanager' title='Status: Released'>Upgrade Manager</a>
+
+</li>
+</ul>
+<h2>Cloud</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/cloud/addingkeystoneurltoexternalproviders' title='Status: Unknown'>Adding Keystone URL To External Providers</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/cloud/cloud-init-integration' title='Status: Unknown'>Cloud-Init Integration</a>
+
+</li>
+<li class=' status-completed'>
+<a href='/develop/release-management/features/cloud/neutronvirtualappliance' title='Status: Completed'>Neutron Virtual Appliance</a>
+
+</li>
+</ul>
+<h2>Engine</h2>
+<ul class='feature-list'>
+<li class=' status-planning'>
+<a href='/develop/release-management/features/engine/avoid-ip-spoofing' title='Status: Planning'>Avoid IP Spoofing</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/engine/cluster-parameters-override' title='Status: QA'>Cluster parameters override</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/engine/command-coordinator-flows-and-events' title='Status: WIP'>CommandCoordinator Framework Enhancements to Support Flows and Events</a>
+
+</li>
+<li class=' status-completed'>
+<a href='/develop/release-management/features/engine/commandcoordinator' title='Status: Completed'>Introduce CommandCoordinator Framework and Ability To Persist Commands in Database</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/engine/cumulative-rx-tx-statistics' title='Status: Done'>Cumulative Network Usage Statistics</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/engine-backup' title='Status: Released'>oVirt engine backup</a>
+
+</li>
+<li class=' status-partial'>
+<a href='/develop/release-management/features/engine/engine-cleanup' title='Status: Partial'>Engine</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/engine-config-utilities' title='Status: Unknown'>Engine Config Utilities</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/engine-high-availability' title='Status: Unknown'>Engine High Availability</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/engine-nic-health-check' title='Status: Released'>Engine NIC health check</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/engine-snmp' title='Status: Unknown'>engine snmp</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/engine/engine-snmp3' title='Status: Development'>Add support to send SNMPv3 traps from notifier</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/engine-support-for-ppc64' title='Status: Released'>Engine support for PPC64</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/feature-level-support' title='Status: Unknown'>Feature Level Support</a>
+
+</li>
+<li class=' status-wontfix'>
+<a href='/develop/release-management/features/engine/fedora-21-support' title='Status: WONTFIX'>Fedora 21 Support</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/engine/fedora-22-support' title='Status: QA'>Fedora 22 Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/fence-kdump' title='Status: Unknown'>Fence kdump</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/fenceagents' title='Status: Unknown'>Fence Agents</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/engine/fencing-refactoring' title='Status: Design'>Fencing refactoring</a>
+
+</li>
+<li class=' status-proposed'>
+<a href='/develop/release-management/features/engine/get-route' title='Status: Proposed'>Get Route</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/guest-reboot' title='Status: Unknown'>Guest Reboot</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/hostdeployprotocol' title='Status: Unknown'>Host Deploy Protocol</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/hostdev-passthrough' title='Status: Unknown'>hostdev passthrough</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/hosted-engine' title='Status: Released'>Node Hosted Engine</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/importunregisteredentities' title='Status: Released'>Detach/Attach Storage Domain with entities</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/integrating-libosinfo-with-engine' title='Status: Released'>Integrating libosinfo with oVirt engine</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/engine/migration-of-local-dwh-reports-to-remote' title='Status: Design'>Migrating local DWH and Reports to remote</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/engine/orm' title='Status: Unknown'>ORM</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/engine/reportguestdiskslogicaldevicename' title='Status: Design'>Report Guest Disks Logical Device Name</a>
+
+</li>
+<li class=' status-completed'>
+<a href='/develop/release-management/features/engine/self-hosted-engine-fc-support' title='Status: completed'>Self Hosted Engine FC Support</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/engine/self-hosted-engine-gluster-support' title='Status: QA'>Self Hosted Engine Gluster Support</a>
+
+</li>
+<li class=' status-post'>
+<a href='/develop/release-management/features/engine/self-hosted-engine-hyper-converged-gluster-support' title='Status: POST'>Self Hosted Engine Hyper Converged Gluster Support</a>
+
+</li>
+<li class=' status-completed'>
+<a href='/develop/release-management/features/engine/self-hosted-engine-iscsi-support' title='Status: Completed'>Self Hosted Engine iSCSI Support</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/self-hosted-engine-maintenance-flows' title='Status: Released'>Hosted Engine Maintenance Flow Unification</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/self-hosted-engine' title='Status: Released'>Self Hosted Engine</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/separate-dwh-host' title='Status: Released'>Separate DWH Host</a>
+
+</li>
+<li class=' status-qe'>
+<a href='/develop/release-management/features/engine/separate-reports-host' title='Status: QE'>Separate Reports Host</a>
+
+</li>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/engine/serial-console' title='Status: QA'>oVirt serial console</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/engine/sr-iov' title='Status: Design'>SR_IOV</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/upgrademanager' title='Status: Released'>Upgrade Manager</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/engine/vm-icons' title='Status: Done'>VM Icons</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/watchdog-engine-support' title='Status: Released'>Watchdog engine support</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/engine/windows-guest-tools' title='Status: Released'>oVirt Windows Guest Tools ISO</a>
+
+</li>
+</ul>
+<h2>Foreman</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/foreman/advancedforemanintegration' title='Status: Unknown'>Advanced Foreman Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/foreman/foremanintegration' title='Status: Unknown'>Foreman Integration</a>
+
+</li>
+</ul>
+<h2>Infra</h2>
+<ul class='feature-list'>
+<li class=' status-finished'>
+<a href='/develop/release-management/features/infra/aaa-jdbc' title='Status: FINISHED'>AAA_JDBC</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/aaa' title='Status: Unknown'>AAA</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/aaa_faq' title='Status: Unknown'>AAA</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/api' title='Status: Unknown'>API</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/asynctaskmanagerchanges-3.3' title='Status: Unknown'>AsyncTaskManagerChanges 3.3</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/asynctaskmanagerchanges-3.3detailed' title='Status: Unknown'>AsyncTaskManagerChanges 3.3Detailed</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/asynctaskmanagerchanges' title='Status: Unknown'>Async Task Manager Changes</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/authentication-rewrite' title='Status: Unknown'>Authentication Rewrite</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/bootstrap-improvements' title='Status: Unknown'>Bootstrap Improvements</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/cli' title='Status: Unknown'>CLI</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/clonevmfromsnapshot' title='Status: Unknown'>Clone VM From Snapshot</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/custompropertiessheet' title='Status: Unknown'>Custom Properties Sheet</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/dbschemaversioncheck' title='Status: Unknown'>DB Schema Version Check</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/detailedclonevmfromsnapshot' title='Status: Unknown'>Detailed Clone VM From Snapshot</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/detailedhostpmproxypreferences' title='Status: Unknown'>Detailed Host PM Proxy Preferences</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/detailedlockmechanism' title='Status: Unknown'>Detailed Lock Mechanism</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/detailedpmhealthcheck' title='Status: Unknown'>Detailed PM Health Check</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/drbd' title='Status: Unknown'>DRBD</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/entity-configuration-management' title='Status: Unknown'>Entity Configuration Management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/externalevents' title='Status: Unknown'>External Events</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/externaltasks' title='Status: Unknown'>External Tasks</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/fullapplicationslist' title='Status: Unknown'>Full Applications List</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/hostpmproxypreferences' title='Status: Unknown'>Host PM Proxy Preferences</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/hsm-async-tasks' title='Status: Unknown'>HSM Async Tasks</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/java-sdk' title='Status: Unknown'>Java sdk</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/kerberos-support-in-sdks-and-cli' title='Status: Unknown'>Kerberos Support in SDKs and CLI</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/microthreading' title='Status: Unknown'>Microthreading</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/nagios-integration' title='Status: Unknown'>Nagios Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/ntpsupport' title='Status: Unknown'>NTP Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/one-certificate-key-pair-per-nic' title='Status: Unknown'>One certificate-key pair per NIC</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/pki-improvements' title='Status: Unknown'>PKI Improvements</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/pki' title='Status: Unknown'>PKI</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/pkireduce' title='Status: Unknown'>PKI Reduce</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/pmhealthcheck' title='Status: Unknown'>PM Health Check</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/python-sdk' title='Status: Unknown'>Python sdk</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/reloadableconfiguration' title='Status: Unknown'>Reloadable Configuration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/restsessionmanagement' title='Status: Unknown'>REST Session Management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/rsdl-schema' title='Status: Unknown'>RSDL schema</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/rsdl' title='Status: Unknown'>RSDL</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/runningcommandsonendactionfailure' title='Status: Unknown'>Running Commands On End Action Failure</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/ssh-abilities' title='Status: Unknown'>SSH Abilities</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/sso-method-control' title='Status: Unknown'>SSO Method Control</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/sso' title='Status: Unknown'>SSO</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/taskmanager' title='Status: Unknown'>Task Manager</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/taskmanagercanceltask' title='Status: Unknown'>Task Manager Cancel Task</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/taskmanagerdetailed' title='Status: Unknown'>Task Manager Detailed</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/testingframework' title='Status: Unknown'>Testing Framework</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/uniformssosupport' title='Status: Unknown'>Uniform SSO Support</a>
+
+</li>
+</ul>
+<h2>Infra / Reloadable Configuration</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/reloadable-configuration/keys-table' title='Status: Unknown'>keys table</a>
+
+</li>
+</ul>
+<h2>Infra / User Portal Permissions</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/infra/user-portal-permissions/writing-a-new-user-query' title='Status: Unknown'>Writing A New User Query</a>
+
+</li>
+</ul>
+<h2>Integration</h2>
+<ul class='feature-list'>
+<li class=' status-released'>
+<a href='/develop/release-management/features/integration/allinone' title='Status: Released'>All in One</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/integration/otopi-infra-migration' title='Status: Unknown'>Otopi Infra Migration</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/integration/ovirtappliance' title='Status: Done'>oVirt Appliance</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/integration/remotedb' title='Status: Unknown'>Remote DB</a>
+
+</li>
+<li class=' status-completed'>
+<a href='/develop/release-management/features/integration/websocketproxy-on-a-separate-host' title='Status: completed'>WebSocketProxy on a separate host</a>
+
+</li>
+</ul>
+<h2>Network</h2>
+<ul class='feature-list'>
+<li class=' status-qa'>
+<a href='/develop/release-management/features/network/apidatacenternetworks' title='Status: QA'>API Data Center Networks</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/arbitraryvlandevicename' title='Status: Unknown'>Arbitrary VLAN Device Name</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/bridgeless-networking' title='Status: Unknown'>Bridgeless Networking</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/bridgeless-networks' title='Status: Unknown'>Bridgeless Networks</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/compatibilityversion' title='Status: Unknown'>compatibility Version</a>
+
+</li>
+<li class=' status-implementation'>
+<a href='/develop/release-management/features/network/detailed-host-network-qos' title='Status: Implementation'>Host Network QoS</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/detailed-osn-integration' title='Status: Unknown'>Detailed OSN Integration</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/network/detailedhostnetworkingapi' title='Status: Design'>Host Networking API</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/network/detailedmanagementnetworkasarole' title='Status: WIP'>Management network as a role - Detailed</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/detailednetworklinking' title='Status: Unknown'>Detailed Network Linking</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/detailedreportingvnicinformation' title='Status: Unknown'>Detailed Reporting Vnic Information</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/device-custom-properties' title='Status: Unknown'>Device Custom Properties</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/directhostaddress' title='Status: Unknown'>Direct Host Address</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/network/ethtool-options' title='Status: Released'>Device ethtool options</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/get-route-device' title='Status: Unknown'>Get Route Device</a>
+
+</li>
+<li class=' status-implementation'>
+<a href='/develop/release-management/features/network/host-network-qos' title='Status: Implementation'>Host Network QoS</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/network/hostnetworkingapi' title='Status: Design'>Host Networking API</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/network/hotplugnic' title='Status: Released'>Hotplug/Hotunplug of Network Interface Cards</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/ipv6-support' title='Status: Unknown'>IPv6 support</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/network/isolatednetworks' title='Status: Design'>Isolated Network</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/network/management-network-as-a-role' title='Status: design'>Management network as a role</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/migration-network' title='Status: Unknown'>Migration Network</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/multihostnetworkconfiguration' title='Status: Unknown'>Multi Host Network Configuration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/multiple-gateways' title='Status: Unknown'>Multiple Gateways</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/network/network-custom-properties' title='Status: Released'>Network Custom Properties</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/network-labels' title='Status: Unknown'>Network Labels</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/network-qos-detailed-design' title='Status: Unknown'>Network QoS - detailed design</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/networkfiltering' title='Status: Unknown'>Network Filtering</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/network/networklabels' title='Status: Released'>Network Labels</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/networklinking' title='Status: Unknown'>Network Linking</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/networkmaintab' title='Status: Unknown'>Network Main Tab</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/networkmanager-support' title='Status: Unknown'>NetworkManager Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/networkpermissions' title='Status: Unknown'>Network Permissions</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/networkreloaded' title='Status: Unknown'>Network Reloaded</a>
+
+</li>
+<li class=' status-dormant'>
+<a href='/develop/release-management/features/network/nicless-network' title='Status: Dormant'>Nic-less Network</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/normalized-ovirtmgmt-initialization' title='Status: Unknown'>Normalized oVirtmgmt Initialization</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/osn-integration' title='Status: Unknown'>OSN Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/portmirroring' title='Status: Unknown'>Port Mirroring</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/network/predictable-vnic-order' title='Status: Released'>Predictable vNIC Order</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/reportingvnicinformation' title='Status: Unknown'>Reporting Vnic Information</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/required-networks' title='Status: Unknown'>Required Networks</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/network/select-network-for-gluster' title='Status: Done'>Select Network for Gluster traffic</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/setupnetworks' title='Status: Unknown'>Setup Networks</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/network/ucs-integration' title='Status: Released'>Cisco UCS integration</a>
+
+</li>
+<li class=' status-proposed'>
+<a href='/develop/release-management/features/network/unrestricted-network-names' title='Status: Proposed'>Unrestricted Network Names</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/network/update-device-hooks' title='Status: Unknown'>Update device hooks</a>
+
+</li>
+</ul>
+<h2>Node</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/buildtoolmigration' title='Status: Unknown'>Buildtool Migration</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/node/cockpit' title='Status: WIP'>Cockpit</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/node/dbusbackend' title='Status: WIP'>D-Bus Backend</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/diagnostic-page' title='Status: Unknown'>Node Diagnostic Page</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/docker-integration' title='Status: Unknown'>Docker Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/featurepublishing' title='Status: Unknown'>Feature Publishing</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/glusterfs-support' title='Status: Unknown'>Node GlusterFS Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/kimchiplugin' title='Status: Unknown'>Kimchi Plugin</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/nic-bonding' title='Status: Unknown'>NIC Bonding</a>
+
+</li>
+<li class=' status-new'>
+<a href='/develop/release-management/features/node/node.next' title='Status: New'>Node.next</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/nodeautomation' title='Status: Unknown'>Node Automation</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/openvswitchsupport' title='Status: Unknown'>Open V Switch Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/packagerefactoring' title='Status: Unknown'>Package Refactoring</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/pluginliveinstall' title='Status: Unknown'>Plugin Live Install</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/plugins' title='Status: Unknown'>Node plugins</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/puppet-plugin' title='Status: Unknown'>Node Puppet Plugin</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/software-iscsi-root' title='Status: Unknown'>Node software iscsi root</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/storageandinstallermodulerewrite' title='Status: Unknown'>Storage And Installer Module Rewrite</a>
+
+</li>
+<li class=' status-merged/done'>
+<a href='/develop/release-management/features/node/subpackages' title='Status: Merged/Done'>subpackages</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/tuiredesign' title='Status: Unknown'>TU Iredesign</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/universal-image' title='Status: Unknown'>Universal Image</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/upgrade-tool' title='Status: Unknown'>Node upgrade tool</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/node/urwid-tui' title='Status: Unknown'>Urwid TUI</a>
+
+</li>
+</ul>
+<h2>Plugins</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/plugins/plugins' title='Status: Unknown'>Plugins</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/plugins/uipluginsoriginaldesignnotes' title='Status: Unknown'>UI Plugins Original Design Notes</a>
+
+</li>
+</ul>
+<h2>SLA</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/aggregate-qos' title='Status: Unknown'>aggregate QoS</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/automatic-scaling' title='Status: Unknown'>Automatic scaling</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/autorecovery' title='Status: Unknown'>Autorecovery</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/blkio-support' title='Status: Unknown'>blkio support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/cpu-host-support' title='Status: Unknown'>CPU-host Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/cpu-sla' title='Status: Unknown'>CPU SLA</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/cpu-thread-handling' title='Status: Unknown'>CPU thread handling</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/deploy-hosted-engine-hosts-via-engine' title='Status: Unknown'>Deploy Hosted Engine Hosts via Engine</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/detailed-numa-and-virtual-numa' title='Status: Unknown'>Detailed NUMA and Virtual NUMA</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/detailedquota' title='Status: Unknown'>Detailed Quota</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/drools-planner-scheduler' title='Status: Unknown'>drools planner scheduler</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/even-vm-count-distribution' title='Status: Unknown'>Even VM Count Distribution</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/external-scheduling-proxy' title='Status: Unknown'>oVirt External Scheduling Proxy</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/ha-vm-reservation-detaileddesign' title='Status: Unknown'>HA VM reservation detailedDesign</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/ha-vm-reservation' title='Status: Unknown'>HA VM reservation</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/hostpowermanagementpolicy' title='Status: Unknown'>Host Power Management Policy</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/memory-hotplug' title='Status: Unknown'>Memory Hotplug</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/minimum-guaranteed-memory' title='Status: Unknown'>Minimum guaranteed memory</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/momintegration' title='Status: Unknown'>Mom Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/numa-and-virtual-numa' title='Status: Unknown'>NUMA and Virtual NUMA</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/optaplanner' title='Status: Unknown'>Optaplanner</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/ovirtscheduler' title='Status: Unknown'>o Virt Scheduler</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/ovirtschedulerapi' title='Status: Unknown'>o Virt Scheduler API</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/performance-and-scalability' title='Status: Unknown'>Performance And Scalability</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/quota' title='Status: Unknown'>Quota</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/sla-mom-ballooning-tp' title='Status: Unknown'>SLA mom ballooning tp</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/sla-mom' title='Status: Unknown'>SLA mom</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/trusted-compute-pools' title='Status: Unknown'>Trusted compute pools</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/vm-affinity' title='Status: Unknown'>VM Affinity</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/vm-coredump' title='Status: Unknown'>VM coredump</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/vnic-profiles' title='Status: Unknown'>Vnic Profiles</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/sla/xbzrle-and-auto-convergence' title='Status: Unknown'>XBZRLE and Auto-Convergence</a>
+
+</li>
+</ul>
+<h2>Storage</h2>
+<ul class='feature-list'>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/advancednfsoptions' title='Status: Released'>Advanced Nfs Options</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/backup-provider' title='Status: Unknown'>Backup Provider</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/backup-restore-api-integration' title='Status: Unknown'>Backup-Restore API Integration</a>
+
+</li>
+<li class=' status-stabilization'>
+<a href='/develop/release-management/features/storage/cinder-integration' title='Status: Stabilization'>Cinder Integration</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/copy-disks' title='Status: Unknown'>Copy Disks</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/decommission-master-domain-and-spm' title='Status: Unknown'>Decommission Master Domain and SPM</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/design-for-multiple-storage-domains' title='Status: Released'>Manage storage connections</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/detailed-gluster-geo-rep' title='Status: Unknown'>Detailed Gluster Geo Rep</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/detailed-gluster-volume-asynchronous-tasks-management' title='Status: Unknown'>Detailed Gluster Volume Asynchronous Tasks Management</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/detailedfloatingdisk' title='Status: Released'>Floating Disk</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/detailedhotplug' title='Status: Released'>Disk Hot Plug</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/detailedsharedrawdisk' title='Status: Released'>Shared Raw Disk</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/direct-lun' title='Status: Released'>Direct LUN</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/disk-hooks' title='Status: Released'>Disk Hooks</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/diskalignment' title='Status: Released'>Disk Alignment</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/diskpermissions' title='Status: Released'>Disk Permissions</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/domain-scan' title='Status: Released'>Domain Scan</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/floatingdisk' title='Status: Released'>Floating Disk</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/glance-integration' title='Status: Released'>Glance Integration</a>
+
+</li>
+<li class=' status-wip'>
+<a href='/develop/release-management/features/storage/gluster-dashboard' title='Status: WIP'>Gluster Dashboard</a>
+
+</li>
+<li class=' status-completed'>
+<a href='/develop/release-management/features/storage/gluster-geo-replication' title='Status: Completed'>Geo replication</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/gluster-hooks-management' title='Status: Released'>Gluster Hooks management</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/gluster-import-existing-cluster' title='Status: Released'>Import cluster</a>
+
+</li>
+<li class=' status-complete'>
+<a href='/develop/release-management/features/storage/gluster-support' title='Status: Complete'>Gluster management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/gluster-swift-management' title='Status: Unknown'>Gluster Swift Management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/gluster-sync-configuration-with-cli' title='Status: Unknown'>Gluster Sync Configuration With CLI</a>
+
+</li>
+<li class=' status-complete'>
+<a href='/develop/release-management/features/storage/gluster-volume-asynchronous-tasks-management' title='Status: Complete'>Gluster tasks management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/gluster-volume-capacity' title='Status: Unknown'>Gluster Volume Capacity</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/gluster-volume-performance-statistics' title='Status: Unknown'>Gluster Volume Performance Statistics</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/glusterfs-hyperconvergence' title='Status: Unknown'>GlusterFS Hyperconvergence</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/glusterfs-storage-domain' title='Status: Released'>GlusterFS Storage Domain</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/storage/glusterhostdiskmanagement' title='Status: Done'>Host Device Management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/glustervolumeadvanceddetails' title='Status: Unknown'>Gluster Volume Advanced Details</a>
+
+</li>
+<li class=' status-not-started'>
+<a href='/develop/release-management/features/storage/glustervolumequota' title='Status: Not-Started'>Gluster Volume Quota</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/hotplug' title='Status: Released'>Disk Hot Plug</a>
+
+</li>
+<li class=' status-implementation'>
+<a href='/develop/release-management/features/storage/image-upload' title='Status: Implementation'>Image Upload</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/importmorethanonce' title='Status: Released'>Import VM or Template More than Once</a>
+
+</li>
+<li class='selected status-released'>
+<a href='/develop/release-management/features/storage/importstoragedomain' title='Status: Released'>Import Storage Domain</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/ioprocess' title='Status: Unknown'>ioprocess</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/iscsi-multipath' title='Status: Released'>Configure iSCSI Multipathing</a>
+
+</li>
+<li class=' status-stabilization'>
+<a href='/develop/release-management/features/storage/live-merge' title='Status: Stabilization'>Live Merge</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/storage/live-storage-migration-between-mixed-domains' title='Status: Done'>Live storage migration between mixed domains</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/lun-resize' title='Status: Released'>Refresh LUN Size</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/manage-storage-connections' title='Status: Released'>Manage storage connections</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/mixed-types-data-center' title='Status: Unknown'>Mixed Types Data Center</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/move-disk-two-phase-commit' title='Status: Unknown'>Move Disk Two Phase Commit</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/moveascopyanddelete' title='Status: Unknown'>Move As Copy And Delete</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/multiplestoragedomains' title='Status: Released'>Manage storage connections</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/nfsv4' title='Status: Released'>NFSv4</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/online-virtual-drive-resize' title='Status: Released'>Online Virtual Drive Resize</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/orphaned-images' title='Status: Unknown'>Orphaned Images</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/ovfautoupdater' title='Status: Unknown'>Ovf Auto Updater</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/ovfonanydomain' title='Status: Unknown'>Ovf On Any Domain</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/posixfsconnection' title='Status: Released'>PosixFS Connection</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/read-only-disk' title='Status: Released'>Read-Only Disks</a>
+
+</li>
+<li class=' status-design'>
+<a href='/develop/release-management/features/storage/sanlock-fencing' title='Status: Design'>Sanlock Fencing</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/serial-execution-of-asynchronous-tasks-detailed-design' title='Status: Unknown'>Serial Execution of Asynchronous Tasks Detailed Design</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/serial-execution-of-asynchronous-tasks' title='Status: Released'>Serial Execution of Asynchronous Tasks</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/sharedrawdisk' title='Status: Released'>Shared Raw Disk</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/single-disk-snapshot' title='Status: Unknown'>Single Disk Snapshot</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/snapshots-overview' title='Status: Unknown'>Snapshots Overview</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/storage/spmpriority' title='Status: Released'>SPM Priority</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/storagedomainliveupgrade' title='Status: Unknown'>Storage Domain Live Upgrade</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/storagepool-metadata-removal' title='Status: Unknown'>StoragePool Metadata Removal</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/storage/virtio-scsi' title='Status: Unknown'>Virtio SCSI</a>
+
+</li>
+</ul>
+<h2>UX</h2>
+<ul class='feature-list'>
+<li class=' status-released'>
+<a href='/develop/release-management/features/ux/branding' title='Status: Released'>Branding</a>
+
+</li>
+<li class=' status-proposal'>
+<a href='/develop/release-management/features/ux/cssgrids' title='Status: Proposal'>CSS Grids</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/detailedexternalevents' title='Status: Unknown'>Detailed External Events</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/detailedexternaltasks' title='Status: Unknown'>Detailed External Tasks</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/detailedhostpmmultipleagents' title='Status: Unknown'>Detailed Host PM Multiple Agents</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/detailedhotplugnic' title='Status: Unknown'>Detailed Hot Plug NIC</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/detailedstabledeviceaddresses' title='Status: Unknown'>Detailed Stable Device Addresses</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/entityhealthstatus' title='Status: Unknown'>Entity Health Status</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/foreign-menu-using-rest' title='Status: Unknown'>Foreign Menu Using REST</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/ux/frontendrefactor' title='Status: Released'>Frontend Refactoring</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/glustergeoreplication' title='Status: Unknown'>Gluster Geo Replication</a>
+
+</li>
+<li class=' status-inception'>
+<a href='/develop/release-management/features/ux/glustervolumesnapshots' title='Status: Inception'>Gluster Volume Snapshot</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/gwt-platform-upgrade' title='Status: Unknown'>GWT Platform Upgrade</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/hostbiosinfo' title='Status: Unknown'>Host Bios Info</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/hosthardwareinfo' title='Status: Unknown'>Host Hardware Info</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/hostpmmultipleagents' title='Status: Unknown'>Host PM Multiple Agents</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/i18n' title='Status: Unknown'>I18N</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/jasper-in-webadmin' title='Status: Unknown'>jasper in webadmin</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/ux/lowerresolutionsupport' title='Status: Released'>Low Resolution Support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/memory-aware-even-distribution-policy' title='Status: Unknown'>Memory-aware Even-distribution Policy</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/ux/newlookandfeelpatternflyphase1' title='Status: Development'>New Look and Feel based on PatternFly -- Phase 1</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/quota-3.2' title='Status: Unknown'>Quota 3.2</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/reports-dashboard' title='Status: Unknown'>Reports Dashboard</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/sla-for-storage-io-bandwidth' title='Status: Unknown'>SLA for storage io bandwidth</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/uiplugins' title='Status: Unknown'>UI Plugins</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/ux/uirefreshsynchronization' title='Status: Released'>Refresh Synchronization</a>
+
+</li>
+</ul>
+<h2>UX / Design</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/design/glusterhostdiskmanagement' title='Status: Unknown'>Gluster Host Disk Management</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/design/jsonrpc3.5' title='Status: Unknown'> JSON RPC 3.5</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/design/stabledeviceaddresses' title='Status: Unknown'>Stable Device Addresses</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/design/storagehelpers' title='Status: Unknown'>Storage Helpers</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/design/storagelivemigration' title='Status: Unknown'>Storage Live Migration</a>
+
+</li>
+</ul>
+<h2>UX / Design / Network</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/ux/design/network/jumbo-frames' title='Status: Unknown'>Jumbo frames</a>
+
+</li>
+</ul>
+<h2>VDSM</h2>
+<ul class='feature-list'>
+<li class=' status-released'>
+<a href='/develop/release-management/features/vdsm/for-ppc64' title='Status: Released'>VDSM for PPC64</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vdsm/hostconfiguration' title='Status: Unknown'>Host Configuration</a>
+
+</li>
+<li class=' status-development'>
+<a href='/develop/release-management/features/vdsm/jsonrpc' title='Status: Development'>Introduce Messaged communication to VDSM using  JSON-RPC on top of various transport protocols</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vdsm/libvdsm' title='Status: Unknown'>libVDSM</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vdsm/measurements' title='Status: Unknown'>Measurements</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vdsm/python3-compatibility' title='Status: Unknown'>VDSM python3 compatibility</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vdsm/supervdsm-service' title='Status: Unknown'>SuperVDSM service</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/vdsm/vdsm-plugin' title='Status: Unknown'>Node VDSM plugin</a>
+
+</li>
+<li class=' status-proposed'>
+<a href='/develop/release-management/features/vdsm/vdsm-vm-query-api' title='Status: Proposed'>VDSM VM Data Query API</a>
+
+</li>
+</ul>
+<h2>Virt</h2>
+<ul class='feature-list'>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/blank-to-defaults' title='Status: Unknown'>Blank to Defaults</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/clone-vm' title='Status: Unknown'>Clone VM</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/cluster-emulation-modes' title='Status: Unknown'>Cluster emulation modes</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/console-connection-settings-dialog-in-portals' title='Status: Unknown'>Console connection settings dialog in portals</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/detailed-exit-reason' title='Status: Unknown'>Detailed Exit Reason</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/display-address-override' title='Status: Unknown'>Display Address Override</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/edit-running-vm' title='Status: Unknown'>Edit Running VM</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/expose-vm-devices' title='Status: Unknown'>Expose VM Devices</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/guestagent' title='Status: Unknown'>Guest Agent</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/virt/guestagentdebian' title='Status: Done'>oVirt Guest Agent on Debian</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/virt/guestagentopensuse' title='Status: Done'>oVirt Guest Agent on OpenSUSE</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/virt/guestagentsles' title='Status: Done'>oVirt Guest Agent on SLE(S)</a>
+
+</li>
+<li class=' status-done'>
+<a href='/develop/release-management/features/virt/guestagentubuntu' title='Status: Done'>oVirt Guest Agent on Ubuntu</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/virt/hostusb' title='Status: Released'>Expose Host attached USB to a Node</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/hot-plug-cpu' title='Status: Unknown'>Hot plug CPU</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/instance-types' title='Status: Unknown'>Instance Types</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/intial-run-vm-tab' title='Status: Unknown'>Intial Run VM tab</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/multiple-consoles' title='Status: Unknown'>Multiple Consoles</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/multiple-graphic-servers' title='Status: Unknown'>Multiple Graphic Servers</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/multiplemonitors' title='Status: Unknown'>Multiple Monitors</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/non-plugin-console-invocation' title='Status: Unknown'>Non plugin console invocation</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/novnc-console' title='Status: Unknown'>noVNC console</a>
+
+</li>
+<li class=' status-released'>
+<a href='/develop/release-management/features/virt/os-info' title='Status: Released'>OS info</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/prestartedvm' title='Status: Unknown'>Prestarted VM</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/ram-snapshots' title='Status: Unknown'>RAM Snapshots</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/resourceusagegraph' title='Status: Unknown'>Resource Usage Graph</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/s3-suspend' title='Status: Unknown'>S3 suspend</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/smartcard-support' title='Status: Unknown'>Smartcard support</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/spice-proxy' title='Status: Unknown'>Spice Proxy</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/spicehtml5' title='Status: Unknown'>Spice HTML5</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/spicerelatedfeatures' title='Status: Unknown'>SPICE Related Features</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/template-versions' title='Status: Unknown'>Template Versions</a>
+
+</li>
+<li class=' status-merged'>
+<a href='/develop/release-management/features/virt/virt-v2v-integration' title='Status: Merged'>Extended import of Virtual Machines</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/vm-init-persistent' title='Status: Unknown'>VM init persistent</a>
+
+</li>
+<li class=' status-unknown'>
+<a href='/develop/release-management/features/virt/vmpayload' title='Status: Unknown'>VM Payload</a>
+
+</li>
+</ul>
+</section>
+<section class='feature-info col-md-8'>
+<div class='well'>
+<h2>At a glance</h2>
+<ul></ul>
+<li>
+Feature:
+Import Storage Domain
+</li>
+<li>
+Status:
+Released
+</li>
+<li>
+Modules:
+engine/vdsm
+</li>
+<li>
+Authors:
+<span class='author-name' title='derez'>Daniel Erez</span>, <span class='author-name' title='mlipchuk'>Maor Lipchuk</span>, <span class='author-name' title='sandrobonazzola'>Sandro Bonazzola</span>, and <span class='author-name' title='vered'>Vered Volansky</span>
+</li>
+</div>
+<h1 id="import-storage-domain">Import Storage Domain</h1>
+
+<p>This feature is part of <a href="/develop/release-management/features/engine/importunregisteredentities/">http://www.ovirt.org/Features/ImportUnregisteredEntities</a></p>
+
+<h3 id="summary">Summary</h3>
+
+<p>Today, oVirt supports importing ISO and Export Storage Domains, however, there is no support for importing an existing Data Storage Domain.
+A Data Storage Domain contains disks volumes and VMs/Templates OVF files.
+The OVF file is an XML standard representing the VM/Template configuration including disks, memory, CPU and more.<br />
+Based on this information stored in the Storage Domain we can revive entities such as disks, VMs and Templates in the setup of any Data Center the Storage Domain will be attached to.<br />
+The usability of the feature might be useful for various use cases, here are some of them:</p>
+
+<ul>
+  <li>Recover after the loss of the oVirt Engine's database.</li>
+  <li>Transfer VMs between setups without the need to copy the data into and out of the export domain.</li>
+  <li>Support migrating Storage Domains between different oVirt installations.</li>
+</ul>
+
+<p>Storage Domains that can be restored for VMs/Templates must contain OVF_STORE disks.<br />
+Since OVF_STORE disk is only supported from a 3.5v Data Center, the Storage Domains that can be restored have to be managed in a 3.5v Data Center before the disaster.<br />
+As long as the setup contains 3.5v Data Centers, the Import Storage Domain feature will automatically be supported for those Data Centers.</p>
+
+<h3 id="owner">Owner</h3>
+
+<ul>
+  <li>Maor Lipchuk</li>
+  <li>Email <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#109;&#108;&#105;&#112;&#099;&#104;&#117;&#107;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;">&#109;&#108;&#105;&#112;&#099;&#104;&#117;&#107;&#064;&#114;&#101;&#100;&#104;&#097;&#116;&#046;&#099;&#111;&#109;</a></li>
+</ul>
+
+<h3 id="current-status">Current status</h3>
+
+<ul>
+  <li>Implemented</li>
+</ul>
+
+<h3 id="general-functionality">General Functionality</h3>
+
+<ul>
+  <li>The feature should be fully supported from oVirt 3.5.</li>
+  <li>Storage Domains that can be restored for VMs/Templates must contain OVF_STORE disks. Since OVF_STORE disk is only supported from a 3.5v Data Center, the Storage Domains that can be restored have to be managed in a 3.5v Data Center before the disaster.</li>
+  <li>Attach of a Storage domain from a disaster environment, which its meta data still indicates it is attached to another Data Center, is only supported for 3.5 Data Center.</li>
+  <li>The feature is dependent on both features:</li>
+</ul>
+
+<ol>
+  <li>Detach/Attach Storage Domain - <a href="/develop/release-management/features/engine/importunregisteredentities/">http://www.ovirt.org/Features/ImportUnregisteredEntities</a>.<br /> The following is the general functionality of the Detach/Attach Storage Domain:
+    <ul>
+      <li>On detach of Storage Domain the VMs/Templates related to the Storage Domain should be deleted from the engine, but their data will be converted to an XML data which will be preserved in a DB table called unregistered_ovf_of_entities, and will still be part of the OVF disk contained in the Storage Domain.</li>
+      <li>On attach the user will be able to choose the VMs/Templates/Disks he/she desires to register in the Data Center, and will choose which Cluster and quota for each Vm/Template it will be assigned with.</li>
+      <li>After a successful registration of a VM/Template, the entity should be removed from the entities candidates to be registered.</li>
+      <li>The VM's snapshots and VM's disks (active/deactivate) should be preserved on attach, the same as they were when those entities were on the detached Storage Domain.</li>
+      <li>Regarding quota enforcement Data Centers, the user will choose for each disk the quota he/she will want to consume from, when it will choose a VM/Template to register in the setup.</li>
+    </ul>
+  </li>
+  <li>OVF on any Storage Domain - <a href="Feature/OvfOnWantedDomains">http://www.ovirt.org/Feature/OvfOnWantedDomains</a>
+    <ul>
+      <li>The user can import a Storage Domains and attach it directly to a Data Center, or it can be imported as 'unattached' Storage Domain, and later the user can attach it to a Data Center he desires.</li>
+      <li>When attaching a Storage Domain to a Data Center, all the entities (VMs, Templates) from the OVF_STORE disk should be retrieved from the tar file and into the Data Base table unregistered_ovf_of_entities, later the user can decide how to register them into the Data Center (see <a href="/develop/release-management/features/engine/importunregisteredentities/#General_Functionality">http://www.ovirt.org/Features/ImportUnregisteredEntities#General_Functionality</a>)</li>
+      <li>Once those VM/Template will be in the Data Base, the user should be able to register those entities using the import unregistered entities feature [see <a href="/develop/release-management/features/engine/importunregisteredentities/#Work_flow_for_detach_and_attach_Storage_Domain_with_entities_-_UI_flow">http://www.ovirt.org/Features/ImportUnregisteredEntities#Work_flow_for_detach_and_attach_Storage_Domain_with_entities_-_UI_flow</a>]</li>
+    </ul>
+  </li>
+  <li>Search for unregistered floating disks in a Storage Domain
+    <ul>
+      <li>Since floating disks are not part of any VM/Template, the user can register floating disks explicitly from the GUI.</li>
+      <li>A storage domain supports a functionality called "Scan Disks" which scans the Storage Domain for unregistered floating disks that are not reflected in oVirt.<br /> This can be much helpful for manmaging underline disks copies from an external Storage Domain.</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="restrictions">Restrictions</h4>
+
+<ul>
+  <li>Detach/Attach Storage Domain, containing entities, should not be restricted by any Data Center version.
+ VMs and Templates can be moved from old/new Data Center to another with no limitation, except the cluster which the user choose for each VM/Template.</li>
+  <li>An import of a Storage Domain will not reflect the status of a VM (Up, Powring Up, Shutting Down…) all the VMs will be registered with down status.</li>
+  <li>An import of a Storage Domain should be supported for block Storage Domain, and file Storage Domain.</li>
+  <li>In a disaster recovery scenario, if the Host, which the user about to use, was in the environment which was destroyed, it is recommended to reboot this Host before adding it to the new setup. The reason for that is first, to kill any qemu processes which are still running and might be automatically be added as VMs into the new setup, and also to avoid any sanlock issues.</li>
+  <li>Detach will not be permitted if there are VMs/Templates which are delete protected. In case the Storage Domain contains disks which are attached to VMs which are configured as delete protected, the operation should be blocked and an appropriate message should be presented to the user.</li>
+  <li>Detach will not be permitted if there are VMs which are in preview mode. In case the Storage Domain contains disks which are attached to VMs which are in preview mode, the operation should be blocked and an appropriate message should be presented to the user.</li>
+  <li>Detach will not be permitted if there are VMs which are part of pools, In case the Storage Domain contains disks which are attached to VMs which are part of pool, the operation should be blocked and an appropriate message should be presented to the user.</li>
+  <li>a Storage Domain can not be detached if it contains disks which are related to a running VM, unless this disks are inactive.</li>
+  <li>Shareable and Direct lun disks are not supported in the OVF file, therefore will not be part of the recovered VM.</li>
+  <li>The OVF_STORE disk will contain all the entities configuration which are candidates to be registered.
+ The candidates are VMs and Templates which has at least one disk exists in the Storage Domain OVF contained in the unregistered_ovf_of_entities table.</li>
+  <li>Currently all the Storage Domains which are related to the VMs/Templates disks must exist and be active in the Data Center once the entity get registred. (see <a href="https://bugzilla.redhat.com/1133300">https://bugzilla.redhat.com/1133300</a>)</li>
+  <li>Registering a thin provisioned VM which is based on a Template is dependent on the Template existence in the setup.</li>
+  <li>Permissions on VMs and Templates will not be preserved on detach, since they are not part of the OVF. (https://bugzilla.redhat.com/1138177)</li>
+  <li>detach/attach operations with Local Storage Domain will not support migrating unregistered entities, the reason for that is that on the detach the Local Storage Domain is being deleted from the Host.</li>
+  <li>Attaching an imported Storage Domain can only be applied with an initialized Data Center. (see [6])</li>
+  <li>If a Storage Domain will not contain the OVF_STORE disk, the engine should attach the Storage Domain without any unregistered entities, and an audit log should be presented.</li>
+  <li>The engine should retrieve the unregistered entities from the most updated OVF_STORE disk from all the OVF_STORE disks contained in the Storage Domain.</li>
+  <li>If the chosen OVF_STORE disk will contain an entity which already exists in the unregistered_ovf_of_entities table (see <a href="/develop/release-management/features/engine/importunregisteredentities/#General_Functionality">http://www.ovirt.org/Features/ImportUnregisteredEntities#General_Functionality</a>), the engine will replace the data in the unregistered_ovf_of_entities table with the VM fetched from the OVF_STORE disk.</li>
+</ul>
+
+<h4 id="implementation-gaps">Implementation gaps</h4>
+
+<ol>
+  <li>The attach operation should notify the user, a warning, whether the Storage Domain is already attached to another Data Center. The user can then choose whether to run over the meta data or neglect its operation. (https://bugzilla.redhat.com/1138115)</li>
+  <li>Open Issue: We should have an indication of External LUN disk on the Lun (https://bugzilla.redhat.com/1138121)</li>
+  <li>When the user moved the Storage Domain to maintenance, all the entities related to the Storage Domain should be updated in the OVF_STORE disk. (https://bugzilla.redhat.com/1138124 )</li>
+  <li>Currently, VDSM take a lock on the storage pool when performing a detach operation, this obstacle should be removed in a later version, once the storage pool will be removed completely in VDSM. (https://bugzilla.redhat.com/1138126)</li>
+  <li>Currently alias names of disks are not persisted in the Storage Domain, so registering disks, will not have alias names. The alias name should be persisted in the Description of the disk in the Storage Domain. (https://bugzilla.redhat.com/1138129)</li>
+  <li>Add support for importing iSCSI Storage Domain through REST api.</li>
+  <li>The login button, when picking the targets for importing iSCSI Storage domain should be more noticeable in the GUI (https://bugzilla.redhat.com/1138131)</li>
+</ol>
+
+<h3 id="disaster-recovery-flows">Disaster Recovery flows</h3>
+
+<p>This is an example of how to recover a setup if it encountered a disaster.
+1. Create a new engine setup with new Data Base (see <a href="/documentation/quickstart/quickstart-guide/#Install_oVirt">http://www.ovirt.org/Quick_Start_Guide#Install_oVirt</a>)
+2. Create a new Data Center version 3.5 with cluster and add a Host to this cluster. (Recommended to reboot the Host)
+3. Once the Host is UP and running, add and activate a new empty Storage Domain to initialize the Data Center.
+4. If there were VMs/Templates which ran in the old setup on different compatible versions, or different CPU types, then those type of clusters should be created on the new Data Center.
+5. Follow the instructions of importing Storage Domain, depended on the type of Storage Domain which the user wants to recover:</p>
+
+<ul>
+  <li>For Import block Storage Domain - <a href="/develop/release-management/features/storage/importstoragedomain/#Work_flow_for_Import_block_Storage_Domain_-_UI_flow">http://www.ovirt.org/Features/ImportStorageDomain#Work_flow_for_Import_block_Storage_Domain_-_UI_flow</a></li>
+  <li>For Import file Storage Domain - <a href="/develop/release-management/features/storage/importstoragedomain/#Work_flow_for_Import_File_Storage_Domain_-_UI_flow">http://www.ovirt.org/Features/ImportStorageDomain#Work_flow_for_Import_File_Storage_Domain_-_UI_flow</a></li>
+</ul>
+
+<h3 id="gui-perspective">GUI Perspective</h3>
+
+<h4 id="work-flow-for-detach-and-attach-storage-domain-with-entities---ui-flow">Work flow for detach and attach Storage Domain with entities - UI flow</h4>
+
+<iframe width="300" src="//youtube.com/embed/DLcxDB0MY38" frameborder="0" align="right" allowfullscreen="true"></iframe>
+<ol>
+  <li>Choose an active Storage Domain from an active Data Center, make sure this Storage Domain contains VMs/Templates with disks hosted in the specific Storage Domain</li>
+  <li>Move the Storage Domain to maintenance, and detach it from the Data Center - At this point all the entities related to the Storage Domain should be deleted from the setup</li>
+  <li>Attach the Storage Domain to another Data Center and activate it.</li>
+  <li>After the Storage Domain is activated, go to the Storage main tab and pick the Storage Domain which was activated a minute ago</li>
+  <li>In the same Storage main tab, the user should see two sub tabs, "Import VMs" and "Import Tempaltes", in the "Import VMs" sub tab, the user should see all the VMs which are candidates to be imported, and in the "Import Tempaltes" sub tab, there should be the same only for templates.</li>
+  <li>The user can pick several VMs (or Templates), and press on the "import" button.</li>
+  <li>When the "Import" button is pressed, a dialog should be opened, showing the list of all the entities the user chose to register.
+ The user should choose a cluster for each entity which should be compatible for it.
+ The user can also watch the entity properties (such as disks, networks) in the sub tab inside the dialog.</li>
+</ol>
+
+<h4 id="work-flow-for-import-block-storage-domain---ui-flow">Work flow for Import block Storage Domain - UI flow</h4>
+
+<ol>
+  <li>The user should press the "import Storage Domain" button.</li>
+  <li>The user should choose iSCSI or FCP type of Storage Domain.</li>
+  <li>The user should provide a Storage Server name or IP, to be imported from.</li>
+  <li>The engine should present the user a list of targets related to the Storage Server provided in step 3.</li>
+  <li>The user should pick the targets which he knows are related to the Storage Domains he/she wants to import and press the connect button at the top.</li>
+  <li>After the engine will connect to those targets, the user should see in the bottom of the dialog a list of Storage Domains which are candidates to be imported.</li>
+  <li>The user should then choose the Storage Domains which he/she wants to import and press the ok button.</li>
+  <li>Once the Storage Domain has been imported, the user should attach the Storage Domain to an initialized Data Center and activate the Storage Domain.</li>
+  <li>After the Storage Domain is activated, go to the Storage main tab and pick the Storage Domain which was activated a moment ago.</li>
+  <li>In the same Storage main tab, the user should see two sub tabs, "Import VMs" and "Import Tempaltes", in the "Import VMs" sub tab, the user should see all the VMs which are candidates to be imported, and in the "Import Tempaltes" sub tab, there should be the same only for templates.</li>
+  <li>The user can pick several VMs (or Templates), and press on the "import" button.</li>
+  <li>When the "Import" button is pressed, a dialog should be opened, showing the list of all the entities the user chose to register.
+The user should choose a cluster for each entity which should be compatible for it.
+The user can also watch the entity properties (such as disks, networks) in the sub tab inside the dialog.</li>
+</ol>
+
+<h4 id="work-flow-for-import-file-storage-domain---ui-flow">Work flow for Import File Storage Domain - UI flow</h4>
+
+<iframe width="300" src="//youtube.com/embed/YbU-DIwN-Wc" frameborder="0" align="right" allowfullscreen="true"></iframe>
+<ol>
+  <li>The user should press the "import Storage Domain" button.</li>
+  <li>The user should choose a file type domain (NFS, POSIX, etc.).</li>
+  <li>The user should provide the path where this Storage exists and press on the import button.</li>
+  <li>Once the Storage Domain has been imported, the user should attach the Storage Domain to an initialized Data Center and activate the Storage Domain.</li>
+  <li>After the Storage Domain is activated, go to the Storage main tab and pick the Storage Domain which was activated a moment ago.</li>
+  <li>In the same Storage main tab, the user should see two sub tabs, "Import VMs" and "Import Templates", in the "Import VMs" sub tab, the user should see all the VMs which are candidates to be imported, and in the "Import Tempaltes" sub tab, there should be the same only for templates.</li>
+  <li>The user can pick several VMs (or Templates), and press on the "import" button.</li>
+  <li>When the "Import" button is pressed, a dialog should be opened, showing the list of all the entities the user chose to register.
+The user should choose a cluster for each entity which should be compatible for it.
+The user can also watch the entity properties (such as disks, networks) in the sub tab inside the dialog.</li>
+</ol>
+
+<h4 id="work-flow-for-recovery-of-local-data-center---ui-flow">Work flow for recovery of local Data Center - UI flow</h4>
+
+<iframe width="300" src="//youtube.com/embed/T03ai6FrMI4" frameborder="0" align="right" allowfullscreen="true"></iframe>
+<ol>
+  <li>The user should first must initialize a Local Storage Domain.</li>
+  <li>The user should press the "import Storage Domain" button.</li>
+  <li>The user should choose a file type domain Data/ Local on Host.</li>
+  <li>Once the Storage Domain has been imported, the user should attach the Storage Domain to the Data Center he has created and initialized.</li>
+  <li>After the Storage Domain is activated, go to the Storage main tab and pick the Storage Domain which was activated a moment ago.</li>
+  <li>In the same Storage main tab, the user should see two sub tabs, "Import VMs" and "Import Templates", in the "Import VMs" sub tab, the user should see all the VMs which are candidates to be imported, and in the "Import Tempaltes" sub tab, there should be the same only for templates.</li>
+  <li>The user can pick several VMs (or Templates), and press on the "import" button.</li>
+  <li>When the "Import" button is pressed, a dialog should be opened, showing the list of all the entities the user chose to register.
+The user should choose a cluster for each entity which should be compatible for it.
+The user can also watch the entity properties (such as disks, networks) in the sub tab inside the dialog.</li>
+</ol>
+
+<h4 id="work-flow-for-importing-glusterfs-storage-domain---ui-flow">Work flow for importing GlusterFS Storage Domain - UI flow</h4>
+
+<iframe width="300" src="//youtube.com/embed/4YKXHp8wxvI" frameborder="0" align="right" allowfullscreen="true"></iframe>
+<ol>
+  <li>The user should press the "import Storage Domain" button.</li>
+  <li>The user should choose a file type domain Data/GlusterFS on Host.</li>
+  <li>Once the Storage Domain has been imported, the user should attach the Storage Domain to an initialized Data Center .</li>
+  <li>After the Storage Domain is activated, go to the Storage main tab and pick the Storage Domain which was activated a moment ago.</li>
+  <li>In the same Storage main tab, the user should see two sub tabs, "Import VMs" and "Import Templates", in the "Import VMs" sub tab, the user should see all the VMs which are candidates to be imported, and in the "Import Tempaltes" sub tab, there should be the same only for templates.</li>
+  <li>The user can pick several VMs (or Templates), and press on the "import" button.</li>
+  <li>When the "Import" button is pressed, a dialog should be opened, showing the list of all the entities the user chose to register.
+The user should choose a cluster for each entity which should be compatible for it.
+The user can also watch the entity properties (such as disks, networks) in the sub tab inside the dialog.</li>
+</ol>
+
+<h4 id="work-flow-for-registering-floating-disks---ui-flow">Work flow for registering floating disks - UI flow</h4>
+
+<iframe width="300" src="//youtube.com/8v3BI9I0OEM" frameborder="0" align="right" allowfullscreen="true"></iframe>
+<ol>
+  <li>The user should go to the Storage main tab and pick the desired Storage Domain to import floating disks from.</li>
+  <li>The user should press on the "Disk Import" sub tab.</li>
+  <li>The user should pick the desired floating disks to import to the Data Center and press the Register button.</li>
+</ol>
+
+<h4 id="work-flow-for-scanning-unregistered-floating-disks---ui-flow">Work flow for scanning unregistered floating disks - UI flow</h4>
+
+<iframe width="300" src="//youtube.com/c6yTjqdBaMc" frameborder="0" align="right" allowfullscreen="true"></iframe>
+<ol>
+  <li>The user should go to the Storage main tab and pick the desired Storage Domain to import floating disks from.</li>
+  <li>The user should right click on the Storage Domain and choose the "Scan Disks" option.</li>
+  <li>The user should pick the desired floating disks to import to the Data Center and press the Register button.</li>
+  <li>Once the scan is finished there should be an appropriate audit log indicating if the scan succeeded or failed.</li>
+  <li>If the scan succeeded, choose the "Disk Import" sub tab and see the new unregistered floating disks.</li>
+  <li>If the user want to register them to the Data Center, one should follow the previous flow.</li>
+</ol>
+
+<h4 id="mockups">Mockups</h4>
+
+<p>The following UI mockups contain guidelines for the different screens and wizards related for file Storage Domains:
+The user flow for importing NFS Storage Domain, will be similar to importing Export/ISO domain.
+The user will enter the path of the storage domain and will start the import process.<br />
+ An import screen for NFS Storage Domain:<br />
+<img alt="" title="fig:ImportNFS.jpeg" src="/images/wiki/ImportNFS.png" /><br />
+An import screen for POSIX Storage Domain:<br />
+<img alt="" title="fig:ImportPosix.jpeg" src="/images/wiki/ImportPosix.png" /><br />
+An import screen for Gluster Storage Domain:<br />
+<img alt="" title="fig:ImportGluster.jpeg" src="/images/wiki/ImportGluster.jpeg" /><br />
+<br />
+The following UI mockups contain guidelines for the different screens and wizards related to the block domain:
+An import screen for Fibre Channel Storage Domain:<br />
+<img alt="" title="fig:FibreChannel.png" src="/images/wiki/FibreChannel.png" /><br />
+An import screen for iSCSI Storage Domain:<br />
+<img alt="" title="fig:Iscsi.jpeg" src="/images/wiki/Iscsi.png" /><br />
+Import VM/Template sub-tabs:<br />
+<img alt="" title="fig:import_vm_template_subtab.png" src="/images/wiki/Import_vm_template_subtab.png" /><br />
+Import VM/Template Dialog:<br />
+<img alt="" title="fig:import_vm_template_dialog.png" src="/images/wiki/Import_vm_template_dialog.png" /><br /></p>
+
+<h3 id="rest">REST</h3>
+
+<h4 id="import-block-storage-domain">Import block Storage Domain</h4>
+
+<h5 id="discover-the-targets-in-your-iscsi-storage-server">Discover the targets in your iSCSI Storage Server</h5>
+
+<pre class="highlight plaintext"><code>POST /api/hosts/052a880a-53e0-4fe3-9ed5-01f939d1df66/iscsidiscover&#x000A;Accept: application/xml&#x000A;Content-Type: application/xml&#x000A;&#x000A;&lt;action&gt;&#x000A;    &lt;iscsi&gt;&#x000A;        &lt;address&gt;iscsi.server&lt;/address&gt;&#x000A;    &lt;/iscsi&gt;&#x000A;    &lt;iscsi_target&gt;iqn.iscsi.120.01&lt;/iscsi_target&gt;&#x000A;    &lt;iscsi_target&gt;iqn.iscsi.120.02&lt;/iscsi_target&gt;&#x000A;    &lt;iscsi_target&gt;iqn.iscsi.120.03&lt;/iscsi_target&gt;&#x000A;&lt;/action&gt;&#x000A;</code></pre>
+
+<h5 id="get-a-candidates-storage-domains-list-to-be-imported">Get a candidates Storage Domains list to be imported</h5>
+
+<p>After the iscsilogin operation, the host is already connected to the targets in the iSCSI and we can fetch the Storage Domains which are candidates to be imported.</p>
+
+<pre class="highlight plaintext"><code>POST /api/hosts/052a880a-53e0-4fe3-9ed5-01f939d1df66/unregisteredstoragedomainsdiscover HTTP/1.1&#x000A;Accept: application/xml&#x000A;Content-type: application/xml&#x000A;&#x000A;&lt;action&gt;&#x000A;    &lt;iscsi&gt;&#x000A;        &lt;address&gt;iscsiHost&lt;/address&gt;&#x000A;    &lt;/iscsi&gt;&#x000A;    &lt;iscsi_target&gt;iqn.name1.120.01&lt;/iscsi_target&gt;&#x000A;    &lt;iscsi_target&gt;iqn.name2.120.02&lt;/iscsi_target&gt;&#x000A;    &lt;iscsi_target&gt;iqn.name3.120.03&lt;/iscsi_target&gt;&#x000A;&lt;/action&gt;&#x000A;</code></pre>
+
+<p>The response which should returned as a list of Storage Domains, as follow:</p>
+
+<pre class="highlight plaintext"><code>&lt;action&gt;&#x000A;    &lt;iscsi&gt;&#x000A;        &lt;address&gt;iscsiHost&lt;/address&gt;&#x000A;    &lt;/iscsi&gt;&#x000A;    &lt;storage_domains&gt;&#x000A;        &lt;storage_domain id="6ab65b16-0f03-4b93-85a7-5bc3b8d52be0"&gt;&#x000A;            &lt;name&gt;scsi4&lt;/name&gt;&#x000A;            &lt;type&gt;data&lt;/type&gt;&#x000A;            &lt;master&gt;false&lt;/master&gt;&#x000A;            &lt;storage&gt;&#x000A;                &lt;type&gt;iscsi&lt;/type&gt;&#x000A;                &lt;volume_group id="OLkKwa-VmEM-abW7-hPiv-BGrw-sQ2E-vTdAy1"/&gt;&#x000A;            &lt;/storage&gt;&#x000A;            &lt;available&gt;0&lt;/available&gt;&#x000A;            &lt;used&gt;0&lt;/used&gt;&#x000A;            &lt;committed&gt;0&lt;/committed&gt;&#x000A;            &lt;storage_format&gt;v3&lt;/storage_format&gt;&#x000A;        &lt;/storage_domain&gt;&#x000A;    &lt;status&gt;&#x000A;        &lt;state&gt;complete&lt;/state&gt;&#x000A;    &lt;/status&gt;&#x000A;    &lt;iscsi_target&gt;iqn.name1.120.01&lt;/iscsi_target&gt;&#x000A;    &lt;iscsi_target&gt;iqn.name2.120.02&lt;/iscsi_target&gt;&#x000A;    &lt;iscsi_target&gt;iqn.name3.120.03&lt;/iscsi_target&gt;&#x000A;&lt;/action&gt;&#x000A;</code></pre>
+
+<h5 id="import-the-iscsi-storage-domains-to-the-setup">Import the iSCSI Storage Domains to the setup</h5>
+
+<pre class="highlight plaintext"><code>  POST /api/storagedomains/ HTTP/1.1&#x000A;  Accept: application/xml&#x000A;  Content-type: application/xml&#x000A;&#x000A;&lt;storage_domain id="39baf524-380e-407c-8625-50709fcaa9c2"&gt;&#x000A;    &lt;import&gt;true&lt;/import&gt;&#x000A;    &lt;host id="052a880a-53e0-4fe3-9ed5-01f939d1df66" /&gt;&#x000A;    &lt;type&gt;data&lt;/type&gt;&#x000A;    &lt;storage&gt;&#x000A;        &lt;type&gt;iscsi&lt;/type&gt;&#x000A;    &lt;/storage&gt;&#x000A;&lt;/storage_domain&gt;&#x000A;</code></pre>
+
+<h5 id="import-the-fcp-storage-domains-to-the-setup">Import the FCP Storage Domains to the setup</h5>
+
+<pre class="highlight plaintext"><code>  POST /api/storagedomains/ HTTP/1.1&#x000A;  Accept: application/xml&#x000A;  Content-type: application/xml&#x000A;&#x000A;&lt;storage_domain id="ecf053fc-fe65-4d64-883e-c38ca898951c"&gt;&#x000A;    &lt;import&gt;true&lt;/import&gt;&#x000A;    &lt;host id="9d05868b-d40d-4a8c-9a81-dbf09d654fba" /&gt;&#x000A;    &lt;type&gt;data&lt;/type&gt;&#x000A;    &lt;storage&gt;&#x000A;        &lt;type&gt;fcp&lt;/type&gt;&#x000A;    &lt;/storage&gt;&#x000A;&lt;/storage_domain&gt;&#x000A;</code></pre>
+
+<h4 id="import-nfs-storage-domain">Import NFS Storage Domain</h4>
+
+<p>Importing a Storage Domain requires a POST request, with the storage domain representation included, sent to the URL of the storage domain collection.
+    POST /api/storagedomains HTTP/1.1
+    Accept: application/xml
+    Content-type: application/xml</p>
+
+<pre class="highlight plaintext"><code>&lt;storage_domain&gt;&#x000A;    &lt;name&gt;data1&lt;/name&gt;&#x000A;    &lt;type&gt;data&lt;/type&gt;&#x000A;    &lt;host id="052a880a-53e0-4fe3-9ed5-01f939d1df66"/&gt;&#x000A;    &lt;storage&gt;&#x000A;        &lt;type&gt;nfs&lt;/type&gt;&#x000A;        &lt;address&gt;10.35.16.2&lt;/address&gt;&#x000A;        &lt;path&gt;/export/images/rnd/maor/data9&lt;/path&gt;&#x000A;    &lt;/storage&gt;&#x000A;&lt;/storage_domain&gt;&#x000A;</code></pre>
+
+<p>The API creates an NFS data storage domain called data1 with an export path of 10.35.16.2:/export/images/rnd/maor/data9 and sets access to the storage domain through the hypervisor host.
+The API also returns the following representation of the newly created storage domain resource:
+<img alt="" title="fig:Screenshot_from_2014-11-13_14-34-19.png" src="/images/wiki/Screenshot_from_2014-11-13_14-34-19.png" /></p>
+
+<h4 id="attach-a-storage-domain">Attach a Storage Domain</h4>
+
+<pre class="highlight plaintext"><code>POST /api/datacenters/01a45ff0-915a-11e0-8b87-5254004ac988/storagedomains HTTP/1.1&#x000A;Accept: application/xml&#x000A;Content-type: application/xml&#x000A;&#x000A;&lt;storage_domain&gt;&#x000A;    &lt;name&gt;data1&lt;/name&gt;&#x000A;&lt;/storage_domain&gt;&#x000A;</code></pre>
+
+<h4 id="get-list-of-unregistered-vmtemplate">Get list of unregistered VM/Template</h4>
+
+<p>The user can get a list of all the unregistered VMs or unregistered Templates by adding the prefix ";unregistered" after the vms/Templates, in the Storage Domain.
+For example to get all the unregistered VMs in the Storage Domain fa38172b-baae-4ca3-b949-95619c01ca31 the URL will be :</p>
+
+<p>http://localhost:8080/ovirt-engine/api/storagedomains/fa38172b-baae-4ca3-b949-95619c01ca31/vms;unregistered</p>
+
+<p><img alt="" title="fig:UnregisteredVms.png" src="/images/wiki/UnregisteredVms.png" /></p>
+
+<h4 id="register-vm-to-a-new-cluster">Register VM to a new cluster</h4>
+
+<p>If the user want to register a VM to the setup, then the URL should indicate register after the VM id, as follow:</p>
+
+<pre class="highlight plaintext"><code>POST /api/storagedomains/xxxxxxx-xxxx-xxxx-xxxxxx/vms/xxxxxxx-xxxx-xxxx-xxxxxx/register HTTP/1.1&#x000A;Accept: application/xml&#x000A;Content-type: application/xml&#x000A;&#x000A;&lt;action&gt;&#x000A;    &lt;cluster id='xxxxxxx-xxxx-xxxx-xxxxxx'&gt;&lt;/cluster&gt;&#x000A;&lt;/action&gt;&#x000A;</code></pre>
+
+<p><img alt="" title="fig:UnregisterVM1.png" src="/images/wiki/UnregisterVM1.png" /></p>
+
+<h4 id="get-all-the-unregistered-disks-in-the-storage-domain">Get all the unregistered disks in the Storage Domain</h4>
+
+<p>If the user want to get a list of all the floating disks in the storage domain he should use the following URL: http://localhost:8080/ovirt-engine/api/storagedomains/60cec75d-f01d-44a0-9c75-8b415547bc3d/disks;unregistered</p>
+
+<p><img alt="" title="fig:ListUnregisteredDisk.png" src="/images/wiki/ListUnregisteredDisk.png" /></p>
+
+<h4 id="register-an-unregistered-disk">Register an unregistered disk</h4>
+
+<p>If the user want to register a specific floating disks in the system he should use the following:</p>
+
+<pre class="highlight plaintext"><code>POST /api/storagedomains/60cec75d-f01d-44a0-9c75-8b415547bc3d/disks;unregistered HTTP/1.1&#x000A;Accept: application/xml&#x000A;Content-type: application/xml&#x000A;&#x000A;&lt;disk id='8ddb988f-6ab8-4c19-9ea0-b03ab3035347'&gt;&lt;/disk&gt;&#x000A;</code></pre>
+
+<p><img alt="" title="RegisterDisk.png" src="/images/wiki/RegisterDisk.png" /></p>
+
+<h5 id="register-an-unregistered-disk-with-curl">Register an unregistered disk with curl</h5>
+
+<pre class="highlight plaintext"><code>curl -v -k -u "admin@redhat.com" -H "Content-type: application/xml" -d '&lt;disk id="8ddb988f-6ab8-4c19-9ea0-b03ab3035347"&gt;&lt;alias&gt;dsdsdsdmap1_Disk3&lt;/alias&gt; &lt;/disk&gt;' "http://localhost:8080/ovirt-engine/api/datacenters/d2045b3a-a313-452f-8333-b1e0178a024e/storagedomains/60cec75d-f01d-44a0-9c75-8b415547bc3d/disks';'unregistered "&#x000A;</code></pre>
+
+<h3 id="permissions">Permissions</h3>
+
+<ul>
+  <li>No additional permissions will be added.</li>
+</ul>
+
+<h3 id="future-work">Future Work</h3>
+
+<ul>
+  <li>Import Storage Domain : The user will be able to import a list of Storage domains all at once.</li>
+  <li>Adding validation for checking image corruption after importing the Storage Domain. - Mainly for sync issues with the OVF.</li>
+  <li>Import an Export Domain as a regular Storage Domain</li>
+</ul>
+
+<h3 id="related-bugs">Related Bugs</h3>
+
+<ul>
+  <li><a href="https://bugzilla.redhat.com/1069780">https://bugzilla.redhat.com/1069780</a></li>
+  <li><a href="https://bugzilla.redhat.com/1069173">https://bugzilla.redhat.com/1069173</a></li>
+</ul>
+
+<h3 id="related-features">Related Features</h3>
+
+<ul>
+  <li>OVF on any domain</li>
+  <li>Import Unregistered entities</li>
+  <li>Local Storage Domain</li>
+  <li>Gluster</li>
+  <li>PosixFs</li>
+  <li>Quota - The user might import disks which will extend a defined Quota in DC.</li>
+</ul>
+
+<p>This scenario is similar to when a user enforce a quota though it already been extended. The default behaviour will treat that by letting the user still use the resources though he/she will not be able to create any more disks.</p>
+
+
+<div class='related-features'>
+<h2>Related features</h2>
+<ul>
+<li>
+<a href='/develop/release-management/features/storage/glance-integration/'>Glance Integration</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/image-upload/'>Image Upload</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/direct-lun/'>Direct LUN</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/posixfsconnection/'>Posix FS Connection</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/lun-resize/'>Refresh LUN Size</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/cinder-integration/'>Cinder Integration</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/glusterfs-storage-domain/'>GlusterFS Storage Domain</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/nfsv4/'>NFSv4</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/online-virtual-drive-resize/'>Online Virtual Drive Resize</a>
+</li>
+<li>
+<a href='/develop/release-management/features/engine/serial-console/'>Serial Console</a>
+</li>
+<li>
+<a href='/develop/release-management/features/engine/reportguestdiskslogicaldevicename/'>Report Guest Disks Logical Device Name</a>
+</li>
+<li>
+<a href='/develop/release-management/features/node/node.next/'>Node.next</a>
+</li>
+<li>
+<a href='/develop/release-management/features/vdsm/vdsm-vm-query-api/'>VDSM VM Query API</a>
+</li>
+<li>
+<a href='/develop/release-management/features/vdsm/jsonrpc/'> JSON RPC</a>
+</li>
+<li>
+<a href='/develop/release-management/features/numaawareksmsupport/'>Numa Aware Ksm Support</a>
+</li>
+<li>
+<a href='/develop/release-management/features/hosted-engine-vm-management/'>Hosted engine VM management</a>
+</li>
+<li>
+<a href='/develop/release-management/features/network/hotplugnic/'>Hotplug NIC</a>
+</li>
+<li>
+<a href='/develop/release-management/features/engine/sr-iov/'>SR IOV</a>
+</li>
+<li>
+<a href='/develop/release-management/features/linux-bridges-libvirt-management/'>linUX bridges libvirt management</a>
+</li>
+<li>
+<a href='/develop/release-management/features/network/detailed-host-network-qos/'>Detailed Host Network QoS</a>
+</li>
+<li>
+<a href='/develop/release-management/features/network/host-network-qos/'>Host Network QoS</a>
+</li>
+<li>
+<a href='/develop/release-management/features/engine/avoid-ip-spoofing/'>Avoid IP Spoofing</a>
+</li>
+<li>
+<a href='/develop/release-management/features/network/ethtool-options/'>Ethtool options</a>
+</li>
+<li>
+<a href='/develop/release-management/features/network/network-custom-properties/'>Network Custom Properties</a>
+</li>
+<li>
+<a href='/develop/release-management/features/network/ucs-integration/'>UCS Integration</a>
+</li>
+<li>
+<a href='/develop/release-management/features/virt-sysprep/'>virt sysprep</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/live-storage-migration-between-mixed-domains/'>Live storage migration between mixed domains</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/sanlock-fencing/'>Sanlock Fencing</a>
+</li>
+<li>
+<a href='/develop/release-management/features/storage/live-merge/'>Live Merge</a>
+</li>
+<li>
+<a href='/develop/release-management/features/engine/cumulative-rx-tx-statistics/'>Cumulative RX TX Statistics</a>
+</li>
+<li>
+<a href='/develop/release-management/features/virt-sparsify/'>virt sparsify</a>
+</li>
+<li>
+<a href='/develop/release-management/features/virt/virt-v2v-integration/'>virt-v2v Integration</a>
+</li>
+<li>
+<a href='/develop/release-management/features/external-network-provider/'>External Network Providers</a>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/develop/release-management/features/storage/importstoragedomain.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Tue 3 May 2016 07:41 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>
+<script>
+  (function() {
+    var $featureItems, $featureLists, $featureSidebar, $form, $headers, $input, clearField, showAll, updateHeaders, updateList;
+  
+    $featureSidebar = $('.feature-sidebar');
+  
+    $form = $('#feature-search');
+  
+    $input = $('#feature-search-input');
+  
+    $featureLists = $('.feature-list');
+  
+    $featureItems = $('li', $featureLists);
+  
+    $headers = $('.feature-sidebar h2');
+  
+    clearField = function() {
+      return $input.val('');
+    };
+  
+    showAll = function() {
+      return $featureItems.filter('.hide').removeClass('hide');
+    };
+  
+    updateHeaders = function() {
+      var $emptyList;
+      $('h2.hide', $featureSidebar).removeClass('hide');
+      $emptyList = $headers.filter(function(i, el) {
+        return $(el).next('ul').find('li:visible').length === 0;
+      });
+      return $emptyList.addClass('hide');
+    };
+  
+    updateList = function() {
+      var $hide, searchStr;
+      searchStr = $input.val();
+      showAll();
+      $hide = $featureItems.not(function(i, el) {
+        return $(el).text().toLowerCase().match(searchStr.toLowerCase());
+      });
+      $hide.addClass('hide');
+      return updateHeaders();
+    };
+  
+    $(function() {
+      var statuses;
+      $input.focus();
+      statuses = ["on qa", "partially implemented", "wip", "wip, 4.0 proposed feature", "in development", "merged", "new", "qa", "design & research", "done", "design", "on_qa", "draft", "development", "planning", "to be released", "completed", "in progress", "released", "partial", "wontfix", "proposed", "post", "qe", "in qa", "finished", "implementation", "dormant", "partially released", "merged/done", "stabilization", "released in ovirt 3.3", "complete", "not started", "proposal", "inception"];
+      console.log(statuses);
+      return $form.removeClass('hide').on('submit', function(e) {
+        return e.preventDefault();
+      }).on('keyup', function(e) {
+        switch (e.key) {
+          case 'Escape':
+            clearField();
+            showAll();
+            return updateHeaders();
+          default:
+            return updateList();
+        }
+      });
+    });
+  
+  }).call(this);
+</script>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>oVirt</title>
+  <subtitle>Tag: Howto</subtitle>
+  <id>http://ovirt.org/blog/</id>
+  <link href="http://ovirt.org/blog/"/>
+  <link href="http://ovirt.org/blog/tag/howto.xml" rel="self"/>
+  <updated>2016-04-25T16:00:00+02:00</updated>
+  <author>
+    <name/>
+  </author>
+  <entry>
+    <title>Advanced users authentication, using Kerberos, CAS SSO and Active Directory</title>
+    <link rel="alternate" href="http://ovirt.org/blog/2016/04/sso/"/>
+    <id>http://ovirt.org/blog/2016/04/sso/</id>
+    <published>2016-04-25T16:00:00+02:00</published>
+    <updated>2016-05-24T17:02:06+02:00</updated>
+    <author>
+      <name>fbacchella</name>
+    </author>
+    <content type="html">&lt;p&gt;I have a environment where hard coded password are avoided. We prefer to use Kerberos. We also provided a SSO for Web UI using &lt;a href="http://jasig.github.io/cas/4.2.x/index.html"&gt;CAS&lt;/a&gt;. We use ActiveDirectory for users backend.&lt;/p&gt;
+
+&lt;p&gt;So I wanted a oVirt installation that will use kerberos for API authentication. For the web UI, Kerberos is not always the best solution, so I wanted to integrated it in our CAS.&lt;/p&gt;
+
+&lt;p&gt;The Apache part was easy to setup. It needs an external module, auth_cas_module, that can be found at &lt;a href="https://wiki.jasig.org/display/CASC/mod_auth_cas"&gt;Apache's CAS module&lt;/a&gt;. It builds without special tweaks with&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;./configure
+make
+make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I will show only subpart of the whole Apache setup and only authentication related part&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;# The CAS modules
+LoadModule authz_user_module      /usr/lib64/httpd/modules/mod_authz_user.so
+# Needed because auth_cas_module forget to link openssl
+LoadModule ssl_module            /usr/lib64/httpd/modules/mod_ssl.so
+LoadModule auth_cas_module       /usr/lib64/httpd/modules/mod_auth_cas.so
+
+# For the kerberos authentication on the API
+LoadModule auth_gssapi_module    /usr/lib64/httpd/modules/mod_auth_gssapi.so
+LoadModule session_module        /usr/lib64/httpd/modules/mod_session.so
+LoadModule session_cookie_module /usr/lib64/httpd/modules/mod_session_cookie.so
+
+CASLoginURL https://sso/cas/login
+CASValidateSAML On
+CASValidateURL https://sso/cas/samlValidate
+
+&amp;lt;VirtualHost *:443&amp;gt;
+
+    RequestHeader unset X-Remote-User early
+    
+    &amp;lt;LocationMatch ^/api($|/)&amp;gt;
+        RequestHeader set X-Remote-User %{REMOTE_USER}s
+
+        RewriteEngine on
+        RewriteCond %{LA-U:REMOTE_USER} ^(.*@DOMAIN)$
+        RewriteRule ^(.*)$ - [L,P,E=REMOTE_USER:%1]
+
+        AuthType GSSAPI
+        AuthName "GSSAPI Single Sign On Login"
+        GssapiCredStore keytab:.../httpd.keytab
+        Require valid-user
+        GssapiUseSessions On
+        Session On
+        SessionCookieName ovirt_gssapi_session path=/private;httponly;secure;
+    &amp;lt;/LocationMatch&amp;gt;
+    
+    &amp;lt;LocationMatch ^/(ovirt-engine($|/)|RHEVManagerWeb/|OvirtEngineWeb/|ca.crt$|engine.ssh.key.txt$|rhevm.ssh.key.txt$)&amp;gt;
+        AuthType CAS
+        Require valid-user
+        CASAuthNHeader X-Remote-User
+    &amp;lt;/LocationMatch&amp;gt;
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The file httpd.keytab contains the kerberos ticket for the service HTTP. In my setup, the realm using for Linux machine is different 
+than the active directory's domain, and a trust was established between them. So the keytab is created using MIT kerberos.&lt;/p&gt;
+
+&lt;p&gt;It was generated using the following &lt;code&gt;kadmin&lt;/code&gt; commands:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;addprinc -randkey HTTP/VHOST@REALM
+addprinc -randkey HTTP/FQDN@REALM
+ktadd -k .../http.keytab -e aes128-cts-hmac-sha1-96:normal -e aes256-cts-hmac-sha1-96:normal HTTP/VHOST@REALM
+ktadd -k .../http.keytab -e aes128-cts-hmac-sha1-96:normal -e aes256-cts-hmac-sha1-96:normal HTTP/FQDN@REALM
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Kerberos can be surprising when resolving principal and http client uses different method. Some requests an ticket using directly the Host header. Some other choose the reverse of the IP used for the connection.
+So if Apache is configured using a virtual host, both principal for the virtual host and the FQDN pointed by the reverse of the IP should be created and added to the keytab.&lt;/p&gt;
+
+&lt;p&gt;The authn file &lt;code&gt;/etc/ovirt-engine/extensions.d/apachesso-authn.properties&lt;/code&gt; is :&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;ovirt.engine.extension.name = apachesso-authn
+ovirt.engine.extension.bindings.method = jbossmodule
+ovirt.engine.extension.binding.jbossmodule.module = org.ovirt.engine-extensions.aaa.misc
+ovirt.engine.extension.binding.jbossmodule.class = org.ovirt.engineextensions.aaa.misc.http.AuthnExtension
+ovirt.engine.extension.provides = org.ovirt.engine.api.extensions.aaa.Authn
+ovirt.engine.aaa.authn.profile.name = apachesso
+ovirt.engine.aaa.authn.authz.plugin = DOMAIN-authz
+config.artifact.name = HEADER
+config.artifact.arg = X-Remote-User
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the authz file &lt;code&gt;/etc/ovirt-engine/extensions.d/DOMAIN-authz.properties&lt;/code&gt; is:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;ovirt.engine.extension.name = DOMAIN-authz
+ovirt.engine.extension.bindings.method = jbossmodule
+ovirt.engine.extension.binding.jbossmodule.module = org.ovirt.engine-extensions.aaa.ldap
+ovirt.engine.extension.binding.jbossmodule.class = org.ovirt.engineextensions.aaa.ldap.AuthzExtension
+ovirt.engine.extension.provides = org.ovirt.engine.api.extensions.aaa.Authz
+config.profile.file.1 = ..../aaa/DOMAIN.properties
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I had some difficulties with AD backend. A straightforward solution would have been :&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;include = &amp;lt;ad.properties&amp;gt;
+
+vars.domain = DOMAIN
+vars.user = BINDDN
+vars.password = BINDPWD
+vars.forest = domain.com
+
+pool.default.auth.simple.bindDN = ${global:vars.user}
+pool.default.auth.simple.password = ${global:vars.password}
+pool.default.serverset.type = srvrecord
+pool.default.serverset.srvrecord.domain = ${global:vars.domain}
+
+pool.default.ssl.startTLS = true
+pool.default.ssl.truststore.file = .../domain.jks
+pool.default.ssl.truststore.password = 
+# Only TLSv1.2 is secure nowadays
+pool.default.ssl.startTLSProtocol = TLSv1.2
+
+# long time out should be avoided
+pool.default.connection-options.connectTimeoutMillis = 500
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But if fails. We have a special setup with about 100 domain controlers and only two of them can be reached from the ovirt engine. So my first try was so defined them directly in the configuration file:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;pool.default.serverset.type = failover
+pool.default.serverset.failover.1.server = dcX.domain.com
+pool.default.serverset.failover.2.server = dcY.domain.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But that fails. oVirt-engine was still using a lot of unreachable domain controler. After some digging I found that other part of the ldap extension use a different serverset, I don’t know why it don’t reuse the default pool. It’s called &lt;code&gt;pool.default.dc-resolve&lt;/code&gt; (it should be called &lt;code&gt;pool.dc-resolve&lt;/code&gt;, as it’s not the default but a custom one), so I added in my configuration:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;pool.default.dc-resolve.default.serverset.type = failover
+pool.default.dc-resolve.serverset.failover.1.server = dcX.domain.com
+pool.default.dc-resolve.serverset.failover.2.server = dcY.domain.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I worked well, but there is a better solution as Ondra Machacek point it to me. In Active Directory, there is something called a “site”, with a subset of all the domain controler in it. It can be found under &lt;code&gt;CN=Sites,CN=Configuration,DC=DOMAIN,...&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To list them:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;ldapsearch -H ldap://somedc -b CN=Sites,CN=Configuration,DC=DOMAIN -s one -o ldif-wrap=no cn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The information to write down is the &lt;code&gt;cn&lt;/code&gt; returned&lt;/p&gt;
+
+&lt;p&gt;You get a list of all sites, just pick the right one, remove all the serverset configuration and add :&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;pool.default.serverset.srvrecord.domain-conversion.type = regex
+pool.default.serverset.srvrecord.domain-conversion.regex.pattern = ^(?&amp;lt;domain&amp;gt;.*)$
+pool.default.serverset.srvrecord.domain-conversion.regex.replacement = GOOD_SITE._sites.${domain}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The entry &lt;code&gt;_sites.${domain}&lt;/code&gt; don’t exist in the DNS, so to check that your regex is good, try instead:&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;dig +short _ldap._tcp.GOOD_SITE._sites.${domain} srv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It should return only reachable domain controlers.&lt;/p&gt;
+
+&lt;p&gt;So the final &lt;code&gt;/etc/ovirt-engine/aaa/DOMAIN.properties&lt;/code&gt; was :&lt;/p&gt;
+
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;include = &amp;lt;ad.properties&amp;gt;
+
+vars.domain = DOMAIN
+vars.user = BINDDN
+vars.password = BINDPWD
+vars.forest = domain.com
+
+pool.default.auth.simple.bindDN = ${global:vars.user}
+pool.default.auth.simple.password = ${global:vars.password}
+pool.default.serverset.type = srvrecord
+pool.default.serverset.srvrecord.domain = ${global:vars.domain}
+
+pool.default.ssl.startTLS = true
+pool.default.ssl.truststore.file = .../domain.jks
+pool.default.ssl.truststore.password = 
+pool.default.ssl.startTLSProtocol = TLSv1.2
+
+pool.default.connection-options.connectTimeoutMillis = 500
+
+pool.default.serverset.srvrecord.domain-conversion.type = regex
+pool.default.serverset.srvrecord.domain-conversion.regex.pattern = ^(?&amp;lt;domain&amp;gt;.*)$
+pool.default.serverset.srvrecord.domain-conversion.regex.replacement = GOOD_SITE._sites.${domain}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With this setup, my &lt;a href="https://github.com/fbacchella/ovirtcmd"&gt;python client&lt;/a&gt; can connect to ovirt-engine using kerberos ticket, web users are authenticated using CAS. And there is no need to duplicate user base.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+Advanced users authentication, using Kerberos, CAS SSO and Active Directory &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='fbacchella' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+<link href='/blog/feed.xml' rel='alternate' title='Atom feed' type='application/atom+xml'>
+<!-- Open Graph (FB / G+) -->
+<meta content='article' property='og:type'>
+<meta content='Advanced users authentication, using Kerberos, CAS SSO and Active Directory' property='og:title'>
+<meta content='I have a environment where hard coded password are avoided. We prefer to use Kerberos. We also provided a SSO for Web UI using CAS. We use ActiveDirectory for users backend.&#x000A;&#x000A;So I wanted a oVirt installation...' property='og:description'>
+<meta content='http://ovirt.org/blog/2016/04/sso/' property='og:url'>
+<meta content='2016-04-25T14:00:00Z' property='article:published_time'>
+<meta content='fbacchella' property='article:author:username'>
+<meta content='blog' property='article:tag'>
+<link href='/blog/tag/blog.xml' rel='alternate' title='Atom feed' type='application/atom+xml'>
+<meta content='community' property='article:tag'>
+<link href='/blog/tag/community.xml' rel='alternate' title='Atom feed' type='application/atom+xml'>
+<meta content='howto' property='article:tag'>
+<link href='/blog/tag/howto.xml' rel='alternate' title='Atom feed' type='application/atom+xml'>
+<!-- Twitter card -->
+<meta content='summary' name='twitter:card'>
+<meta content='Advanced users authentication, using Kerberos, CAS SSO and Active Directory' name='twitter:title'>
+<meta content='I have a environment where hard coded password are avoided. We prefer to use Kerberos. We also provided a SSO for Web UI using CAS. We use ActiveDirectory for users backend.&#x000A;&#x000A;So I wanted a oVirt installation...' name='twitter:description'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li class='active'>Blog</li>
+<li class='active'>2016</li>
+<li class='active'>04</li>
+<li class='active'>Advanced users authentication, using Kerberos, CAS SSO and Active Directory</li>
+</ul>
+
+<section class='container content' id='content'>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<section class='blog-post-page row'>
+<div class='col-md-10 col-md-offset-1'>
+<article class='post hentry'>
+<header class='post-header'>
+<h2 class='post-title entry-title'>
+Advanced users authentication, using Kerberos, CAS SSO and Active Directory
+</h2>
+<header class='post-meta'>
+<span class='byline'>
+by
+<span class='author vcard'>
+<a href="/blog/author/fbacchella/">fbacchella</a>
+</span>
+</span>
+&ndash;
+<time class='published' datetime='2016-04-25T14:00:00Z'>
+Monday 25 April
+</time>
+</header>
+</header>
+<section class='post-content entry-content'>
+<p>I have a environment where hard coded password are avoided. We prefer to use Kerberos. We also provided a SSO for Web UI using <a href="http://jasig.github.io/cas/4.2.x/index.html">CAS</a>. We use ActiveDirectory for users backend.</p>
+
+<p>So I wanted a oVirt installation that will use kerberos for API authentication. For the web UI, Kerberos is not always the best solution, so I wanted to integrated it in our CAS.</p>
+
+<p>The Apache part was easy to setup. It needs an external module, auth_cas_module, that can be found at <a href="https://wiki.jasig.org/display/CASC/mod_auth_cas">Apache's CAS module</a>. It builds without special tweaks with</p>
+
+<pre class="highlight plaintext"><code>./configure&#x000A;make&#x000A;make install&#x000A;</code></pre>
+
+<p>I will show only subpart of the whole Apache setup and only authentication related part</p>
+
+<pre class="highlight plaintext"><code># The CAS modules&#x000A;LoadModule authz_user_module      /usr/lib64/httpd/modules/mod_authz_user.so&#x000A;# Needed because auth_cas_module forget to link openssl&#x000A;LoadModule ssl_module            /usr/lib64/httpd/modules/mod_ssl.so&#x000A;LoadModule auth_cas_module       /usr/lib64/httpd/modules/mod_auth_cas.so&#x000A;&#x000A;# For the kerberos authentication on the API&#x000A;LoadModule auth_gssapi_module    /usr/lib64/httpd/modules/mod_auth_gssapi.so&#x000A;LoadModule session_module        /usr/lib64/httpd/modules/mod_session.so&#x000A;LoadModule session_cookie_module /usr/lib64/httpd/modules/mod_session_cookie.so&#x000A;&#x000A;CASLoginURL https://sso/cas/login&#x000A;CASValidateSAML On&#x000A;CASValidateURL https://sso/cas/samlValidate&#x000A;&#x000A;&lt;VirtualHost *:443&gt;&#x000A;&#x000A;    RequestHeader unset X-Remote-User early&#x000A;    &#x000A;    &lt;LocationMatch ^/api($|/)&gt;&#x000A;        RequestHeader set X-Remote-User %{REMOTE_USER}s&#x000A;&#x000A;        RewriteEngine on&#x000A;        RewriteCond %{LA-U:REMOTE_USER} ^(.*@DOMAIN)$&#x000A;        RewriteRule ^(.*)$ - [L,P,E=REMOTE_USER:%1]&#x000A;&#x000A;        AuthType GSSAPI&#x000A;        AuthName "GSSAPI Single Sign On Login"&#x000A;        GssapiCredStore keytab:.../httpd.keytab&#x000A;        Require valid-user&#x000A;        GssapiUseSessions On&#x000A;        Session On&#x000A;        SessionCookieName ovirt_gssapi_session path=/private;httponly;secure;&#x000A;    &lt;/LocationMatch&gt;&#x000A;    &#x000A;    &lt;LocationMatch ^/(ovirt-engine($|/)|RHEVManagerWeb/|OvirtEngineWeb/|ca.crt$|engine.ssh.key.txt$|rhevm.ssh.key.txt$)&gt;&#x000A;        AuthType CAS&#x000A;        Require valid-user&#x000A;        CASAuthNHeader X-Remote-User&#x000A;    &lt;/LocationMatch&gt;&#x000A;&lt;/VirtualHost&gt;&#x000A;</code></pre>
+
+<p>The file httpd.keytab contains the kerberos ticket for the service HTTP. In my setup, the realm using for Linux machine is different 
+than the active directory's domain, and a trust was established between them. So the keytab is created using MIT kerberos.</p>
+
+<p>It was generated using the following <code>kadmin</code> commands:</p>
+
+<pre class="highlight plaintext"><code>addprinc -randkey HTTP/VHOST@REALM&#x000A;addprinc -randkey HTTP/FQDN@REALM&#x000A;ktadd -k .../http.keytab -e aes128-cts-hmac-sha1-96:normal -e aes256-cts-hmac-sha1-96:normal HTTP/VHOST@REALM&#x000A;ktadd -k .../http.keytab -e aes128-cts-hmac-sha1-96:normal -e aes256-cts-hmac-sha1-96:normal HTTP/FQDN@REALM&#x000A;</code></pre>
+
+<p>Kerberos can be surprising when resolving principal and http client uses different method. Some requests an ticket using directly the Host header. Some other choose the reverse of the IP used for the connection.
+So if Apache is configured using a virtual host, both principal for the virtual host and the FQDN pointed by the reverse of the IP should be created and added to the keytab.</p>
+
+<p>The authn file <code>/etc/ovirt-engine/extensions.d/apachesso-authn.properties</code> is :</p>
+
+<pre class="highlight plaintext"><code>ovirt.engine.extension.name = apachesso-authn&#x000A;ovirt.engine.extension.bindings.method = jbossmodule&#x000A;ovirt.engine.extension.binding.jbossmodule.module = org.ovirt.engine-extensions.aaa.misc&#x000A;ovirt.engine.extension.binding.jbossmodule.class = org.ovirt.engineextensions.aaa.misc.http.AuthnExtension&#x000A;ovirt.engine.extension.provides = org.ovirt.engine.api.extensions.aaa.Authn&#x000A;ovirt.engine.aaa.authn.profile.name = apachesso&#x000A;ovirt.engine.aaa.authn.authz.plugin = DOMAIN-authz&#x000A;config.artifact.name = HEADER&#x000A;config.artifact.arg = X-Remote-User&#x000A;</code></pre>
+
+<p>And the authz file <code>/etc/ovirt-engine/extensions.d/DOMAIN-authz.properties</code> is:</p>
+
+<pre class="highlight plaintext"><code>ovirt.engine.extension.name = DOMAIN-authz&#x000A;ovirt.engine.extension.bindings.method = jbossmodule&#x000A;ovirt.engine.extension.binding.jbossmodule.module = org.ovirt.engine-extensions.aaa.ldap&#x000A;ovirt.engine.extension.binding.jbossmodule.class = org.ovirt.engineextensions.aaa.ldap.AuthzExtension&#x000A;ovirt.engine.extension.provides = org.ovirt.engine.api.extensions.aaa.Authz&#x000A;config.profile.file.1 = ..../aaa/DOMAIN.properties&#x000A;</code></pre>
+
+<p>I had some difficulties with AD backend. A straightforward solution would have been :</p>
+
+<pre class="highlight plaintext"><code>include = &lt;ad.properties&gt;&#x000A;&#x000A;vars.domain = DOMAIN&#x000A;vars.user = BINDDN&#x000A;vars.password = BINDPWD&#x000A;vars.forest = domain.com&#x000A;&#x000A;pool.default.auth.simple.bindDN = ${global:vars.user}&#x000A;pool.default.auth.simple.password = ${global:vars.password}&#x000A;pool.default.serverset.type = srvrecord&#x000A;pool.default.serverset.srvrecord.domain = ${global:vars.domain}&#x000A;&#x000A;pool.default.ssl.startTLS = true&#x000A;pool.default.ssl.truststore.file = .../domain.jks&#x000A;pool.default.ssl.truststore.password = &#x000A;# Only TLSv1.2 is secure nowadays&#x000A;pool.default.ssl.startTLSProtocol = TLSv1.2&#x000A;&#x000A;# long time out should be avoided&#x000A;pool.default.connection-options.connectTimeoutMillis = 500&#x000A;</code></pre>
+
+<p>But if fails. We have a special setup with about 100 domain controlers and only two of them can be reached from the ovirt engine. So my first try was so defined them directly in the configuration file:</p>
+
+<pre class="highlight plaintext"><code>pool.default.serverset.type = failover&#x000A;pool.default.serverset.failover.1.server = dcX.domain.com&#x000A;pool.default.serverset.failover.2.server = dcY.domain.com&#x000A;</code></pre>
+
+<p>But that fails. oVirt-engine was still using a lot of unreachable domain controler. After some digging I found that other part of the ldap extension use a different serverset, I don’t know why it don’t reuse the default pool. It’s called <code>pool.default.dc-resolve</code> (it should be called <code>pool.dc-resolve</code>, as it’s not the default but a custom one), so I added in my configuration:</p>
+
+<pre class="highlight plaintext"><code>pool.default.dc-resolve.default.serverset.type = failover&#x000A;pool.default.dc-resolve.serverset.failover.1.server = dcX.domain.com&#x000A;pool.default.dc-resolve.serverset.failover.2.server = dcY.domain.com&#x000A;</code></pre>
+
+<p>I worked well, but there is a better solution as Ondra Machacek point it to me. In Active Directory, there is something called a “site”, with a subset of all the domain controler in it. It can be found under <code>CN=Sites,CN=Configuration,DC=DOMAIN,...</code>.</p>
+
+<p>To list them:</p>
+
+<pre class="highlight plaintext"><code>ldapsearch -H ldap://somedc -b CN=Sites,CN=Configuration,DC=DOMAIN -s one -o ldif-wrap=no cn&#x000A;</code></pre>
+
+<p>The information to write down is the <code>cn</code> returned</p>
+
+<p>You get a list of all sites, just pick the right one, remove all the serverset configuration and add :</p>
+
+<pre class="highlight plaintext"><code>pool.default.serverset.srvrecord.domain-conversion.type = regex&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.pattern = ^(?&lt;domain&gt;.*)$&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.replacement = GOOD_SITE._sites.${domain}&#x000A;</code></pre>
+
+<p>The entry <code>_sites.${domain}</code> don’t exist in the DNS, so to check that your regex is good, try instead:</p>
+
+<pre class="highlight plaintext"><code>dig +short _ldap._tcp.GOOD_SITE._sites.${domain} srv&#x000A;</code></pre>
+
+<p>It should return only reachable domain controlers.</p>
+
+<p>So the final <code>/etc/ovirt-engine/aaa/DOMAIN.properties</code> was :</p>
+
+<pre class="highlight plaintext"><code>include = &lt;ad.properties&gt;&#x000A;&#x000A;vars.domain = DOMAIN&#x000A;vars.user = BINDDN&#x000A;vars.password = BINDPWD&#x000A;vars.forest = domain.com&#x000A;&#x000A;pool.default.auth.simple.bindDN = ${global:vars.user}&#x000A;pool.default.auth.simple.password = ${global:vars.password}&#x000A;pool.default.serverset.type = srvrecord&#x000A;pool.default.serverset.srvrecord.domain = ${global:vars.domain}&#x000A;&#x000A;pool.default.ssl.startTLS = true&#x000A;pool.default.ssl.truststore.file = .../domain.jks&#x000A;pool.default.ssl.truststore.password = &#x000A;pool.default.ssl.startTLSProtocol = TLSv1.2&#x000A;&#x000A;pool.default.connection-options.connectTimeoutMillis = 500&#x000A;&#x000A;pool.default.serverset.srvrecord.domain-conversion.type = regex&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.pattern = ^(?&lt;domain&gt;.*)$&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.replacement = GOOD_SITE._sites.${domain}&#x000A;</code></pre>
+
+<p>With this setup, my <a href="https://github.com/fbacchella/ovirtcmd">python client</a> can connect to ovirt-engine using kerberos ticket, web users are authenticated using CAS. And there is no need to duplicate user base.</p>
+
+</section>
+<footer class='post-meta'>
+<div class='tags'>
+Tags:
+<ul class='taglist'></ul>
+<li><a href="/blog/tag/blog/">blog</a></li>
+<li><a href="/blog/tag/community/">community</a></li>
+<li><a href="/blog/tag/howto/">howto</a></li>
+</div>
+</footer>
+</article>
+
+<section id='blog-comments'></section>
+</div>
+</section>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/blog/2016-04-25-sso.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Fri 20 May 2016 05:37 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

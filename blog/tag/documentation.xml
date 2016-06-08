@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>oVirt</title>
+  <subtitle>Tag: Documentation</subtitle>
+  <id>http://ovirt.org/blog/</id>
+  <link href="http://ovirt.org/blog/"/>
+  <link href="http://ovirt.org/blog/tag/documentation.xml" rel="self"/>
+  <updated>2016-04-25T16:00:00+02:00</updated>
+  <author>
+    <name/>
+  </author>
+  <entry>
+    <title>Welcome to the new oVirt.org website!</title>
+    <link rel="alternate" href="http://ovirt.org/blog/2016/02/welcome-to-new-ovirt-site/"/>
+    <id>http://ovirt.org/blog/2016/02/welcome-to-new-ovirt-site/</id>
+    <published>2016-02-19T15:00:00+01:00</published>
+    <updated>2016-06-02T10:15:55+02:00</updated>
+    <author>
+      <name>mariel</name>
+    </author>
+    <content type="html">&lt;p&gt;As part of our efforts to upgrade the ovirt.org website and improve the community experience, we migrated the oVirt website from a MediaWiki site to a static site, authored in &lt;a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/"&gt;Markdown&lt;/a&gt; and published with &lt;a href="https://middlemanapp.com/"&gt;Middleman&lt;/a&gt;. This was a major project that took more than 6 months and involved many contributors from all aspects of the project.&lt;/p&gt;
+
+&lt;p&gt;I'd like to take this opportunity to thank all the people who were involved with this migration, from content reviewers to UX designers and Website admins who gave their time and brain power to make this happen.&lt;/p&gt;
+
+&lt;p&gt;The old MediaWiki site is &lt;a href="http://old.ovirt.org/Home"&gt;still available in read-only&lt;/a&gt;, and will be taken offline once we fix some pending issues, including handling PDF files and such.&lt;/p&gt;
+
+&lt;h2 id="whats-new"&gt;What's new?&lt;/h2&gt;
+
+&lt;p&gt;The new Website is full of improvements and enhancements, check out these highlights:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Source content is now formatted in Markdown instead of MediaWiki. This means that you can create and edit documentation, blog posts, and feature pages with the same Markdown syntax you know.&lt;/li&gt;
+  &lt;li&gt;The Website is deployed with Middleman and stored on GitHub. This means that you can make changes to content with the same GitHub contribution workflow that you know (fork, clone, edit, commit, submit pull request). We even have an "Edit this page on GitHub" link at the bottom of every page!&lt;/li&gt;
+  &lt;li&gt;New layout and design, from breadcrumbs to sidebards and an upgraded landing page.&lt;/li&gt;
+  &lt;li&gt;Automatic redirects from the old MediaWiki site. This means that if the wiki page exists in the new website, previously-released URLs will redirect to that page. If the page was removed, the Search page will open with the page title auto-filled in the search box.&lt;/li&gt;
+  &lt;li&gt;Hierarchical content structure. This means that instead of flat Wiki-style files, the deployed Website reflects an organized source repo with content sorted into directories and sub-directories.&lt;/li&gt;
+  &lt;li&gt;Official oVirt blog! This first post marks the beginning of our new blog, and we welcome contributions. This means that if you solved a problem with oVirt, want to share your oVirt story, or describe a cool integration, you can submit a blog post and we will provide editorial reviews and help publish your posts.&lt;/li&gt;
+  &lt;li&gt;Standardized contribution process. The GitHub repo now includes a &lt;a href="https://github.com/oVirt/ovirt-site/blob/master/README.md"&gt;README.md&lt;/a&gt; file that you can use to learn about how to add and edit content on the website. We welcome pull requests!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="known-issues"&gt;Known Issues&lt;/h1&gt;
+
+&lt;p&gt;Despite our best efforts, there are still a few kinks with the new website that you should be aware of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Attempting to navigate to ovirt.org (without www.) leads to a redirect loop. We have a ticket open with OpenShift, our hosting service to fix this.&lt;/li&gt;
+  &lt;li&gt;Only http is available. We also have a ticket with OpenShift to add SSL and enable https.&lt;/li&gt;
+  &lt;li&gt;Home page and Download page are still being upgraded by our UX team, expect some cool new changes soon!&lt;/li&gt;
+  &lt;li&gt;Feature pages look-and-feel is still under construction. You can still edit and push feature pages as usual.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="whats-next"&gt;What's Next&lt;/h1&gt;
+
+&lt;p&gt;Even though the Website is live, the work is hardly over. We'd like to ask for your help in:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reviewing content for anything obsolete or outdated; each page in the new website includes a header toolbar with metadata from the original wiki page for your convenience&lt;/li&gt;
+  &lt;li&gt;Submitting blog posts or any other content that you wish to share with the oVirt community&lt;/li&gt;
+  &lt;li&gt;Reporting bugs and proposing enhancements, for example broken links or missing pages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We hope you will enjoy the new oVirt Website, looking forward to your feedback and contributions!&lt;/p&gt;
+</content>
+  </entry>
+</feed>

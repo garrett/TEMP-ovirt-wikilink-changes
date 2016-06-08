@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+Bugzilla rework &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/develop/">Develop</a></li>
+<li><a href="/develop/dev-process/">Dev-process</a></li>
+<li class='active'>Bugzilla rework</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>Bugzilla rework</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>ydary</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>Bugzilla rework</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>5</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2015-09-09</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/Bugzilla_rework' target='_blank'>
+Bugzilla rework
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="bugzilla-rework">Bugzilla rework</h1>
+
+<ol>
+  <li>oVirt will move to a Bugzilla classification within the Red Hat bugzilla:</li>
+</ol>
+
+<p>:#oVirt is a set of synced sub-projects that is growing in complexity every day.</p>
+
+<p>:#Each project has its own versioning schema\components and is built separately. Therefore it needs to be tracked for issues separately.</p>
+
+<p>:#Each building block (sub-project) of oVirt will be a Bugzilla product which will allow tracking of package versions and target releases based on its versioning schema.</p>
+
+<p>:#Each maintainer will have admin rights on his Bugzilla sub-project and will be able to change flags, versions, targets and components.</p>
+
+<p>Example:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Components</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vdsm</td>
+      <td>RFEs</td>
+      <td>Requests for enhancements.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Build</td>
+      <td>Build related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Core</td>
+      <td>Core issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Documentation</td>
+      <td>Documentation related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>General</td>
+      <td>General issues and requests, select this if you do not know what component to select.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Packaging.debian</td>
+      <td>Debian Packaging related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Packaging.rpm</td>
+      <td>RPM Packaging related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Services</td>
+      <td>Services related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Tools</td>
+      <td>Tools related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>SuperVDSM</td>
+      <td>SuperVDSM related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Gluster</td>
+      <td>Gluster related issues.</td>
+    </tr>
+    <tr>
+      <td>vdsm</td>
+      <td>Bindings/API</td>
+      <td>Bindings/API related issues.</td>
+    </tr>
+  </tbody>
+</table>
+
+<ol>
+  <li>Flag system will be added to the oVirt tracker:</li>
+</ol>
+
+<p>:#needinfo - Used to ask questions to other users of bugzilla.</p>
+
+<p>:#requires_doc_text - Will be used to auto-generate release notes for oVirt releases using provided text box in the bug.</p>
+
+<p>:#ovirt-3.5.z \ ovirt-3.6.0 \ ovirt-3.6.z \ ovirt-4.0.0 \ ovirt-future - Version propuse flags. Will be set to plus, if planning approved, somebody commits to develop and test the bug\feature.</p>
+
+<p>:#blocker - Used to block releases due to urgency. Not fixing a bug marked as blocker will delay the release until fixed.</p>
+
+<p>:#exception - Used to mark features\bugs that should be considered for a release even due the merge windows passed for them. Features post feature freeze and bugs post code freeze.</p>
+
+<p>:#Triaged - Used by planning team to mark that all involved parties know what needs to be fixed and how, when it should be ready and how to test it.</p>
+
+<p>:#planning_ack - Ack that a bug\feature should be considered for a releases.</p>
+
+<p>:#testing_ack - Ack that someone will test a bug\feature.</p>
+
+<p>:#devel_ack - Ack that someone will develop needed code a bug\feature.</p>
+
+<p>:#testing_plan_complete - Flag set by oVirt maintainers to mark severe bugs or large features that needs a test plan. Acked once plan was created.</p>
+
+<p>:#requirements_defined - Flags set by oVirt developers if requirements are not well defined. Acked by oVirt planning team, once requirements are defined by reporter.</p>
+
+<p>:#testing_beta_priority - Marks features\bugs that need to be tested before the oVirt RC.</p>
+
+<p>:#ci_coverage_complete - Marks severe bugs or important features that need to be added to continuous integration of oVirt.</p>
+
+<p>:#priority_rfe_tracking - Marked by oVirt planning team for the top features planned for a version that are most pressing for a release.</p>
+
+<ol>
+  <li>A ‘teams’ drop-down will be added to oVirt to allow tracking according to the handling development team:</li>
+</ol>
+
+<p>:#External</p>
+
+<p>:#Gluster</p>
+
+<p>:#i18n</p>
+
+<p>:#Infra</p>
+
+<p>:#Integration</p>
+
+<p>:#Network</p>
+
+<p>:#Node</p>
+
+<p>:#SLA</p>
+
+<p>:#Spice</p>
+
+<p>:#Storage</p>
+
+<p>:#UX</p>
+
+<p>:#Virt</p>
+
+<p>:#Docs</p>
+
+<ol>
+  <li>Since version and target releases will be used to track each sub-project separately. Target milestones will now sync releases between sub-projects. Examples:</li>
+</ol>
+
+<p>:#ovirt-3.5.3</p>
+
+<p>:#ovirt-3.5.4</p>
+
+<p>:#ovirt-3.5.5</p>
+
+<p>:#ovirt-3.6.0-alpha</p>
+
+<p>:#ovirt-3.6.0-beta</p>
+
+<p>:#ovirt-3.6.0-rc</p>
+
+<p>:#ovirt-3.6.0-ga</p>
+
+<ol>
+  <li>RFEs will be tracked in a separate component of each sub-project, since they will likely touch multiple logical components in the sub-project. Complex features that touch several sub-projects will be tracked in ‘ovirt-engine’ and cloned on a need basis to other sub-projects to capture needed changes.</li>
+  <li>Layered product will be added to mark issues affecting other projects (ManageIQ, Foreman, Neutron..).</li>
+  <li>RFE was opened to add community votes on oVirt, so community need will be considered in planning.</li>
+</ol>
+
+<h2 id="ovirt-tracker-rework-milestones-ending-early-oct-2015">oVirt tracker rework milestones (ending early Oct 2015)</h2>
+
+<ul>
+  <li>Bugzilla Team: Creation of new classification.</li>
+  <li>Planning Team: Manual creation of rules\behaviours for Bugzilla (example: adding ‘RFE’ to bug name will set ‘FutureFeature’ keyword).</li>
+  <li>Sub-projects maintainers: addition of versions/targets. An RFE to automate this was already opened to allow automation of build process.</li>
+  <li>Bugzilla Team: Lock of old oVirt tracker to read\edit only.</li>
+  <li>Everyone: New bugs will be opened on classification only.</li>
+  <li>Planning Team: Move of all bugs\RFEs to new tracker.</li>
+  <li>Sub-projects maintainers: Scrub of RFEs\bugs to version\target\component.</li>
+</ul>
+
+<p><a href="https://docs.google.com/spreadsheets/d/1SOJNw1WQHEhE2rVP26qNtu30aKLQIV8JEzPp8KqCbwU/edit?usp=sharing">Planning Spreadsheet</a></p>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/develop/dev-process/bugzilla-rework.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Mon 30 Nov 2015 19:41 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

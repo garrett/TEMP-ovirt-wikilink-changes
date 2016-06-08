@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+OVirt Hosted Engine Backup and Restore &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/documentation/">Documentation</a></li>
+<li><a href="/documentation/admin-guide/">Admin-guide</a></li>
+<li class='active'>OVirt Hosted Engine Backup and Restore</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>OVirt Hosted Engine Backup and Restore</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>doron, sandrobonazzola</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>OVirt Hosted Engine Backup and Restore</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>9</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2015-06-22</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/OVirt_Hosted_Engine_Backup_and_Restore' target='_blank'>
+OVirt Hosted Engine Backup and Restore
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="ovirt-hosted-engine-backup-and-restore">oVirt Hosted Engine Backup and Restore</h1>
+
+<h3 id="test-environment">Test environment</h3>
+
+<ul>
+  <li>2 hosts with EL 6.6 and HE from 3.5.3 GA</li>
+  <li>1 VM with EL 6.6 and engine from 3.5.3 GA</li>
+  <li>
+    <p>NFSv3 storage on a different server</p>
+
+    <p># hosted-engine –vm-status
+  –== Host 1 status ==–
+  Status up-to-date                  : True
+  Hostname                           : mididell.home
+  Host ID                            : 1
+  Engine status                      : {"health": "good", "vm": "up", "detail": "up"}
+  Score                              : 2400
+  Local maintenance                  : False
+  Host timestamp                     : 17106
+  Extra metadata (valid at timestamp):
+      metadata_parse_version=1
+      metadata_feature_version=1
+      timestamp=17106 (Thu Jun 18 14:09:00 2015)
+      host-id=1
+      score=2400
+      maintenance=False
+      state=EngineUp
+  –== Host 2 status ==–
+  Status up-to-date                  : True
+  Hostname                           : minidell.home
+  Host ID                            : 2
+  Engine status                      : {"reason": "vm not running on this host", "health": "bad", "vm": "down", "detail": "unknown"}
+  Score                              : 2400
+  Local maintenance                  : False
+  Host timestamp                     : 15235
+  Extra metadata (valid at timestamp):
+      metadata_parse_version=1
+      metadata_feature_version=1
+      timestamp=15235 (Thu Jun 18 14:09:00 2015)
+      host-id=2
+      score=2400
+      maintenance=False
+      state=EngineDown</p>
+  </li>
+</ul>
+
+<h3 id="application-backup--restore">Application backup / restore</h3>
+
+<h4 id="backup">Backup</h4>
+
+<ul>
+  <li>
+    <ol>
+      <li>hosted-engine –set-maintenance –mode=global</li>
+    </ol>
+  </li>
+  <li>within the HE vm:
+    <ul>
+      <li>
+        <ol>
+          <li>service ovirt-engine stop</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>engine-backup –mode=backup –file=backup1 –log=backup1.log</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>service ovirt-engine start</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <ol>
+      <li>hosted-engine –set-maintenance –mode=none</li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="restore">Restore</h4>
+
+<h5 id="preconditions">Preconditions</h5>
+
+<ul>
+  <li>the vm is not available anymore due to storage corruption</li>
+  <li>an empty shared storage is available</li>
+  <li>engine backup exists</li>
+</ul>
+
+<h5 id="restore-procedure">Restore procedure</h5>
+
+<ul>
+  <li>on all the hosts (if they are still available):
+    <ul>
+      <li>
+        <ol>
+          <li>service ovirt-ha-broker stop</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>service ovirt-ha-agent stop</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>chkconfig –del ovirt-ha-broker</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>chkconfig –del ovirt-ha-agent</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<ul>
+  <li>on first host:
+    <ul>
+      <li>if the original host is not available anymore, provision a new host from scratch and proceed on this new host</li>
+      <li>
+        <ol>
+          <li>hosted-engine –deploy</li>
+        </ol>
+
+        <ul>
+          <li>use same fqdn you had previously in the HE VM.</li>
+          <li>point to the new shared storage</li>
+          <li>provide the same admin password you used in previous setup</li>
+          <li>install the OS on the vm</li>
+          <li>confirm it has been installed</li>
+          <li>install the ovirt-engine rpms on the vm but don't run engine-setup</li>
+          <li>follow <a href="/develop/release-management/features/engine/engine-backup/">http://www.ovirt.org/Ovirt-engine-backup</a> . Basic steps:
+            <ul>
+              <li>Open the backup in some temporary directory (it's a tar file)</li>
+              <li>look at the file "files/etc/ovirt-engine/engine.conf.d/10-setup-database.conf" and find the password used when doing backup</li>
+              <li>
+                <ol>
+                  <li>service postgresql initdb</li>
+                </ol>
+              </li>
+              <li>
+                <ol>
+                  <li>service postgresql start</li>
+                </ol>
+              </li>
+              <li>
+                <ol>
+                  <li>su - postgres -c "psql -d template1"</li>
+                </ol>
+              </li>
+              <li>create role engine ENCRYPTED PASSWORD 'MYPASSWORD';</li>
+              <li>create database engine owner engine template template0 encoding 'UTF8' lc_collate 'en_US.UTF-8' lc_ctype 'en_US.UTF-8';</li>
+              <li>note: replace MYPASSWORD with the password you found inside the backup file.</li>
+              <li>edit /var/lib/pgsql/data/pg_hba.conf for allowing connections using password</li>
+              <li>
+                <ol>
+                  <li>service postgresql restart</li>
+                </ol>
+              </li>
+              <li>restore the backup</li>
+              <li>
+                <ol>
+                  <li>engine-backup –mode=restore –file=backup1 –log=backup1-restore.log –change-db-credentials –db-host=localhost –db-user=engine –db-password –db-name=engine</li>
+                </ol>
+              </li>
+              <li>
+                <ol>
+                  <li>engine-setup</li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li>remove the hosts used for Hosted Engine from the engine</li>
+          <li>confirm that the engine has been installed</li>
+          <li>first host should be a added cleanly to the engine</li>
+          <li>finish the deploy</li>
+          <li>wait for the engine to be started by the HA daemons</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<ul>
+  <li>on additional hosts run:
+    <ul>
+      <li>
+        <ol>
+          <li>hosted-engine –deploy as if the host was clean.</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="full-storage-domain-backup">Full storage domain backup</h3>
+
+<p><big><strong>DRAFT - This procedure is still under testing</strong></big></p>
+
+<h4 id="backup-1">Backup</h4>
+
+<ul>
+  <li>
+    <ol>
+      <li>hosted-engine –set-maintenance –mode=global</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>hosted-engine –vm-shutdown</li>
+    </ol>
+  </li>
+  <li>backup the data domain. hints:
+    <ul>
+      <li>block: dd if=<iscsi lun="" containing="" the="" he="" domain=""> |xz &gt;he_domain.xz</iscsi></li>
+      <li>nfs: tar cJf he_domain.tar.xz . -C <path to="" sd="" directory=""></path></li>
+    </ul>
+  </li>
+  <li>
+    <ol>
+      <li>hosted-engine –set-maintenance –mode=none</li>
+    </ol>
+  </li>
+</ul>
+
+<p>In order to simulate storage corruption you can destroy the content of the sd</p>
+
+<h4 id="restore-1">Restore</h4>
+
+<h5 id="preconditions-1">Preconditions</h5>
+
+<ul>
+  <li>hosts are still working</li>
+  <li>the vm is not available anymore due to storage corruption</li>
+  <li>an empty shared storage is available</li>
+  <li>storage domain backup exists</li>
+</ul>
+
+<h5 id="restore-procedure-1">Restore procedure</h5>
+
+<ul>
+  <li>
+    <ol>
+      <li>service ovirt-ha-broker stop</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>service ovirt-ha-agent stop</li>
+    </ol>
+  </li>
+  <li>restore the data domain. hints:
+    <ul>
+      <li>block: xz -d -c he_domain.xz dd of=<iscsi lun="" containing="" the="" he="" domain=""> |xz &gt;he_domain.xz</iscsi></li>
+      <li>nfs: tar xJf he_domain.tar.xz -C <path to="" sd="" directory=""></path></li>
+    </ul>
+  </li>
+  <li>
+    <ol>
+      <li>service ovirt-ha-broker start</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>service ovirt-ha-agent start</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>hosted-engine –set-maintenance –mode=none</li>
+    </ol>
+  </li>
+</ul>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/documentation/admin-guide/hosted-engine-backup-and-restore.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Mon 30 Nov 2015 19:41 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

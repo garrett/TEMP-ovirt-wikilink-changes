@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+Hosted Engine host operating system upgrade Howto &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/documentation/">Documentation</a></li>
+<li><a href="/documentation/how-to/">How-to</a></li>
+<li class='active'>Hosted Engine host operating system upgrade Howto</li>
+</ul>
+
+<section class='container content' id='content'>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h3 id="hosted-engine-host-operating-system-upgrade-howto">Hosted Engine host operating system upgrade Howto</h3>
+
+<h3 id="summary">Summary</h3>
+
+<p>How to upgrade a hosted-engine setup on el6 hosts to el7 hosts.</p>
+
+<h3 id="background">Background</h3>
+
+<p>oVirt 3.6 does not support installing new hosts as el6.</p>
+
+<p>oVirt 3.5 did allow that, including for hosted-engine.</p>
+
+<p>Upgrading hosts from el6 to el7 should be done when using 3.5.</p>
+
+<h3 id="assumptions">Assumptions</h3>
+
+<p>An existing oVirt 3.5 hosted-engine setup, consisting of:</p>
+
+<ul>
+  <li>At least two hypervisors (hosts) serving the hosted-engine, with el6 (RHEL 6 or CentOS 6), one of which can be evacuated during the process</li>
+  <li>A hosted-engine engine vm with whatever OS (irrelevant for current document)</li>
+</ul>
+
+<h3 id="upgrade-process">Upgrade process</h3>
+
+<h4 id="upgrade-hosts-to-el7">1. Upgrade hosts to el7</h4>
+
+<ol>
+  <li>
+    <p>Create a new cluster in the engine named 'el7'</p>
+  </li>
+  <li>
+    <p>Move one host to maintenance in the web admin interface.
+Wait until all the VMs that were on it were migrated to other hosts, and it's displayed as being in local maintenance in:</p>
+
+<pre class="highlight plaintext"><code>  # hosted-engine --vm-status&#x000A;</code></pre>
+  </li>
+  <li>
+    <p>Remove the host from the engine in the web admin interface</p>
+  </li>
+  <li>
+    <p>Reinstall the host with el7</p>
+  </li>
+  <li>
+    <p>Add relevant 3.5 repos</p>
+  </li>
+  <li>
+    <p>Install and deploy:</p>
+
+<pre class="highlight plaintext"><code>  # yum install -y ovirt-hosted-engine-setup&#x000A;  # hosted-engine --deploy&#x000A;</code></pre>
+  </li>
+</ol>
+
+<p>When prompted, supply the path to the existing hosted-engine storage domain.</p>
+
+<p>Accept that this is an additional host.</p>
+
+<p>When prompted, supply host ID. You can supply the same ID the host had prior to reinstall.</p>
+
+<p>You will not be able to supply host ID '1' even if reinstalling the actual first host. Supply a new unique ID.</p>
+
+<p>Eventually it will try to add the host to the engine and fail, for all hosts except for the last one, with something like:</p>
+
+<pre class="highlight plaintext"><code>      The host didi-box1 is in non-operational state.&#x000A;      Please try to activate it via the engine webadmin UI.&#x000A;</code></pre>
+
+<p>If you check engine.log on the engine vm, you should find a line like:</p>
+
+<pre class="highlight plaintext"><code>      2016-02-11 16:39:51,795 INFO  [org.ovirt.engine.core.vdsbroker.VdsUpdateRunTimeInfo] (DefaultQuartzScheduler_Worker-76) [7a19f193] Host 4c56fc2a-fb98-4e20-a5c8-ddb2a68e6c01 : hosted_engine_2 is already in NonOperational status for reason MIXING_RHEL_VERSIONS_IN_CLUSTER. SetNonOperationalVds command is skipped.&#x000A;</code></pre>
+
+<p>This happens because it's not allowed to mix el6 and el7 hosts in the same cluster.</p>
+
+<p>In the web admin interface, move the host to maintenance, Edit, change Cluster to 'el7', Activate. After a few seconds it should turn green.</p>
+
+<p>Return to the prompt of 'hosted-engine –deploy' and accept Retry in:</p>
+
+<pre class="highlight plaintext"><code>      Retry checking host status or ignore this and continue (Retry, Ignore)[Retry]?&#x000A;</code></pre>
+
+<p>After some time the HA services will settle down, and all hosts should see the new host in 'hosted-engine –vm-status'.</p>
+
+<ol>
+  <li>
+    <p>Migrate VMs as needed to the new host. You'll have to press 'Advanced' and chane cluster to 'el7'.</p>
+  </li>
+  <li>
+    <p>Repeat steps 2 to 7 above for all other hosts.</p>
+  </li>
+  <li>
+    <p>When re-deploying the last host, it should not fail, and the host will be added to the cluster it was in before, usually 'Default'.</p>
+  </li>
+  <li>
+    <p>Optionally either move also the last host to cluster 'el7', or move all the other hosts back to the previous cluster, usually 'Default'.</p>
+  </li>
+</ol>
+
+<h4 id="upgrade-to-36">2. Upgrade to 3.6</h4>
+
+<ol>
+  <li>
+    <p>Move the HE cluster to Global maintenance.</p>
+  </li>
+  <li>
+    <p>Add relevant 3.6 repos to the engine vm.</p>
+  </li>
+  <li>
+    <p>Run on the engine vm:</p>
+
+<pre class="highlight plaintext"><code>  # engine-setup&#x000A;</code></pre>
+  </li>
+  <li>
+    <p>Move one host to maintenance in the web admin interface.</p>
+  </li>
+  <li>
+    <p>Add relevant 3.6 repos to this host.</p>
+  </li>
+  <li>
+    <p>Run on this host:</p>
+
+<pre class="highlight plaintext"><code>  # yum update -y&#x000A;</code></pre>
+  </li>
+</ol>
+
+<p>In 3.6, hosted-engine keeps its configuration in the shared storage.</p>
+
+<p>After some time, you should see this in /var/log/ovirt-hosted-engine-ha/agent.log:</p>
+
+<pre class="highlight plaintext"><code>     MainThread::INFO::2016-02-17 13:30:01,561::upgrade::957::ovirt_hosted_engine_ha.lib.upgrade.StorageServer::(upgrade) Upgrading to current version&#x000A;</code></pre>
+
+<p>And later:</p>
+
+<pre class="highlight plaintext"><code>     MainThread::INFO::2016-02-17 13:31:58,097::upgrade::987::ovirt_hosted_engine_ha.lib.upgrade.StorageServer::(upgrade) Successfully upgraded&#x000A;</code></pre>
+
+<ol>
+  <li>Activate the host in the web admin interface.</li>
+</ol>
+
+<p>After some time, all hosts should see the upgraded host back in non-maintenance in 'hosted-engine –vm-status' and with score 3400.</p>
+
+<p>When doing this on the first host, the engine vm will be shutdown, and then started on the new host, because it will have score higher than the one currently running it (which is normally 2400 in 3.5). On agent.log of the "loosing" host, you'll see something like:</p>
+
+<pre class="highlight plaintext"><code>     MainThread::ERROR::2016-02-23 15:12:17,511::states::385::ovirt_hosted_engine_ha.agent.hosted_engine.HostedEngine::(consume) Host didi-box1.home.local (id 3) score is significantly better than local score, shutting down VM on this host&#x000A;</code></pre>
+
+<ol>
+  <li>
+    <p>Repeat steps 4 to 7 on the rest of the hosts.</p>
+  </li>
+  <li>
+    <p>When everything seems stable (in 'hosted-engine –vm-status', web admin alerts etc), edit the cluster 'Default' (or 'el7' if you left it like that in previous part), and change compatibility level to 3.6.</p>
+  </li>
+</ol>
+
+<p>You'll see in engine.log something like:</p>
+
+<pre class="highlight plaintext"><code>     2016-02-17 23:10:07,668 INFO  [org.ovirt.engine.core.dal.dbbroker.auditloghandling.AuditLogDirector] (ajp-/127.0.0.1:8702-3) [214ca5dc] Correlation ID: 214ca5dc, Call Stack: null, Custom Event ID: -1, Message: Host cluster Default was updated by admin@internal&#x000A;</code></pre>
+
+<ol>
+  <li>
+    <p>If you do not have another storage domain, you should add one, so that you have a 'master' storage domain.</p>
+  </li>
+  <li>
+    <p>Shortly thereafter, the engine will import the hosted-engine storage domain. When this finishes, you'll see in engine.log something like:</p>
+
+<pre class="highlight plaintext"><code> 2016-02-17 23:10:30,728 INFO  [org.ovirt.engine.core.dal.dbbroker.auditloghandling.AuditLogDirector] (org.ovirt.thread.pool-6-thread-43) [36bc3d70] Correlation ID: 67512e3f, Call Stack: null, Custom Event ID: -1, Message: Hosted Engine storage domain imported successfully&#x000A;</code></pre>
+  </li>
+</ol>
+
+<p>and later:</p>
+
+<pre class="highlight plaintext"><code>     2016-02-17 23:10:34,857 INFO  [org.ovirt.engine.core.dal.dbbroker.auditloghandling.AuditLogDirector] (org.ovirt.thread.pool-6-thread-47) [] Correlation ID: null, Call Stack: null, Custom Event ID: -1, Message: Hosted Engine VM was imported successfully&#x000A;</code></pre>
+
+<ol>
+  <li>
+    <p>After about an hour, the engine will create OVF_STORE on the hosted-engine storage domain. You'll see in engine.log something like:</p>
+
+<pre class="highlight plaintext"><code> 2016-02-18 00:22:41,598 INFO  [org.ovirt.engine.core.vdsbroker.irsbroker.CreateImageVDSCommand] (DefaultQuartzScheduler_Worker-19) [355787ea] START, CreateImageVDSCommand( CreateImageVDSCommandParameters:{runAsync='true', storagePoolId='00000002-0002-0002-0002-000000000068', ignoreFailoverLimit='false', storageDomainId='91d59062-f823-40b4-a27c-f58142b6423a', imageGroupId='4a7effab-e9d0-48e1-8111-cb3a173f15f7', imageSizeInBytes='134217728', volumeFormat='RAW', newImageId='bf2719c2-63f2-48a2-8245-475ef48255f4', newImageDescription='{"DiskAlias":"OVF_STORE","DiskDescription":"OVF_STORE"}', imageInitialSizeInBytes='0'}), log id: 13368b09&#x000A;</code></pre>
+  </li>
+</ol>
+
+<p>and later</p>
+
+<pre class="highlight plaintext"><code>     2016-02-18 00:23:13,006 INFO  [org.ovirt.engine.core.vdsbroker.irsbroker.SetVolumeDescriptionVDSCommand] (org.ovirt.thread.pool-6-thread-15) [1fe540ae] ++ description={"Updated":true,"Disk Description":"OVF_STORE","Storage Domains":[{"uuid":"91d59062-f823-40b4-a27c-f58142b6423a"}],"Last Updated":"Thu Feb 18 00:23:07 IST 2016","Size":20480}&#x000A;</code></pre>
+
+<p>Before OVF_STORE is created, you'll see on the hosts, in /var/log/ovirt-hosted-engine-ha/agent.log, lines like:</p>
+
+<pre class="highlight plaintext"><code>     MainThread::ERROR::2016-02-18 00:23:06,076::config::234::ovirt_hosted_engine_ha.agent.hosted_engine.HostedEngine.config::(refresh_local_conf_file) Unable to get vm.conf from OVF_STORE, falling back to initial vm.conf&#x000A;</code></pre>
+
+<p>After it's created, you'll see there lines like:</p>
+
+<pre class="highlight plaintext"><code>     MainThread::INFO::2016-02-18 00:23:16,588::ovf_store::110::ovirt_hosted_engine_ha.lib.ovf.ovf_store.OVFStore::(getEngineVMOVF) Extracting Engine VM OVF from the OVF_STORE&#x000A;</code></pre>
+
+<category:sla>
+</category:sla>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/documentation/how-to/hosted-engine-host-OS-upgrade.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Tue 23 Feb 2016 14:55 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

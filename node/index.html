@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+oVirt Node &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+
+<section class='container content' id='content'>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="ovirt-node">oVirt Node</h1>
+
+<p>This is the main entry page for using oVirt Node.
+More informations about developing oVirt Node can be found here (TBD).</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The oVirt Node sub-project is geared towards building a small, robust operating system
+image. It uses minimal resources while providing the ability to control virtual machines
+running upon it.</p>
+
+<p>After installing oVirt Node the host can directly be added to oVirt Engine and be used as a
+host to run your Virtual Machines.</p>
+
+<p>For installation Node now relies on <a href="https://github.com/rhinstaller/">Anaconda</a> - the installer
+used for installing Fedora, CentOS and Red Hat Enterprise Linux. Formerly Node used a
+specialiced TUI installer to perform the installation.</p>
+
+<p>For administration Node is now leveraging <a href="http://cockpit-project.org/">Cockpit</a> formerly
+the administration was performed by a specialiced administration TUI.</p>
+
+<h2 id="quickstart">Quickstart</h2>
+
+<ol>
+  <li>Download the oVirt Node installation iso from one of our release streams(<a href="#releases">see below</a>)</li>
+  <li>Install oVirt Node on your bare-metal host</li>
+  <li>Navigate to Cockpit on https://yourhost.example.com:9090/ to configure your host (i.e. configure networking)</li>
+  <li>Navigate to Engine and add the host <strong>OR</strong> run <code>hosted-engine-setup</code></li>
+</ol>
+
+<blockquote>
+  <p>If you encounter problems, please file them in <a href="https://bugzilla.redhat.com/enter_bug.cgi?product=ovirt-node&amp;component=General">bugzilla</a>.</p>
+</blockquote>
+
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+
+<p>Please see <a href="faq">this page</a> for some common questions.</p>
+
+<h2 id="releases-and-streams">Releases and Streams</h2>
+
+<p>oVirt Node is released continously.</p>
+
+<p>Usually you install Node once, using one of our installer images (see below). Afterwards you
+use <code>yum update</code> (or updates through Engine from 4.0 on) to keep your hosts updated.</p>
+
+<blockquote>
+  <p>Note: <code>yum update</code> will not update individual packages like on normal Fedora or CentOS systems,
+it will rather update the whole image.</p>
+</blockquote>
+
+<blockquote>
+  <p>Note: You can verify the integrity of any downloaded installation iso by checking the embedded checksum:
+<code>checkisomd5 $ISONAME</code></p>
+</blockquote>
+
+<h3 id="legacy-vs-vintage">Legacy vs. Vintage</h3>
+
+<p>With oVirt 4.0 Node got a complete overhaul and reimplementation - which are using Anaconda
+and Cockpit as described above.</p>
+
+<p>Up to oVirt 3.x Node was using a custom installer, a custom administration TUI, and a custom
+build process. All of these - including other design decisions - caused a couple of issues,
+which we addressed with the re-designed oVirt Node 4.0.</p>
+
+<h3 id="ovirt-node-3">oVirt Node 3</h3>
+
+<ul>
+  <li><strong>oVirt Node 3 Next</strong> (Tech-Preview, downwards compatible within oVirt 3, <strong>recommended</strong>)
+    <ul>
+      <li>This is the oVirt Node Next image, with the newly designed oVirt Node, but using the stable oVirt 3 packages.</li>
+      <li><a href="http://jenkins.ovirt.org/job/ovirt-node-ng_ovirt-3.6_build-artifacts-fc22-x86_64/lastSuccessfulBuild/artifact/exported-artifacts/latest-installation-iso.html">Installation ISO</a></li>
+      <li>Jenkins job: <a href="http://jenkins.ovirt.org/job/ovirt-node-ng_ovirt-3.6_build-artifacts-fc22-x86_64/">http://jenkins.ovirt.org/job/ovirt-node-ng_ovirt-3.6_build-artifacts-fc22-x86_64/</a></li>
+    </ul>
+  </li>
+  <li><strong>oVirt Node 3 Vintage</strong> (downwards compatible within oVirt 3, legacy)
+    <ul>
+      <li>Installation and update ISO: <a href="http://jenkins.ovirt.org/job/ovirt-node_ovirt-3.6_create-iso-el7_merged/">http://jenkins.ovirt.org/job/ovirt-node_ovirt-3.6_create-iso-el7_merged/</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="ovirt-node-4">oVirt Node 4</h3>
+
+<p>This is the oVirt Node 4 image including the latest oVirt 4 packages.</p>
+
+<ul>
+  <li><a href="http://jenkins.ovirt.org/job/ovirt-node-ng_ovirt-4.0_build-artifacts-fc22-x86_64/lastSuccessfulBuild/artifact/exported-artifacts/latest-installation-iso.html">Installation ISO</a></li>
+  <li>Jenkins job: <a href="http://jenkins.ovirt.org/job/ovirt-node-ng_ovirt-4.0_build-artifacts-fc22-x86_64/">http://jenkins.ovirt.org/job/ovirt-node-ng_ovirt-4.0_build-artifacts-fc22-x86_64/</a></li>
+</ul>
+
+<h3 id="ovirt-node-master">oVirt Node Master</h3>
+
+<p>This is the oVirt Node image build based on oVirt packages from the master branches.</p>
+
+<ul>
+  <li><a href="http://jenkins.ovirt.org/job/ovirt-node-ng_master_build-artifacts-fc22-x86_64/lastSuccessfulBuild/artifact/exported-artifacts/latest-installation-iso.html">Installation ISO</a></li>
+  <li>Jenkins job: <a href="http://jenkins.ovirt.org/job/ovirt-node-ng_master_build-artifacts-fc22-x86_64/">http://jenkins.ovirt.org/job/ovirt-node-ng_master_build-artifacts-fc22-x86_64/</a></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/node/index.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Mon 9 May 2016 11:45 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

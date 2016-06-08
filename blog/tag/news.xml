@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>oVirt</title>
+  <subtitle>Tag: News</subtitle>
+  <id>http://ovirt.org/blog/</id>
+  <link href="http://ovirt.org/blog/"/>
+  <link href="http://ovirt.org/blog/tag/news.xml" rel="self"/>
+  <updated>2016-04-25T16:00:00+02:00</updated>
+  <author>
+    <name/>
+  </author>
+  <entry>
+    <title>My Devconf.CZ 2016 experience</title>
+    <link rel="alternate" href="http://ovirt.org/blog/2016/03/devconf-2016/"/>
+    <id>http://ovirt.org/blog/2016/03/devconf-2016/</id>
+    <published>2016-03-10T15:00:00+01:00</published>
+    <updated>2016-05-18T16:20:26+02:00</updated>
+    <author>
+      <name>Yaniv Kaul</name>
+    </author>
+    <content type="html">&lt;p&gt;On the first weekend of February I had the pleasure of attending DevConf.CZ 2016, which took place in the wonderful city of Brno, Czech Republic.
+It's a relaxed, young and vibrant conference and it was fun and rewarding from my perspective.
+Here's a disorganized personal summary:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Met many community members from all over Europe. Was excited to see so many happy users of the project!&lt;/li&gt;
+  &lt;li&gt;Attended &lt;a title="in-depth look of virtual machine migration algorithms - Marcelo Tosatti" href="https://www.youtube.com/watch?v=XkMIMJKJeTY"&gt;in-depth look of virtual machine migration algorithms - Marcelo Tosatti&lt;/a&gt;. I hope to see some of it in coming versions of QEMU, while we work on other improvements to this critical feature.&lt;/li&gt;
+  &lt;li&gt;&lt;a title="Growing the ARM server ecosystem - Jim Perrin" href="https://www.youtube.com/watch?v=q4gU87wdRtI"&gt;Growing the ARM server ecosystem - Jim Perrin&lt;/a&gt; was interesting. Seems like a great positive effort, but the road is still long for complete support. Would be cool to support ARM based hosts running virtual machines!&lt;/li&gt;
+  &lt;li&gt;Attended &lt;a title="Qemu Disk I/O: Which performs better, Native or Threads? - Pradeep K Surisetty" href="https://www.youtube.com/watch?v=Jx93riUF5_I"&gt;Qemu Disk I/O: Which performs better, Native or Threads? - Pradeep K Surisetty&lt;/a&gt;. The results were not conclusive, though some improvements in native brought it close to, or in some cases better than threads. Seems that our default of heuristic for threads in file-based storage and native in block based storage is fine for the time being, but we'll watch closely for developments in this area.&lt;/li&gt;
+  &lt;li&gt;Attended &lt;a title="Debugging the Virtualization Layer (libvirt and QEMU) in OpenStack - Kashyap Chamarthy" href="https://www.youtube.com/watch?v=Dd2AGGMWXQM"&gt;Debugging the Virtualization Layer (libvirt and QEMU) in OpenStack - Kashyap Chamarthy&lt;/a&gt; - I think (and asked) if libvirt can do a better job - in saving in a cyclic log the QMP commands sent and the response from the guest and dump it in case of a guest crash.&lt;/li&gt;
+  &lt;li&gt;Paid a visit to &lt;a title="Cockpit Hackfest - Dominik Perpeet, Marius Vollmer, Peter Volpe, Stef Walter" href="https://www.youtube.com/watch?v=TNDe90WSZow"&gt;Cockpit Hackfest - Dominik Perpeet, Marius Vollmer, Peter Volpe, Stef Walter&lt;/a&gt; - as we intend to use Cockpit as our UI for oVirt Next Generation Node, it was great to present our use case and exchange thoughts, ideas and directions. Few bugs were filed during the hackfest per our comments.&lt;/li&gt;
+  &lt;li&gt;Attended &lt;a title="Dockerizing JBoss Products - David Becvarik" href="https://www.youtube.com/watch?v=NpyEoFlDzOQ"&gt;Dockerizing JBoss Products - David Becvarik&lt;/a&gt;. Great work done by the JBoss team to improve and streamline packaging of JBoss into containers.&lt;/li&gt;
+  &lt;li&gt;Attended &lt;a title="Upstream First Testing - Tim Flink" href="https://www.youtube.com/watch?v=15-yXOJuonQ"&gt;Upstream First Testing - Tim Flink&lt;/a&gt;. I discussed with the presenter the possibility to run oVirt with &lt;a title="Lago project on GitHub" href="https://github.com/lago-project/lago"&gt;Lago project on GitHub&lt;/a&gt; in Fedora, in a CI way, by monitoring distgit changes for relevant packages (such as lvm2, device-mapper*, libvirt and others.&lt;/li&gt;
+  &lt;li&gt;Attended &lt;a title="High performance VMs in OpenStack - Nikola Dipanov" href="https://www.youtube.com/watch?v=9J_sEdlpIlQ"&gt;High performance VMs in OpenStack - Nikola Dipanov&lt;/a&gt; - looks like oVirt is already doing a lot of what OpenStack is working on to achieve high-performance from KVM!&lt;/li&gt;
+  &lt;li&gt;Preached on running Lago with OpenStack, Gluster and Cockpit. At least the first two items look really promising and I'm looking forward to a collaboration in those efforts. I might just try to do the Gluster one myself.&lt;/li&gt;
+  &lt;li&gt;&lt;a title="Avocado and Jenkins: Test Automation and CI - Lukáš Doktor, Yash Mankad" href="https://www.youtube.com/watch?v=rqavfmPAt7o"&gt;Avocado and Jenkins: Test Automation and CI - Lukáš Doktor, Yash Mankad&lt;/a&gt; was interesting for me, as Avocado seems like a cool, mature testing framework - which I hope we can use in the future in CI testing.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Having used the &lt;a href="download/ovirt-live/&amp;quot;download/ovirt-live/&amp;quot;"&gt;oVirt Live&lt;/a&gt; USB DoK image in both FOSDEM and DevConf, I've found several items where we can improve in and filed relevant RFEs for them [1][2].&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The oVirt team has delivered numerous presentations in the virtualization track:
+&lt;a title="Smart VM Scheduling - Martin Sivák" href="https://www.youtube.com/watch?v=cQqJEiK7-Ug"&gt;Smart VM Scheduling - Martin Sivák&lt;/a&gt;
+&lt;a title="Host fencing in oVirt - Fixing the unknown and allowing VMs to be highly available - Martin Peřina" href="https://www.youtube.com/watch?v=V1JQtmdleaM"&gt;Host fencing in oVirt - Fixing the unknown and allowing VMs to be highly available - Martin Peřina&lt;/a&gt; ,
+&lt;a title="Ceph integration with oVirt using Cinder - Nir Soffer" href="https://www.youtube.com/watch?v=4CbHTAkVDZo"&gt;Ceph integration with oVirt using Cinder - Nir Soffer&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The Gluster team has additionally provided more presentations:
+&lt;a title="oVirt and Gluster Hyperconvergence - Ramesh Nachimuthu" href="https://www.youtube.com/watch?v=XudYwEWQF7U"&gt;oVirt and Gluster Hyperconvergence - Ramesh Nachimuthu&lt;/a&gt; ,
+&lt;a title="Improvements in gluster for virtualization use case - Prasanna Kumar Kalever" href="https://www.youtube.com/watch?v=TczVVCbm8NE"&gt;Improvements in gluster for virtualization use case - Prasanna Kumar Kalever&lt;/a&gt;, which were all well received.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I'd like to thank our project's current community manager Mikey Ariel, and former community manager Brian Proffitt for once again, just one week after FOSDEM, leading the effort of representing the oVirt project and community in this event.&lt;/p&gt;
+
+&lt;p&gt;1.&lt;a title="[RFE] register .vv files so they'll be opened automatically with remote-viewer" href="https://bugzilla.redhat.com/show_bug.cgi?id=1307261"&gt;[RFE] register .vv files so they'll be opened automatically with remote-viewer&lt;/a&gt;
+2. &lt;a title="[RFE] Disable power management (display and computer" href="https://bugzilla.redhat.com/show_bug.cgi?id=1307262"&gt;[RFE] Disable power management (display and computer&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Welcome to the new oVirt.org website!</title>
+    <link rel="alternate" href="http://ovirt.org/blog/2016/02/welcome-to-new-ovirt-site/"/>
+    <id>http://ovirt.org/blog/2016/02/welcome-to-new-ovirt-site/</id>
+    <published>2016-02-19T15:00:00+01:00</published>
+    <updated>2016-06-02T10:15:55+02:00</updated>
+    <author>
+      <name>mariel</name>
+    </author>
+    <content type="html">&lt;p&gt;As part of our efforts to upgrade the ovirt.org website and improve the community experience, we migrated the oVirt website from a MediaWiki site to a static site, authored in &lt;a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/"&gt;Markdown&lt;/a&gt; and published with &lt;a href="https://middlemanapp.com/"&gt;Middleman&lt;/a&gt;. This was a major project that took more than 6 months and involved many contributors from all aspects of the project.&lt;/p&gt;
+
+&lt;p&gt;I'd like to take this opportunity to thank all the people who were involved with this migration, from content reviewers to UX designers and Website admins who gave their time and brain power to make this happen.&lt;/p&gt;
+
+&lt;p&gt;The old MediaWiki site is &lt;a href="http://old.ovirt.org/Home"&gt;still available in read-only&lt;/a&gt;, and will be taken offline once we fix some pending issues, including handling PDF files and such.&lt;/p&gt;
+
+&lt;h2 id="whats-new"&gt;What's new?&lt;/h2&gt;
+
+&lt;p&gt;The new Website is full of improvements and enhancements, check out these highlights:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Source content is now formatted in Markdown instead of MediaWiki. This means that you can create and edit documentation, blog posts, and feature pages with the same Markdown syntax you know.&lt;/li&gt;
+  &lt;li&gt;The Website is deployed with Middleman and stored on GitHub. This means that you can make changes to content with the same GitHub contribution workflow that you know (fork, clone, edit, commit, submit pull request). We even have an "Edit this page on GitHub" link at the bottom of every page!&lt;/li&gt;
+  &lt;li&gt;New layout and design, from breadcrumbs to sidebards and an upgraded landing page.&lt;/li&gt;
+  &lt;li&gt;Automatic redirects from the old MediaWiki site. This means that if the wiki page exists in the new website, previously-released URLs will redirect to that page. If the page was removed, the Search page will open with the page title auto-filled in the search box.&lt;/li&gt;
+  &lt;li&gt;Hierarchical content structure. This means that instead of flat Wiki-style files, the deployed Website reflects an organized source repo with content sorted into directories and sub-directories.&lt;/li&gt;
+  &lt;li&gt;Official oVirt blog! This first post marks the beginning of our new blog, and we welcome contributions. This means that if you solved a problem with oVirt, want to share your oVirt story, or describe a cool integration, you can submit a blog post and we will provide editorial reviews and help publish your posts.&lt;/li&gt;
+  &lt;li&gt;Standardized contribution process. The GitHub repo now includes a &lt;a href="https://github.com/oVirt/ovirt-site/blob/master/README.md"&gt;README.md&lt;/a&gt; file that you can use to learn about how to add and edit content on the website. We welcome pull requests!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="known-issues"&gt;Known Issues&lt;/h1&gt;
+
+&lt;p&gt;Despite our best efforts, there are still a few kinks with the new website that you should be aware of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Attempting to navigate to ovirt.org (without www.) leads to a redirect loop. We have a ticket open with OpenShift, our hosting service to fix this.&lt;/li&gt;
+  &lt;li&gt;Only http is available. We also have a ticket with OpenShift to add SSL and enable https.&lt;/li&gt;
+  &lt;li&gt;Home page and Download page are still being upgraded by our UX team, expect some cool new changes soon!&lt;/li&gt;
+  &lt;li&gt;Feature pages look-and-feel is still under construction. You can still edit and push feature pages as usual.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="whats-next"&gt;What's Next&lt;/h1&gt;
+
+&lt;p&gt;Even though the Website is live, the work is hardly over. We'd like to ask for your help in:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reviewing content for anything obsolete or outdated; each page in the new website includes a header toolbar with metadata from the original wiki page for your convenience&lt;/li&gt;
+  &lt;li&gt;Submitting blog posts or any other content that you wish to share with the oVirt community&lt;/li&gt;
+  &lt;li&gt;Reporting bugs and proposing enhancements, for example broken links or missing pages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We hope you will enjoy the new oVirt Website, looking forward to your feedback and contributions!&lt;/p&gt;
+</content>
+  </entry>
+</feed>

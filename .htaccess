@@ -1,0 +1,976 @@
+# Apache configuration file
+# httpd.apache.org/docs/2.2/mod/quickreference.html
+
+# Note .htaccess files are an overhead, this logic should be in your Apache
+# config if possible: httpd.apache.org/docs/2.2/howto/htaccess.html
+
+# Techniques in here adapted from all over, including:
+#   Kroc Camen: camendesign.com/.htaccess
+#   perishablepress.com/press/2006/01/10/stupid-htaccess-tricks/
+#   Sample .htaccess file of CMS MODx: modxcms.com
+
+
+# ----------------------------------------------------------------------
+# Better website experience for IE users
+# ----------------------------------------------------------------------
+
+# Force the latest IE version, in various cases when it may fall back to IE7 mode
+#  github.com/rails/rails/commit/123eb25#commitcomment-118920
+# Use ChromeFrame if it's installed for a better experience for the poor IE folk
+
+<IfModule mod_headers.c>
+  Header set X-UA-Compatible "IE=Edge,chrome=1"
+  # mod_headers can't match by content-type, but we don't want to send this header on *everything*...
+  <FilesMatch "\.(js|css|gif|png|jpe?g|pdf|xml|oga|ogg|m4a|ogv|mp4|m4v|webm|svg|svgz|eot|ttf|otf|woff|ico|webp|appcache|manifest|htc|crx|oex|xpi|safariextz|vcf)$" >
+    Header unset X-UA-Compatible
+  </FilesMatch>
+</IfModule>
+
+
+# ----------------------------------------------------------------------
+# Cross-domain AJAX requests
+# ----------------------------------------------------------------------
+
+# Serve cross-domain Ajax requests, disabled by default.
+# enable-cors.org
+# code.google.com/p/html5security/wiki/CrossOriginRequestSecurity
+
+#  <IfModule mod_headers.c>
+#    Header set Access-Control-Allow-Origin "*"
+#  </IfModule>
+
+
+# ----------------------------------------------------------------------
+# CORS-enabled images (@crossorigin)
+# ----------------------------------------------------------------------
+
+# Send CORS headers if browsers request them; enabled by default for images.
+# developer.mozilla.org/en/CORS_Enabled_Image
+# blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
+# hacks.mozilla.org/2011/11/using-cors-to-load-webgl-textures-from-cross-domain-images/
+# wiki.mozilla.org/Security/Reviews/crossoriginAttribute
+
+<IfModule mod_setenvif.c>
+  <IfModule mod_headers.c>
+    # mod_headers, y u no match by Content-Type?!
+    <FilesMatch "\.(gif|png|jpe?g|svg|svgz|ico|webp)$">
+      SetEnvIf Origin ":" IS_CORS
+      Header set Access-Control-Allow-Origin "*" env=IS_CORS
+    </FilesMatch>
+  </IfModule>
+</IfModule>
+
+
+# ----------------------------------------------------------------------
+# Webfont access
+# ----------------------------------------------------------------------
+
+# Allow access from all domains for webfonts.
+# Alternatively you could only whitelist your
+# subdomains like "subdomain.example.com".
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
+
+# ----------------------------------------------------------------------
+# Proper MIME type for all files
+# ----------------------------------------------------------------------
+
+# JavaScript
+#   Normalize to standard type (it's sniffed in IE anyways)
+#   tools.ietf.org/html/rfc4329#section-7.2
+AddType application/javascript         js jsonp
+AddType application/json               json
+
+# Audio
+AddType audio/ogg                      oga ogg
+AddType audio/mp4                      m4a f4a f4b
+
+# Video
+AddType video/ogg                      ogv
+AddType video/mp4                      mp4 m4v f4v f4p
+AddType video/webm                     webm
+AddType video/x-flv                    flv
+
+# SVG
+#   Required for svg webfonts on iPad
+#   twitter.com/FontSquirrel/status/14855840545
+AddType     image/svg+xml              svg svgz
+AddEncoding gzip                       svgz
+
+# Webfonts
+AddType application/vnd.ms-fontobject  eot
+AddType application/x-font-ttf         ttf ttc
+AddType font/opentype                  otf
+AddType application/x-font-woff        woff
+
+# Assorted types
+AddType image/x-icon                        ico
+AddType image/webp                          webp
+AddType text/cache-manifest                 appcache manifest
+AddType text/x-component                    htc
+AddType application/xml                     rss atom xml rdf
+AddType application/x-chrome-extension      crx
+AddType application/x-opera-extension       oex
+AddType application/x-xpinstall             xpi
+AddType application/octet-stream            safariextz
+AddType application/x-web-app-manifest+json webapp
+AddType text/x-vcard                        vcf
+AddType application/x-shockwave-flash       swf
+AddType text/vtt                            vtt
+
+
+# ----------------------------------------------------------------------
+# Allow concatenation from within specific js and css files
+# ----------------------------------------------------------------------
+
+# e.g. Inside of script.combined.js you could have
+#   <!--#include file="libs/jquery-1.5.0.min.js" -->
+#   <!--#include file="plugins/jquery.idletimer.js" -->
+# and they would be included into this single file.
+
+# This is not in use in the boilerplate as it stands. You may
+# choose to use this technique if you do not have a build process.
+
+#<FilesMatch "\.combined\.js$">
+#  Options +Includes
+#  AddOutputFilterByType INCLUDES application/javascript application/json
+#  SetOutputFilter INCLUDES
+#</FilesMatch>
+
+#<FilesMatch "\.combined\.css$">
+#  Options +Includes
+#  AddOutputFilterByType INCLUDES text/css
+#  SetOutputFilter INCLUDES
+#</FilesMatch>
+
+
+# ----------------------------------------------------------------------
+# Gzip compression
+# ----------------------------------------------------------------------
+
+<IfModule mod_deflate.c>
+
+  # Force deflate for mangled headers developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping/
+  <IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+      SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+      RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+    </IfModule>
+  </IfModule>
+
+  # Compress all output labeled with one of the following MIME-types
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE application/atom+xml \
+                                  application/javascript \
+                                  application/json \
+                                  application/rss+xml \
+                                  application/vnd.ms-fontobject \
+                                  application/x-font-ttf \
+                                  application/xhtml+xml \
+                                  application/xml \
+                                  font/opentype \
+                                  image/svg+xml \
+                                  image/x-icon \
+                                  text/css \
+                                  text/html \
+                                  text/plain \
+                                  text/x-component \
+                                  text/xml
+  </IfModule>
+
+</IfModule>
+
+
+# ----------------------------------------------------------------------
+# Expires headers (for better cache control)
+# ----------------------------------------------------------------------
+
+# These are pretty far-future expires headers.
+# They assume you control versioning with filename-based cache busting
+# Additionally, consider that outdated proxies may miscache
+#   www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/
+
+# If you don't use filenames to version, lower the CSS and JS to something like
+# "access plus 1 week".
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+
+# Perhaps better to whitelist expires rules? Perhaps.
+  ExpiresDefault                          "access plus 1 month"
+
+# cache.appcache needs re-requests in FF 3.6 (thanks Remy ~Introducing HTML5)
+  ExpiresByType text/cache-manifest       "access plus 0 seconds"
+
+# Your document html
+  ExpiresByType text/html                 "access plus 0 seconds"
+
+# Data
+  ExpiresByType text/xml                  "access plus 0 seconds"
+  ExpiresByType application/xml           "access plus 0 seconds"
+  ExpiresByType application/json          "access plus 0 seconds"
+
+# Feed
+  ExpiresByType application/rss+xml       "access plus 1 hour"
+  ExpiresByType application/atom+xml      "access plus 1 hour"
+
+# Favicon (cannot be renamed)
+  ExpiresByType image/x-icon              "access plus 1 week"
+
+# Media: images, video, audio
+  ExpiresByType image/gif                 "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType video/ogg                 "access plus 1 month"
+  ExpiresByType audio/ogg                 "access plus 1 month"
+  ExpiresByType video/mp4                 "access plus 1 month"
+  ExpiresByType video/webm                "access plus 1 month"
+
+# HTC files  (css3pie)
+  ExpiresByType text/x-component          "access plus 1 month"
+
+# Webfonts
+  ExpiresByType application/x-font-ttf    "access plus 1 month"
+  ExpiresByType font/opentype             "access plus 1 month"
+  ExpiresByType application/x-font-woff   "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+
+# CSS and JavaScript
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+
+</IfModule>
+
+
+# ----------------------------------------------------------------------
+# Prevent mobile network providers from modifying your site
+# ----------------------------------------------------------------------
+
+# The following header prevents modification of your code over 3G on some
+# European providers.
+# This is the official 'bypass' suggested by O2 in the UK.
+
+# <IfModule mod_headers.c>
+# Header set Cache-Control "no-transform"
+# </IfModule>
+
+
+# ----------------------------------------------------------------------
+# ETag removal
+# ----------------------------------------------------------------------
+
+# FileETag None is not enough for every server.
+<IfModule mod_headers.c>
+  Header unset ETag
+</IfModule>
+
+# Since we're sending far-future expires, we don't need ETags for
+# static content.
+#   developer.yahoo.com/performance/rules.html#etags
+FileETag None
+
+
+# ----------------------------------------------------------------------
+# Stop screen flicker in IE on CSS rollovers
+# ----------------------------------------------------------------------
+
+# The following directives stop screen flicker in IE on CSS rollovers - in
+# combination with the "ExpiresByType" rules for images (see above).
+
+# BrowserMatch "MSIE" brokenvary=1
+# BrowserMatch "Mozilla/4.[0-9]{2}" brokenvary=1
+# BrowserMatch "Opera" !brokenvary
+# SetEnvIf brokenvary 1 force-no-vary
+
+
+# ----------------------------------------------------------------------
+# Set Keep-Alive Header
+# ----------------------------------------------------------------------
+
+# Keep-Alive allows the server to send multiple requests through one
+# TCP-connection. Be aware of possible disadvantages of this setting. Turn on
+# if you serve a lot of static content.
+
+# <IfModule mod_headers.c>
+#   Header set Connection Keep-Alive
+# </IfModule>
+
+
+# ----------------------------------------------------------------------
+# Cookie setting from iframes
+# ----------------------------------------------------------------------
+
+# Allow cookies to be set from iframes (for IE only)
+# If needed, specify a path or regex in the Location directive.
+
+# <IfModule mod_headers.c>
+#   Header set P3P "policyref=\"/w3c/p3p.xml\", CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\""
+# </IfModule>
+
+
+# ----------------------------------------------------------------------
+# Start rewrite engine
+# ----------------------------------------------------------------------
+
+# Turning on the rewrite engine is necessary for the following rules and
+# features. FollowSymLinks must be enabled for this to work.
+
+# Some cloud hosting services require RewriteBase to be set: goo.gl/HOcPN
+# If using the h5bp in a subdirectory, use `RewriteBase /foo` instead where
+# 'foo' is your directory.
+
+# If your web host doesn't allow the FollowSymlinks option, you may need to
+# comment it out and use `Options +SymLinksOfOwnerMatch`, but be aware of the
+# performance impact: http://goo.gl/Mluzd
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks
+# Options +SymLinksIfOwnerMatch
+  RewriteEngine On
+# RewriteBase /
+</IfModule>
+
+
+# add trailing slash to dirs if missing
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_URI} !(.*)/$
+# RewriteRule ^(.*)$ http://ovirt.org/$1/ [R=301,L]
+
+
+# ----------------------------------------------------------------------
+# Suppress or force the "www." at the beginning of URLs
+# ----------------------------------------------------------------------
+
+# The same content should never be available under two different URLs -
+# especially not with and without "www." at the beginning, since this can cause
+# SEO problems (duplicate content). That's why you should choose one of the
+# alternatives and redirect the other one.
+
+# By default option 1 (no "www.") is activated.
+# no-www.org/faq.php?q=class_b
+
+# If you'd prefer to use option 2, just comment out all option 1 lines
+# and uncomment option 2.
+
+# IMPORTANT: NEVER USE BOTH RULES AT THE SAME TIME!
+
+# ----------------------------------------------------------------------
+
+# Option 1:
+# Rewrite "www.example.com -> example.com".
+
+# <IfModule mod_rewrite.c>
+#  RewriteCond %{HTTPS} !=on
+#  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+#  RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+# </IfModule>
+
+# ----------------------------------------------------------------------
+
+# Option 2:
+# Rewrite "example.com -> www.example.com".
+# Be aware that the following rule might not be a good idea if you use "real"
+# subdomains for certain parts of your website.
+
+# <IfModule mod_rewrite.c>
+#   RewriteCond %{HTTPS} !=on
+#   RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
+#   RewriteRule ^ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# </IfModule>
+
+
+# ----------------------------------------------------------------------
+# Built-in filename-based cache busting
+# ----------------------------------------------------------------------
+
+# If you're not using the build script to manage your filename version revving,
+# you might want to consider enabling this, which will route requests for
+# /css/style.20110203.css to /css/style.css
+
+# To understand why this is important and a better idea than all.css?v1231,
+# read: github.com/h5bp/html5-boilerplate/wiki/cachebusting
+
+# <IfModule mod_rewrite.c>
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+#   RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpg|gif)$ $1.$3 [L]
+# </IfModule>
+
+
+# ----------------------------------------------------------------------
+# Prevent SSL cert warnings
+# ----------------------------------------------------------------------
+
+# Rewrite secure requests properly to prevent SSL cert warnings, e.g. prevent
+# https://www.example.com when your cert only allows https://secure.example.com
+
+# <IfModule mod_rewrite.c>
+#   RewriteCond %{SERVER_PORT} !^443
+#   RewriteRule ^ https://example-domain-please-change-me.com%{REQUEST_URI} [R=301,L]
+# </IfModule>
+
+
+# ----------------------------------------------------------------------
+# Prevent 404 errors for non-existing redirected folders
+# ----------------------------------------------------------------------
+
+# without -MultiViews, Apache will give a 404 for a rewrite if a folder of the
+# same name does not exist.
+# webmasterworld.com/apache/3808792.htm
+
+Options -MultiViews
+
+
+# ----------------------------------------------------------------------
+# Custom 404 page
+# ----------------------------------------------------------------------
+
+# You can add custom pages to handle 500 or 403 pretty easily, if you like.
+# If you are hosting your site in subdirectory, adjust this accordingly
+#    e.g. ErrorDocument 404 /subdir/404.html
+ErrorDocument 404 /404.html
+
+
+# ----------------------------------------------------------------------
+# UTF-8 encoding
+# ----------------------------------------------------------------------
+
+# Use UTF-8 encoding for anything served text/plain or text/html
+AddDefaultCharset utf-8
+
+# Force UTF-8 for a number of file formats
+AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
+
+
+# ----------------------------------------------------------------------
+# A little more security
+# ----------------------------------------------------------------------
+
+# To avoid displaying the exact version number of Apache being used, add the
+# following to httpd.conf (it will not work in .htaccess):
+# ServerTokens Prod
+
+# "-Indexes" will have Apache block users from browsing folders without a
+# default document Usually you should leave this activated, because you
+# shouldn't allow everybody to surf through every folder on your server (which
+# includes rather private places like CMS system folders).
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
+
+# Block access to "hidden" directories or files whose names begin with a
+# period. This includes directories used by version control systems such as
+# Subversion or Git.
+<IfModule mod_rewrite.c>
+  RewriteCond %{SCRIPT_FILENAME} -d [OR]
+  RewriteCond %{SCRIPT_FILENAME} -f
+  RewriteRule "(^|/)\." - [F]
+</IfModule>
+
+# Block access to backup and source files. These files may be left by some
+# text/html editors and pose a great security danger, when anyone can access
+# them.
+<FilesMatch "(\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</FilesMatch>
+
+# If your server is not already configured as such, the following directive
+# should be uncommented in order to set PHP's register_globals option to OFF.
+# This closes a major security hole that is abused by most XSS (cross-site
+# scripting) attacks. For more information: http://php.net/register_globals
+#
+# IF REGISTER_GLOBALS DIRECTIVE CAUSES 500 INTERNAL SERVER ERRORS:
+#
+# Your server does not allow PHP directives to be set via .htaccess. In that
+# case you must make this change in your php.ini file instead. If you are
+# using a commercial web host, contact the administrators for assistance in
+# doing this. Not all servers allow local php.ini files, and they should
+# include all PHP configurations (not just this one), or you will effectively
+# reset everything to PHP defaults. Consult www.php.net for more detailed
+# information about setting PHP directives.
+
+# php_flag register_globals Off
+
+# Rename session cookie to something else, than PHPSESSID
+# php_value session.name sid
+
+# Disable magic quotes (This feature has been DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0.)
+# php_flag magic_quotes_gpc Off
+
+# Do not show you are using PHP
+# Note: Move this line to php.ini since it won't work in .htaccess
+# php_flag expose_php Off
+
+# Level of log detail - log all errors
+# php_value error_reporting -1
+
+# Write errors to log file
+# php_flag log_errors On
+
+# Do not display errors in browser (production - Off, development - On)
+# php_flag display_errors Off
+
+# Do not display startup errors (production - Off, development - On)
+# php_flag display_startup_errors Off
+
+# Format errors in plain text
+# Note: Leave this setting 'On' for xdebug's var_dump() output
+# php_flag html_errors Off
+
+# Show multiple occurrence of error
+# php_flag ignore_repeated_errors Off
+
+# Show same errors from different sources
+# php_flag ignore_repeated_source Off
+
+# Size limit for error messages
+# php_value log_errors_max_len 1024
+
+# Don't precede error with string (doesn't accept empty string, use whitespace if you need)
+# php_value error_prepend_string " "
+
+# Don't prepend to error (doesn't accept empty string, use whitespace if you need)
+# php_value error_append_string " "
+
+# Increase cookie security
+<IfModule php5_module>
+  php_value session.cookie_httponly true
+</IfModule>
+Redirect 301 /March_2012_workshop_announcement_in_Chinese /community/events/archives/workshop/march-2012-workshop-announcement-in-chinese/
+Redirect 301 /Mass_VMs_Run /develop/release-management/proposals/mass-vms-run/
+Redirect 301 /Meetings_archive /community/about/meetings-archive/
+Redirect 301 /Meetings /community/about/meetings/
+Redirect 301 /Memory_FAQ /documentation/admin-guide/virt/memory-faq/
+Redirect 301 /Migrate_to_Hosted_Engine /develop/developer-guide/engine/migrate-to-hosted-engine/
+Redirect 301 /MockConfigRule /develop/dev-process/unit-testing-utilities/mockconfigrule/
+Redirect 301 /MockEJBStrategyRule /develop/dev-process/unit-testing-utilities/mockejbstrategyrule/
+Redirect 301 /MockStaticAndComplexObjects /develop/dev-process/unit-testing-utilities/mockstaticandcomplexobjects/
+Redirect 301 /MoM /develop/projects/mom/
+Redirect 301 /Multiple_Storage_Domain_Design /search/#Multiple%20Storage%20Domain%20Design
+Redirect 301 /Multiple_Storage_Domain_Feature /search/#Multiple%20Storage%20Domain%20Feature
+Redirect 301 /Multiple_storage_domains /search/#Multiple%20storage%20domains
+Redirect 301 /NetApp_Workshop_January_2013 /community/events/archives/workshop/netapp-workshop-january-2013/
+Redirect 301 /Network_breakout_-_oVirt_workshop_November_2011 /community/events/archives/workshop/network-breakout-workshop-november-2011/
+Redirect 301 /Networking /search/#Networking
+Redirect 301 /Network_Management /documentation/how-to/networking/network-management/
+Redirect 301 /NetworkManager_Summit_Oct_2012 /community/events/archives/networkmanager-summit-oct-2012/
+Redirect 301 /Network_-_oVirt_workshop_November_2011 /community/events/archives/workshop/network-workshop-november-2011/
+Redirect 301 /Network_Provider /search/#Network%20Provider
+Redirect 301 /Networks /documentation/how-to/networking/networks/
+Redirect 301 /New_page /search/#New%20page
+Redirect 301 /News/Beijing_oVirt_Workshop /community/events/archives/workshop/beijing-workshop/
+Redirect 301 /News/NetApp_oVirt_Workshop /community/events/archives/workshop/netapp-workshop/
+Redirect 301 /News/New_oVirt_website_released /search/#News%20New%20oVirt%20website%20released
+Redirect 301 /News/oVirt_3.1_release /develop/release-management/releases/3.1/release/
+Redirect 301 /News/oVirt_kick-off_workshop /community/events/archives/workshop/kick-off-workshop/
+Redirect 301 /News /community/news/news/
+Redirect 301 /New_website_tasks /search/#New%20website%20tasks
+Redirect 301 /Nieuwland_case_study /community/user-stories/nieuwland-case-study/
+Redirect 301 /Nimbus_Concept_Case_Study /community/user-stories/nimbus-concept-case-study/
+Redirect 301 /Node_2.7_release-management /search/#Node%202.7%20release%20management
+Redirect 301 /Node_3.0_release-management /develop/projects/node/3.0-release-management/
+Redirect 301 /Node_3.1_release-management /develop/projects/node/3.1-release-management/
+Redirect 301 /Node/4.0 /develop/projects/node/4.0/
+Redirect 301 /Node_Autoinstall /develop/projects/node/autoinstall/
+Redirect 301 /Node_Automation /develop/projects/node/automation/
+Redirect 301 /Node_Backlog /develop/projects/node/backlog/
+Redirect 301 /Node_breakout_at_oVirt_workshop_November_2011 /community/events/archives/workshop/node-breakout-at-workshop-november-2011/
+Redirect 301 /Node_Building /develop/projects/node/building/
+Redirect 301 /Node /search/#Node
+Redirect 301 /Node_Glusterfs_Support /develop/release-management/features/node/glusterfs-support/
+Redirect 301 /Node_Hosted_Engine /develop/release-management/features/engine/hosted-engine/
+Redirect 301 /Node_Openvswitch_Integration /search/#Node%20Openvswitch%20Integration
+Redirect 301 /Node/OSTree/Nightly /search/#Node%20OSTree%20Nightly
+Redirect 301 /Node_-_oVirt_workshop_November_2011 /community/events/archives/workshop/node-workshop-november-2011/
+Redirect 301 /Node_plugins /develop/release-management/features/node/plugins/
+Redirect 301 /Node_PXE /develop/projects/node/pxe/
+Redirect 301 /Node_Release_Notes /develop/projects/node/release-notes/
+Redirect 301 /Node/Specs /develop/projects/node/specs/
+Redirect 301 /Node_Stateless /develop/projects/node/stateless/
+Redirect 301 /Node_Testing /develop/projects/node/testing/
+Redirect 301 /Node_tips /search/#Node%20tips
+Redirect 301 /Node_Troubleshooting /develop/projects/node/troubleshooting/
+Redirect 301 /Node_versions_numbers /develop/projects/node/versions-numbers/
+Redirect 301 /Normalize_vdsm_start_up_process /search/#Normalize%20vdsm%20start%20up%20process
+Redirect 301 /NumaAwareKsmSupport /develop/release-management/features/numaawareksmsupport/
+Redirect 301 /Opening_guests /search/#Opening%20guests
+Redirect 301 /Opening_welcome_and_introductions_-_oVirt_workshop_November_2011 /community/events/archives/workshop/opening-welcome-and-introductions-workshop-november-2011/
+Redirect 301 /Options_for_RSS_feed_bundling /develop/infra/options-for-rss-feed-bundling/
+Redirect 301 /OS_info /develop/release-management/features/virt/os-info/
+Redirect 301 /OS_info_repository /search/#OS%20info%20repository
+Redirect 301 /Otopi /develop/developer-guide/engine/otopi/
+Redirect 301 /Outage_notice_template /develop/infra/outage-notice-template/
+Redirect 301 /Outreach_Program_for_Women /search/#Outreach%20Program%20for%20Women
+Redirect 301 /Outreach /community/get-involved/promote/
+Redirect 301 /Outreachy /community/activities/outreachy/
+Redirect 301 /Overlay_Networks_with_Neutron_Integration /documentation/how-to/networking/overlay-networks-with-neutron-integration/
+Redirect 301 /Ovf /search/#Ovf
+Redirect 301 /OVirt_3.0_Feature_Guide /develop/release-management/releases/3.0/feature-guide/
+Redirect 301 /OVirt_3.0_release_management /develop/release-management/releases/3.0/release-management/
+Redirect 301 /OVirt_3.0_Release_Notes /search/#OVirt%203.0%20Release%20Notes
+Redirect 301 /OVirt_3.0_release_notes /develop/release-management/releases/3.0/
+Redirect 301 /OVirt_3.0_to_3.1_upgrade /develop/release-management/releases/3.0/to-3.1-upgrade/
+Redirect 301 /OVirt_3.1_release_management /develop/release-management/releases/3.1/release-management/
+Redirect 301 /OVirt_3.1_release_notes /develop/release-management/releases/3.1/
+Redirect 301 /OVirt_3.1_to_3.2_upgrade /develop/release-management/releases/3.1/to-3.2-upgrade/
+Redirect 301 /OVirt_3.2_release-management /develop/release-management/releases/3.2/release-management/
+Redirect 301 /OVirt_3.2_release_notes /develop/release-management/releases/3.2/
+Redirect 301 /OVirt_3.2_to_3.3_upgrade /develop/release-management/releases/3.2/to-3.3-upgrade/
+Redirect 301 /OVirt_3.3.1_release_notes /develop/release-management/releases/3.3.1/
+Redirect 301 /OVirt_3.3.2_release_notes /develop/release-management/releases/3.3.2/
+Redirect 301 /OVirt_3.3.3_release_notes /develop/release-management/releases/3.3.3/
+Redirect 301 /OVirt_3.3.4_release_notes /develop/release-management/releases/3.3.4/
+Redirect 301 /OVirt_3.3.5_release_notes /develop/release-management/releases/3.3.5/
+Redirect 301 /OVirt_3.3_release_announcement /develop/release-management/releases/3.3/release-announcement/
+Redirect 301 /OVirt_3.3_release-management /develop/release-management/releases/3.3/release-management/
+Redirect 301 /OVirt_3.3_release_notes /develop/release-management/releases/3.3/
+Redirect 301 /OVirt_3.3_talking_points /search/#OVirt%203.3%20talking%20points
+Redirect 301 /OVirt_3.3_TestDay /develop/release-management/releases/3.3/testday/
+Redirect 301 /OVirt_3.3.z_release-management /search/#OVirt%203.3.z%20release%20management
+Redirect 301 /OVirt_3.3.z_release_management /develop/release-management/releases/3.3.z/release-management/
+Redirect 301 /OVirt_3.4.0_release_notes /search/#OVirt%203.4.0%20release%20notes
+Redirect 301 /OVirt_3.4.1_release_notes /develop/release-management/releases/3.4.1/
+Redirect 301 /OVirt_3.4.2_Release_Notes /develop/release-management/releases/3.4.2/
+Redirect 301 /OVirt_3.4.3_Release_Notes /develop/release-management/releases/3.4.3/
+Redirect 301 /OVirt_3.4.4_Release_Notes /develop/release-management/releases/3.4.4/
+Redirect 301 /OVirt_3.4_Release_Announcement /develop/release-management/releases/3.4/release-announcement/
+Redirect 301 /OVirt_3.4_release-management /search/#OVirt%203.4%20release%20management
+Redirect 301 /OVirt_3.4_release_management /develop/release-management/releases/3.4/release-management/
+Redirect 301 /Ovirt_3.4_release_notes_bugs_fixed /develop/release-management/releases/3.4/index-bugs-fixed/
+Redirect 301 /OVirt_3.4_Release_Notes /develop/release-management/releases/3.4/
+Redirect 301 /OVirt_3.4_TestDay /search/#OVirt%203.4%20TestDay
+Redirect 301 /OVirt_3.4_Test_Day /develop/release-management/releases/3.4/test-day/
+Redirect 301 /OVirt_3.4.z_release-management /develop/release-management/releases/3.4.z/release-management/
+Redirect 301 /OVirt_3.5.1_Release_Notes /develop/release-management/releases/3.5.1/
+Redirect 301 /OVirt_3.5.2_Release_Notes /develop/release-management/releases/3.5.2/
+Redirect 301 /OVirt_3.5.3_Release_Notes /develop/release-management/releases/3.5.3/
+Redirect 301 /OVirt_3.5.4_Release_Notes /develop/release-management/releases/3.5.4/
+Redirect 301 /OVirt_3.5.5_Release_Notes /develop/release-management/releases/3.5.5/
+Redirect 301 /OVirt_3.5.6_Release_Notes /develop/release-management/releases/3.5.6/
+Redirect 301 /OVirt_3.5_release-management /develop/release-management/releases/3.5/release-management/
+Redirect 301 /OVirt_3.5_Release_Notes /develop/release-management/releases/3.5/
+Redirect 301 /OVirt_3.5_TestDay /develop/release-management/releases/3.5/testday/
+Redirect 301 /OVirt_3.5.z_Release_Management /develop/release-management/releases/3.5.z/release-management/
+Redirect 301 /OVirt_3.6_Release_Management /develop/release-management/releases/3.6/release-management/
+Redirect 301 /OVirt_3.6_Release_Notes /develop/release-management/releases/3.6/
+Redirect 301 /OVirt_3.6_Test_Day /develop/release-management/releases/3.6/test-day/
+Redirect 301 /OVirt_3.6.z_Release_Management /develop/release-management/releases/3.6.z/release-management/
+Redirect 301 /OVirt_Administration_Guide /documentation/admin-guide/administration-guide/
+Redirect 301 /OVirt_architecture_deep_dive /search/#OVirt%20architecture%20deep%20dive
+Redirect 301 /Ovirt_blogs /search/#Ovirt%20blogs
+Redirect 301 /OVirt_Board /community/about/board/
+Redirect 301 /Ovirtbot /develop/infra/ovirtbot/
+Redirect 301 /Ovirt_build_on_debian/ubuntu /develop/developer-guide/ubuntu/
+Redirect 301 /Ovirt_cluster_level_test /develop/dev-process/cluster-level-test/
+Redirect 301 /OVirt_-_connecting_development_vdsm_to_ovirt_engine /develop/developer-guide/vdsm/connecting-development-vdsm-to-engine/
+Redirect 301 /OVirt-database-upgrade-procedure /documentation/internal/database-upgrade-procedure/
+Redirect 301 /OVirt-DB-Issues/compensation /develop/developer-guide/db-issues/compensation/
+Redirect 301 /OVirt-DB-Issues/dbfacade-dao-and-transaction /develop/developer-guide/db-issues/dbfacade-dao-and-transaction/
+Redirect 301 /OVirt-DB-Issues/dbscripts /develop/developer-guide/db-issues/dbscripts/
+Redirect 301 /OVirt-DB-Issues/dbstructure /develop/developer-guide/db-issues/dbstructure/
+Redirect 301 /OVirt-DB-Issues/dbupgrade /develop/developer-guide/db-issues/dbupgrade/
+Redirect 301 /OVirt-DB-Issues/formatting /develop/developer-guide/sql-formatting/
+Redirect 301 /OVirt-DB-Issues/HelperUtilities /develop/developer-guide/db-issues/helperutilities/
+Redirect 301 /OVirt-DB-Issues/MaterializedViews /develop/developer-guide/db-issues/materializedviews/
+Redirect 301 /OVirt-DB-Issues/Postgres /develop/developer-guide/db-issues/postgres/
+Redirect 301 /OVirt-DB-Issues/psql /develop/developer-guide/db-issues/psql/
+Redirect 301 /OVirt-DB-Issues /develop/developer-guide/db-issues/db-issues/
+Redirect 301 /OVirt_-_disable_InstallVds /search/#OVirt%20disable%20InstallVds
+Redirect 301 /OVirt_-_disable_SSL_in_VDSM /search/#OVirt%20disable%20SSL%20in%20VDSM
+Redirect 301 /OVirt_DWH_development_environment /documentation/how-to/reports/dwh-development-environment/
+Redirect 301 /Ovirt_DWH /documentation/how-to/reports/dwh/
+Redirect 301 /Ovirt-engine-backup /develop/release-management/features/engine/engine-backup/
+Redirect 301 /OVirt_Engine_Development_Environment /develop/developer-guide/engine/engine-development-environment/
+Redirect 301 /OVirtEngineDevelopmentEnvironment /search/#OVirtEngineDevelopmentEnvironment
+Redirect 301 /OVirt_engine_tools /develop/developer-guide/engine/engine-tools/
+Redirect 301 /Ovirt_faq /documentation/how-to/faq/
+Redirect 301 /OVirt_feature_guide /documentation/introduction/feature-guide/
+Redirect 301 /OVirt_Global_Workshops /community/events/archives/workshop/global-workshops/
+Redirect 301 /OVirt_Guest_Agent/Architecture /documentation/internal/guest-agent/architecture/
+Redirect 301 /Ovirt_guest_agent_automatic_login_RHEL6 /documentation/internal/guest-agent/guest-agent-automatic-login-rhel6/
+Redirect 301 /Ovirt_guest_agent_automatic_login_windows /documentation/internal/guest-agent/guest-agent-automatic-login-windows/
+Redirect 301 /OVirt_Guest_Agent_For_Windows /documentation/internal/guest-agent/guest-agent-for-windows/
+Redirect 301 /Ovirt_guest_agent /search/#Ovirt%20guest%20agent
+Redirect 301 /OVirt_Guest_Agent/Single_Sign_On/Linux /documentation/internal/guest-agent/linux/
+Redirect 301 /OVirt_Guest_Agent/Single_Sign_On/Windows /documentation/internal/guest-agent/windows/
+Redirect 301 /OVirt_home_in_Chinese /search/#OVirt%20home%20in%20Chinese
+Redirect 301 /OVirt_Hosted_Engine_Backup_and_Restore /documentation/admin-guide/hosted-engine-backup-and-restore/
+Redirect 301 /OVirt_in_Education /community/user-stories/in-education/
+Redirect 301 /OVirt_Invitation_Beijing2012_Chinese /search/#OVirt%20Invitation%20Beijing2012%20Chinese
+Redirect 301 /Ovirt_LAF /search/#Ovirt%20LAF
+Redirect 301 /OVirt_Live /download/ovirt-live/
+Redirect 301 /OVirt_Neutron_GRE_Integration_-_How_To /search/#OVirt%20Neutron%20GRE%20Integration%20How%20To
+Redirect 301 /OVirt_Neutron_Integration /search/#OVirt%20Neutron%20Integration
+Redirect 301 /Ovirt-node-upgrade /develop/projects/node/node-upgrade/
+Redirect 301 /OVirt_on_Arch_Linux /develop/developer-guide/arch-linux/
+Redirect 301 /OVirt_Quality_Assurance /develop/projects/project-qa/
+Redirect 301 /Ovirt_Quickstart /search/#Ovirt%20Quickstart
+Redirect 301 /OVirt_Reports_development_environment /search/#OVirt%20Reports%20development%20environment
+Redirect 301 /Ovirt_Reports /documentation/how-to/reports/reports/
+Redirect 301 /OVirt_Scheduler_Policies /develop/release-management/features/scheduler-policies/
+Redirect 301 /OVirt_Slide_Decks /community/get-involved/resources/slide-decks/
+Redirect 301 /OVirt_User_Guide /documentation/user-guide/user-guide/
+Redirect 301 /oVirt_Wiki:About /search/#oVirt%20Wiki%20About
+Redirect 301 /oVirt_Wiki:Community_portal /search/#oVirt%20Wiki%20Community%20portal
+Redirect 301 /oVirt_Wiki:Copyrights /search/#oVirt%20Wiki%20Copyrights
+Redirect 301 /oVirt_Wiki:Documentation /search/#oVirt%20Wiki%20Documentation
+Redirect 301 /oVirt_Wiki:General_disclaimer /site/general-disclaimer/
+Redirect 301 /oVirt_Wiki:How_to_change_Gluster's_network_interface /search/#oVirt%20Wiki%20How%20to%20change%20Gluster's%20network%20interface
+Redirect 301 /OVirtWiki /search/#OVirtWiki
+Redirect 301 /oVirt_Wiki:Privacy_policy /site/privacy-policy/
+Redirect 301 /OVirt_wiki /search/#OVirt%20wiki
+Redirect 301 /Past_events /community/events/past-events/
+Redirect 301 /Plugins /develop/api/plugins/
+Redirect 301 /Porting_oVirt /develop/developer-guide/porting-ovirt/
+Redirect 301 /Postgres-database-upgrade-procedure /search/#Postgres%20database%20upgrade%20procedure
+Redirect 301 /Postgresql_changing_db_pass /develop/developer-guide/db-issues/postgresql-changing-db-pass/
+Redirect 301 /Press_about_oVirt /community/news/press-about-ovirt/
+Redirect 301 /Press_plan /develop/release-management/process/press-plan/
+Redirect 301 /Profiling_JavaScript /develop/developer-guide/profiling-javascript/
+Redirect 301 /Profiling_Vdsm /develop/developer-guide/vdsm/profiling-vdsm/
+Redirect 301 /Project_moVirt_for_iOS /search/#Project%20moVirt%20for%20iOS
+Redirect 301 /Project_moVirt /develop/projects/project-movirt/
+Redirect 301 /Project_Proposal_-_MOM /develop/projects/proposals/mom/
+Redirect 301 /Project_Proposal_-_Nomad /develop/projects/proposals/nomad/
+Redirect 301 /Project_wiki_template /search/#Project%20wiki%20template
+Redirect 301 /Proposal_for_multiple_storage_domains /search/#Proposal%20for%20multiple%20storage%20domains
+Redirect 301 /Proposal_VDSM_-_Engine_Data_Statistics_Retrieval /develop/developer-guide/vdsm/proposal-vdsm-engine-data-statistics-retrieval/
+Redirect 301 /Python-sdk-changelog /develop/sdk/python-sdk-changelog/
+Redirect 301 /Python-sdk /develop/release-management/features/infra/python-sdk/
+Redirect 301 /QA /search/#QA
+Redirect 301 /QA:TestCase_CommandCoordinator /develop/infra/testing/test-cases/commandcoordinator/
+Redirect 301 /QA:TestCase_DC_hierarchy /develop/infra/testing/test-cases/-dc-hierarchy/
+Redirect 301 /QA:TestCase_HA_Hosted_Engine_Local_Storage /develop/infra/testing/test-cases/-ha-hosted-engine-local-storage/
+Redirect 301 /QA:TestCase_Hosted_Engine_Deploy_With_Insufficient_Storage /develop/infra/testing/test-cases/-hosted-engine-deploy-with-insufficient-storage/
+Redirect 301 /QA:TestCase_Hosted_Engine_External_Gluster_Support /search/#QA%20TestCase%20Hosted%20Engine%20External%20Gluster%20Support
+Redirect 301 /QA:TestCase_Hosted_Engine_iSCSI_Multiple_LUN_Support /develop/infra/testing/test-cases/-hosted-engine-iscsi-multiple-lun-support/
+Redirect 301 /QA:TestCase_Hosted_Engine_Tagged_VLAN_Support /develop/infra/testing/test-cases/-hosted-engine-tagged-vlan-support/
+Redirect 301 /QA:TestCase_Hosted_Engine_Upgrade /develop/infra/testing/test-cases/-hosted-engine-upgrade/
+Redirect 301 /Quantum_and_oVirt /documentation/how-to/networking/quantum-and-ovirt/
+Redirect 301 /Quantum_IPAM_Integration /documentation/how-to/networking/quantum-ipam-integration/
+Redirect 301 /Quick_Start_Guide /documentation/quickstart/quickstart-guide/
+Redirect 301 /Quickstart_guide_to_setting_up_a_working_oVirt_system /search/#Quickstart%20guide%20to%20setting%20up%20a%20working%20oVirt%20system
+Redirect 301 /RandomUtilsSeedingRule /develop/dev-process/unit-testing-utilities/randomutilsseedingrule/
+Redirect 301 /Recording_video /community/get-involved/recording-video/
+Redirect 301 /Registered_attendees_for_November_2011_workshop /community/events/archives/workshop/registered-attendees-for-november-2011-workshop/
+Redirect 301 /Release_Criteria_Template /develop/release-management/process/release-criteria-template/
+Redirect 301 /Release_Notes_Draft /search/#Release%20Notes%20Draft
+Redirect 301 /Release_Notes /search/#Release%20Notes
+Redirect 301 /Release_Notes_Template /develop/release-management/process/release-notes-template/
+Redirect 301 /Release_process /develop/release-management/process/release-process/
+Redirect 301 /Release_Process /search/#Release%20Process
+Redirect 301 /Releases/31/FeatureList /develop/release-management/releases/3.1/featurelist/
+Redirect 301 /Releases/First_Release_Blockers /develop/release-management/releases/first-release-blockers/
+Redirect 301 /Releases/First_Release /search/#Releases%20First%20Release
+Redirect 301 /Releases /develop/release-management/releases/releases/
+Redirect 301 /release/3.6.6/node /search/#release%203.6.6%20node
+Redirect 301 /Reporting_a_bug /community/get-involved/report-a-bug/
+Redirect 301 /Repository_mirrors /develop/infra/repository-mirrors/
+Redirect 301 /Requirements_for_Healthy_Subprojects /develop/projects/requirements-for-healthy-subprojects/
+Redirect 301 /Responding_to_wiki_account_requests /develop/infra/responding-to-wiki-account-requests/
+Redirect 301 /REST-Api /develop/api/rest-api/rest-api/
+Redirect 301 /REST_API_Creating_a_new_BE /develop/api/rest-api/rest-api-creating-a-new-be/
+Redirect 301 /REST_API_Developer_Guidelines /search/#REST%20API%20Developer%20Guidelines
+Redirect 301 /REST-Api_listing_and_modifying_VM_vNic_profile /develop/api/rest-api/rest-api-listing-and-modifying-vm-vnic-profile/
+Redirect 301 /REST_API_using_bash_automation /search/#REST%20API%20using%20bash%20automation
+Redirect 301 /REST_API_Using_BASH_Automation /develop/api/rest-api/rest-api-using-bash-automation/
+Redirect 301 /REST_Client_Addon /develop/api/rest-api/rest-client-addon/
+Redirect 301 /Rethinking_the_Architecture_breakout_-_oVirt_workshop_November_2011 /community/events/archives/workshop/rethinking-the-architecture-breakout-workshop-november-2011/
+Redirect 301 /Roadmap_and_schedule_-_oVirt_workshop_November_2011 /community/events/archives/workshop/roadmap-and-schedule-workshop-november-2011/
+Redirect 301 /RSDL /develop/release-management/features/infra/rsdl/
+Redirect 301 /RSDL_schema /develop/release-management/features/infra/rsdl-schema/
+Redirect 301 /RSVP_list_response_process /community/events/archives/rsvp-list-response-process/
+Redirect 301 /Running_and_moderating_a_mailing_list /search/#Running%20and%20moderating%20a%20mailing%20list
+Redirect 301 /Running_ovirtbot /develop/infra/running-ovirtbot/
+Redirect 301 /Safelease /develop/developer-guide/vdsm/safelease/
+Redirect 301 /SamplesPortals /search/#SamplesPortals
+Redirect 301 /Sample_user_portals /develop/developer-guide/sample-user-portals/
+Redirect 301 /Sandbox /search/#Sandbox
+Redirect 301 /SANLock /develop/developer-guide/vdsm/sanlock/
+Redirect 301 /Scoped_MacPoolManager /search/#Scoped%20MacPoolManager
+Redirect 301 /Score_KSM_OS /documentation/sla/score-ksm-os/
+Redirect 301 /Screencasts /community/get-involved/screencasts/
+Redirect 301 /Sdk /search/#Sdk
+Redirect 301 /Sdk-changelog /develop/sdk/sdk-changelog/
+Redirect 301 /SDK /develop/sdk/sdk/
+Redirect 301 /Sealing_Linux_VM /documentation/how-to/virtual-machines/sealing-linux-vm/
+Redirect 301 /Searchbackend /develop/developer-guide/engine/searchbackend/
+Redirect 301 /Second_Release /search/#Second%20Release
+Redirect 301 /Security_advisories /documentation/security/security-advisories/
+Redirect 301 /Security /documentation/security/security/
+Redirect 301 /Separate-DWH-Host /search/#Separate%20DWH%20Host
+Redirect 301 /Separate-Reports-Host /search/#Separate%20Reports%20Host
+Redirect 301 /Serial_Console_Setup /documentation/admin-guide/serial-console-setup/
+Redirect 301 /Setting_Gerrit /search/#Setting%20Gerrit
+Redirect 301 /Setting_Management_Development_Environment /search/#Setting%20Management%20Development%20Environment
+Redirect 301 /SetupNetworks_SyncNetworks /documentation/how-to/networking/setupnetworks-syncnetworks/
+Redirect 301 /Sla/autoballooning-howto /documentation/how-to/autoballooning/
+Redirect 301 /Sla/autoballooning-howto/mom-balloon.conf /documentation/sla/autoballooning-howto/mom-balloon.conf/
+Redirect 301 /Sla/autoballooning-howto/mom-balloon.policy /documentation/sla/autoballooning-howto/mom-balloon.policy/
+Redirect 301 /Sla/autoballooning-howto/mom.conf /search/#Sla%20autoballooning%20howto%20mom.conf
+Redirect 301 /Sla/autoballooning-howto/mom.policy /search/#Sla%20autoballooning%20howto%20mom.policy
+Redirect 301 /Sla/cpu-and-memory /documentation/sla/cpu-and-memory/
+Redirect 301 /Sla/cpu-and-memory-vdsm-api /develop/api/cpu-and-memory-vdsm-api/
+Redirect 301 /Sla/devel-setups /documentation/sla/devel-setups/
+Redirect 301 /SLA_for_storage_resource /search/#SLA%20for%20storage%20resource
+Redirect 301 /Sla/FreeMemoryCalculation /documentation/sla/freememorycalculation/
+Redirect 301 /Sla/ha-timeouts /documentation/sla/ha-timeouts/
+Redirect 301 /Sla/host-mom-policy /documentation/sla/host-mom-policy/
+Redirect 301 /SLA-mom-ballooning-tp /develop/release-management/features/sla/sla-mom-ballooning-tp/
+Redirect 301 /SLA-mom /develop/release-management/features/sla/sla-mom/
+Redirect 301 /Sla/policies/aggressive /documentation/sla/policies/aggressive/
+Redirect 301 /Sla/policies /documentation/sla/policies/
+Redirect 301 /Sla /documentation/sla/sla/
+Redirect 301 /Sla/use-cases /documentation/sla/use-cases/
+Redirect 301 /Sla/Watchdog_Device /documentation/sla/watchdog-device/
+Redirect 301 /Sniffing_xmlrpc /search/#Sniffing%20xmlrpc
+Redirect 301 /Sonar_with_ovirt /develop/developer-guide/sonar-with-ovirt/
+Redirect 301 /SPICE_Remote-Viewer_on_OS_X /documentation/admin-guide/virt/spice-remote-viewer-on-os-x/
+Redirect 301 /Squid_Reverse_Proxy /documentation/security/squid-reverse-proxy/
+Redirect 301 /Storage_Domain_Versions /documentation/storage/storage-domain-versions/
+Redirect 301 /Storage_-_oVirt_workshop_November_2011 /community/events/archives/workshop/storage-workshop-november-2011/
+Redirect 301 /Subprojects /subprojects/
+Redirect 301 /Summer_of_Code_Students /community/activities/summer-of-code-students/
+Redirect 301 /Summer_of_Code /community/activities/summer-of-code/
+Redirect 301 /Supporting_Chrome /documentation/admin-guide/virt/supporting-chrome/
+Redirect 301 /Templates /search/#Templates
+Redirect 301 /Testing-acceptance /develop/infra/testing-acceptance/
+Redirect 301 /Testing/engineCli /develop/infra/testing/enginecli/
+Redirect 301 /Testing/FedoraTestDay /search/#Testing%20FedoraTestDay
+Redirect 301 /Testing/Ovirt_3.3.1_testing /develop/release-management/releases/3.3.1/testing/
+Redirect 301 /Testing/Ovirt_3.3.2_testing /develop/release-management/releases/3.3.2/testing/
+Redirect 301 /Testing/Ovirt_3.3.3_testing /develop/release-management/releases/3.3.3/testing/
+Redirect 301 /Testing/Ovirt_3.3.4_testing /develop/release-management/releases/3.3.4/testing/
+Redirect 301 /Testing/oVirt_3.3.5_testing /develop/release-management/releases/3.3.5/testing/
+Redirect 301 /Testing/OVirt_3.3.5_testing /search/#Testing%20OVirt%203.3.5%20testing
+Redirect 301 /Testing/oVirt_3.4.1_testing /develop/release-management/releases/3.4.1/testing/
+Redirect 301 /Testing/oVirt_3.4.2_Testing /develop/release-management/releases/3.4.2/testing/
+Redirect 301 /Testing/oVirt_3.4.3_Testing /develop/release-management/releases/3.4.3/testing/
+Redirect 301 /Testing/oVirt_3.4.4_Testing /develop/release-management/releases/3.4.4/testing/
+Redirect 301 /Testing/oVirt_3.5.1_Testing /develop/release-management/releases/3.5.1/testing/
+Redirect 301 /Testing/oVirt_3.5.2_Testing /develop/release-management/releases/3.5.2/testing/
+Redirect 301 /Testing/oVirt_3.5.3_Testing /develop/release-management/releases/3.5.3/testing/
+Redirect 301 /Testing/oVirt_3.5.4_Testing /develop/release-management/releases/3.5.4/testing/
+Redirect 301 /Testing/oVirt_3.5.5_Testing /develop/release-management/releases/3.5.5/testing/
+Redirect 301 /Testing/oVirt_3.5.6_Testing /develop/release-management/releases/3.5.6/testing/
+Redirect 301 /Testing/OvirtTestDay3.0 /develop/infra/testing/ovirttestday3.0/
+Redirect 301 /Testing/OvirtTestDay-3.1 /search/#Testing%20OvirtTestDay%203.1
+Redirect 301 /Testing/OvirtTestDay3.1 /develop/infra/testing/ovirttestday3.1/
+Redirect 301 /Testing/OvirtTestDay /develop/infra/testing/ovirttestday/
+Redirect 301 /Testing/PythonApi /develop/api/pythonapi/
+Redirect 301 /Testing_Queries /develop/dev-process/unit-testing-utilities/testing-queries/
+Redirect 301 /Testing/Spice /develop/infra/testing/spice/
+Redirect 301 /Troubleshooting_NFS_Storage_Issues /documentation/how-to/troubleshooting/troubleshooting-nfs-storage-issues/
+Redirect 301 /Troubleshooting /documentation/how-to/troubleshooting/troubleshooting/
+Redirect 301 /Trusted_compute_pools_deployment /documentation/sla/trusted-compute-pools-deployment/
+Redirect 301 /Trusted_compute_pools /develop/release-management/features/sla/trusted-compute-pools/
+Redirect 301 /Tutorial/UIPlugins/CrashCourse /develop/developer-guide/ui-plugin-tutorial/
+Redirect 301 /Ubuntu/GuestAgent /search/#Ubuntu%20GuestAgent
+Redirect 301 /Ubuntu /search/#Ubuntu
+Redirect 301 /Understanding_Guest_Agents_and_Other_Tools /documentation/internal/guest-agent/understanding-guest-agents-and-other-tools/
+Redirect 301 /Universidad_de_Sevilla_Case_Study /community/user-stories/universidad-de-sevilla-case-study/
+Redirect 301 /University_of_Keele_case_study /search/#University%20of%20Keele%20case%20study
+Redirect 301 /Upcoming_events /community/events/upcoming-events/
+Redirect 301 /User_comments /community/news/user-comments/
+Redirect 301 /User_Guides /documentation/documentation/
+Redirect 301 /User-level-query-column-filtering /documentation/how-to/user-level-query-column-filtering/
+Redirect 301 /User-level-query-filtering /search/#User%20level%20query%20filtering
+Redirect 301 /Use_RpmVersion_instead_of_VdsVersion_in_core /develop/developer-guide/engine/use-rpmversion-instead-of-vdsversion-in-core/
+Redirect 301 /Users_and_Providers /community/user-stories/users-and-providers/
+Redirect 301 /Using_EL6_hosts_with_Ovirt /search/#Using%20EL6%20hosts%20with%20Ovirt
+Redirect 301 /UX/cloud_init /develop/release-management/proposals/cloud-init/
+Redirect 301 /ValidationResult /search/#ValidationResult
+Redirect 301 /VdsClient /develop/developer-guide/vdsm/vdsclient/
+Redirect 301 /Vdsm_API /develop/api/design/vdsm-api/
+Redirect 301 /Vdsm_API_Schema /develop/api/vdsm-api-schema/
+Redirect 301 /VDSM_benchmarks /develop/developer-guide/vdsm/benchmarks/
+Redirect 301 /Vdsm_Block_Storage_Domains /develop/developer-guide/vdsm/block-storage-domains/
+Redirect 301 /Vdsm /search/#Vdsm
+Redirect 301 /Vdsm_Coding_Guidelines /develop/developer-guide/vdsm/coding-guidelines/
+Redirect 301 /Vdsm_datatypes /develop/developer-guide/vdsm/datatypes/
+Redirect 301 /Vdsm_Developers /develop/developer-guide/vdsm/developers/
+Redirect 301 /Vdsm_Disk_Images /develop/developer-guide/vdsm/disk-images/
+Redirect 301 /VDSM_Fake /develop/developer-guide/vdsm/fake/
+Redirect 301 /Vdsm_Functional_Tests /develop/developer-guide/vdsm/functional-tests/
+Redirect 301 /Vdsm_Getting_Started /develop/developer-guide/vdsm/getting-started/
+Redirect 301 /VDSM-Hooks_Catalogue /develop/developer-guide/vdsm/hooks-catalogue/
+Redirect 301 /VDSM-Hooks/directlun /develop/developer-guide/vdsm/hook/directlun/
+Redirect 301 /VDSM-Hooks/faqemu /develop/developer-guide/vdsm/hook/faqemu/
+Redirect 301 /VDSM-Hooks/fileinject /develop/developer-guide/vdsm/hook/fileinject/
+Redirect 301 /VDSM-Hooks/floppy /develop/developer-guide/vdsm/hook/floppy/
+Redirect 301 /VDSM-Hooks/hostusb /develop/release-management/features/virt/hostusb/
+Redirect 301 /VDSM-Hooks/hugepages /develop/developer-guide/vdsm/hook/hugepages/
+Redirect 301 /VDSM-Hooks/isolatedprivatevlan /develop/developer-guide/vdsm/hook/isolatedprivatevlan/
+Redirect 301 /VDSM-Hooks/network-nat /develop/developer-guide/vdsm/hook/network-nat/
+Redirect 301 /VDSM-Hooks/numa /develop/developer-guide/vdsm/hook/numa/
+Redirect 301 /VDSM-Hooks/pincpu /develop/developer-guide/vdsm/hook/pincpu/
+Redirect 301 /VDSM-Hooks/promisc /develop/developer-guide/vdsm/hook/promisc/
+Redirect 301 /VDSM-Hooks/qemucmdline /develop/developer-guide/vdsm/hook/qemucmdline/
+Redirect 301 /VDSM-Hooks/qos /develop/developer-guide/vdsm/hook/qos/
+Redirect 301 /VDSM-Hooks/scratchpad /develop/developer-guide/vdsm/hook/scratchpad/
+Redirect 301 /VDSM-Hooks/smartcard /develop/developer-guide/vdsm/hook/smartcard/
+Redirect 301 /VDSM-Hooks/smbios /develop/developer-guide/vdsm/hook/smbios/
+Redirect 301 /VDSM-Hooks/sriov /develop/developer-guide/vdsm/hook/sriov/
+Redirect 301 /Vdsm_Hooks /search/#Vdsm%20Hooks
+Redirect 301 /VDSM-Hooks /develop/developer-guide/vdsm/hooks/
+Redirect 301 /VDSM-Hooks/vhostmd /develop/developer-guide/vdsm/hook/vhostmd/
+Redirect 301 /VDSM-Hooks/vmdisk /develop/developer-guide/vdsm/hook/vmdisk/
+Redirect 301 /VDSM-Hooks/vmfex /develop/developer-guide/vdsm/hook/vmfex/
+Redirect 301 /VDSM_libvirt_performance_scalability /develop/developer-guide/vdsm/libvirt-performance-scalability/
+Redirect 301 /Vdsm_Log_Files /develop/developer-guide/vdsm/log-files/
+Redirect 301 /Vdsm_Network /develop/developer-guide/vdsm/network/
+Redirect 301 /Vdsm-Node_Integration /develop/projects/node/vdsm-node-integration/
+Redirect 301 /Vdsm_Nose_Tests /develop/developer-guide/vdsm/nose-tests/
+Redirect 301 /VDSM_on_Debian /develop/developer-guide/vdsm/on-debian/
+Redirect 301 /Vdsm_on_el6 /develop/developer-guide/vdsm/on-el6/
+Redirect 301 /VDSM_on_Ubuntu /develop/developer-guide/vdsm/on-ubuntu/
+Redirect 301 /VDSM_-_oVirt_workshop_November_2011 /community/events/archives/workshop/vdsm-workshop-november-2011/
+Redirect 301 /Vdsm_Post_Zeroing /develop/developer-guide/vdsm/post-zeroing/
+Redirect 301 /VDSM_Potential_Features /develop/developer-guide/vdsm/potential-features/
+Redirect 301 /Vdsm_python3_compatibility /develop/release-management/features/vdsm/python3-compatibility/
+Redirect 301 /VDSM_Stable_API /search/#VDSM%20Stable%20API
+Redirect 301 /VDSM_Stable_API_Plan /develop/api/design/vdsm-stable-api-plan/
+Redirect 301 /Vdsm_Standalone /develop/developer-guide/vdsm/standalone/
+Redirect 301 /Vdsm_Storage_Terminology /develop/developer-guide/vdsm/storage-terminology/
+Redirect 301 /Vdsm_tasks /develop/developer-guide/vdsm/tasks/
+Redirect 301 /Vdsm_TODO /develop/developer-guide/vdsm/todo/
+Redirect 301 /VDSM_VM_startup /develop/developer-guide/vdsm/vm-startup/
+Redirect 301 /Videos /community/get-involved/resources/videos/
+Redirect 301 /Virt_group /documentation/admin-guide/virt/virt-group/
+Redirect 301 /Virt-to-date /documentation/admin-guide/virt/virt-to-date/
+Redirect 301 /VM_emulated_machine /search/#VM%20emulated%20machine
+Redirect 301 /Vm_migration_from_vmware /documentation/admin-guide/virt/vm-migration-from-vmware/
+Redirect 301 /VM_Migration /documentation/admin-guide/virt/vm-migration/
+Redirect 301 /Vm_static_fields /documentation/admin-guide/virt/vm-static-fields/
+Redirect 301 /Vm/tune/1.0 /documentation/admin-guide/virt/tuning/1.0/
+Redirect 301 /Vm/tune /search/#Vm%20tune
+Redirect 301 /Website_organisation /search/#Website%20organisation
+Redirect 301 /What_is_oVirt /documentation/introduction/what-is-ovirt/
+Redirect 301 /Widget:Twitter_Search /search/#Widget%20Twitter%20Search
+Redirect 301 /Wiki/AsyncTaskManagerChangesDetailed /search/#Wiki%20AsyncTaskManagerChangesDetailed
+Redirect 301 /Wiki/AsyncTaskManagerChanges /develop/release-management/features/infra/asynctaskmanagerchanges/
+Redirect 301 /Wiki/Engine_Command_changes /develop/release-management/features/engine-command-changes/
+Redirect 301 /Working_with_gerrit.ovirt.org /search/#Working%20with%20gerrit.ovirt.org
+Redirect 301 /Working_with_oVirt_Gerrit /develop/dev-process/working-with-gerrit/
+Redirect 301 /Workshop_Board_Meetings /community/events/archives/workshop/workshop-board-meetings/
+Redirect 301 /Workshop_Mar_2012_-_coordinator_notes /community/events/archives/workshop/workshop-mar-2012-coordinator-notes/
+Redirect 301 /Workshop_March_2012 /community/events/archives/workshop/workshop-march-2012/
+Redirect 301 /Workshop_Nov_2011_-_travel /community/events/archives/workshop/workshop-nov-2011-travel/
+Redirect 301 /Workshop_November_2011 /search/#Workshop%20November%202011
+Redirect 301 /Workshop_November_2011_-_Day_One /community/events/archives/workshop/workshop-november-2011-day-one/
+Redirect 301 /Workshop_November_2011_-_Day_Three /community/events/archives/workshop/workshop-november-2011-day-three/
+Redirect 301 /Workshop_November_2011_-_Day_Two /community/events/archives/workshop/workshop-november-2011-day-two/
+Redirect 301 /Workshop_November_2011_-_schedule /community/events/archives/workshop/workshop-november-2011-schedule/
+Redirect 301 /Workshop_November_2011-schedule /search/#Workshop%20November%202011%20schedule
+Redirect 301 /Workshop_schedule /search/#Workshop%20schedule
+Redirect 301 /Workshop_travel /search/#Workshop%20travel
+Redirect 301 /Www.ovirt.org-Configuration /develop/infra/www.ovirt.org-configuration/
+Redirect 301 /Xen /documentation/how-to/xen/

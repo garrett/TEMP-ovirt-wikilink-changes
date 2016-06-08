@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+<link href='/blog/feed.xml' rel='alternate' title='Atom feed' type='application/atom+xml'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class='front-page source-haml'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='active nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+
+<section class='content' id='content'>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<section class='intro'>
+<div class='container'>
+<div class='col-md-6'>
+<h1 class='tagline'>
+Open your
+<span class='phrase'>virtual datacenter</span>
+</h1>
+<a class="btn btn-action" href="/download/">Start using oVirt now &raquo;</a>
+</div>
+<div class='col-md-6'>
+<div class='intro-blurb intro-net'>
+<h2 id="manage-your-virtualized-networks">Manage your virtualized networks</h2>
+<p><img alt="" src="/images/icon/net.svg" />
+oVirt manages virtual machines, storage and virtualized networks.</p>
+</div>
+<div class='intro-blurb intro-web'>
+<h2 id="easy-to-use-web-interface">Easy to use web interface</h2>
+<p><img alt="" src="/images/icon/web.svg" />
+oVirt is a virtualization platform with an easy-to-use web interface.</p>
+</div>
+<div class='intro-blurb intro-kvm'>
+<h2 id="kvm-based-virtualization-management">KVM based virtualization management</h2>
+<p><img alt="" src="/images/icon/kvm.svg" />
+oVirt is powered by the Open Source you know - KVM on Linux.</p>
+</div>
+</div>
+</div>
+</section>
+<div class='release'>
+<div class='container'>
+<p class="pull-left">Current release: 3.6.6 (2016-05-23)</p>
+
+<p class="pull-right"><a href="/release/3.6.6/">Read the release notes</a>
+<a href="/download/">Get started with oVirt 3.6.6</a></p>
+
+
+</div>
+</div>
+<div class='container'>
+<div class='row'>
+<div class='col-md-8'>
+<section class='blog-posts'>
+<h2>
+oVirt
+News
+</h2>
+<section class='articles'>
+<article class='post hentry'>
+<header class='post-header'>
+<h2 class='post-title entry-title'>
+<a href="/blog/2016/04/sso/">Advanced users authentication, using Kerberos, CAS SSO and Active Directory</a>
+</h2>
+<header class='post-meta'>
+<span class='byline'>
+by
+<span class='author vcard'>
+<a href="/blog/author/fbacchella/">fbacchella</a>
+</span>
+</span>
+&ndash;
+<time class='published' datetime='2016-04-25T14:00:00Z'>
+Monday 25 April
+</time>
+</header>
+</header>
+<section class='post-content entry-content'>
+<p>I have a environment where hard coded password are avoided. We prefer to use Kerberos. We also provided a SSO for Web UI using <a href="http://jasig.github.io/cas/4.2.x/index.html">CAS</a>. We use ActiveDirectory for users backend.</p>
+
+<p>So I wanted a oVirt installation that will use kerberos for API authentication. For the web UI, Kerberos is not always the best solution, so I wanted to integrated it in our CAS.</p>
+
+<p>The Apache part was easy to setup. It needs an external module, auth_cas_module, that can be found at <a href="https://wiki.jasig.org/display/CASC/mod_auth_cas">Apache's CAS module</a>. It builds without special tweaks with</p>
+
+<pre class="highlight plaintext"><code>./configure&#x000A;make&#x000A;make install&#x000A;</code></pre>
+
+<p>I will show only subpart of the whole Apache setup and only authentication related part</p>
+
+<pre class="highlight plaintext"><code># The CAS modules&#x000A;LoadModule authz_user_module      /usr/lib64/httpd/modules/mod_authz_user.so&#x000A;# Needed because auth_cas_module forget to link openssl&#x000A;LoadModule ssl_module            /usr/lib64/httpd/modules/mod_ssl.so&#x000A;LoadModule auth_cas_module       /usr/lib64/httpd/modules/mod_auth_cas.so&#x000A;&#x000A;# For the kerberos authentication on the API&#x000A;LoadModule auth_gssapi_module    /usr/lib64/httpd/modules/mod_auth_gssapi.so&#x000A;LoadModule session_module        /usr/lib64/httpd/modules/mod_session.so&#x000A;LoadModule session_cookie_module /usr/lib64/httpd/modules/mod_session_cookie.so&#x000A;&#x000A;CASLoginURL https://sso/cas/login&#x000A;CASValidateSAML On&#x000A;CASValidateURL https://sso/cas/samlValidate&#x000A;&#x000A;&lt;VirtualHost *:443&gt;&#x000A;&#x000A;    RequestHeader unset X-Remote-User early&#x000A;    &#x000A;    &lt;LocationMatch ^/api($|/)&gt;&#x000A;        RequestHeader set X-Remote-User %{REMOTE_USER}s&#x000A;&#x000A;        RewriteEngine on&#x000A;        RewriteCond %{LA-U:REMOTE_USER} ^(.*@DOMAIN)$&#x000A;        RewriteRule ^(.*)$ - [L,P,E=REMOTE_USER:%1]&#x000A;&#x000A;        AuthType GSSAPI&#x000A;        AuthName "GSSAPI Single Sign On Login"&#x000A;        GssapiCredStore keytab:.../httpd.keytab&#x000A;        Require valid-user&#x000A;        GssapiUseSessions On&#x000A;        Session On&#x000A;        SessionCookieName ovirt_gssapi_session path=/private;httponly;secure;&#x000A;    &lt;/LocationMatch&gt;&#x000A;    &#x000A;    &lt;LocationMatch ^/(ovirt-engine($|/)|RHEVManagerWeb/|OvirtEngineWeb/|ca.crt$|engine.ssh.key.txt$|rhevm.ssh.key.txt$)&gt;&#x000A;        AuthType CAS&#x000A;        Require valid-user&#x000A;        CASAuthNHeader X-Remote-User&#x000A;    &lt;/LocationMatch&gt;&#x000A;&lt;/VirtualHost&gt;&#x000A;</code></pre>
+
+<p>The file httpd.keytab contains the kerberos ticket for the service HTTP. In my setup, the realm using for Linux machine is different 
+than the active directory's domain, and a trust was established between them. So the keytab is created using MIT kerberos.</p>
+
+<p>It was generated using the following <code>kadmin</code> commands:</p>
+
+<pre class="highlight plaintext"><code>addprinc -randkey HTTP/VHOST@REALM&#x000A;addprinc -randkey HTTP/FQDN@REALM&#x000A;ktadd -k .../http.keytab -e aes128-cts-hmac-sha1-96:normal -e aes256-cts-hmac-sha1-96:normal HTTP/VHOST@REALM&#x000A;ktadd -k .../http.keytab -e aes128-cts-hmac-sha1-96:normal -e aes256-cts-hmac-sha1-96:normal HTTP/FQDN@REALM&#x000A;</code></pre>
+
+<p>Kerberos can be surprising when resolving principal and http client uses different method. Some requests an ticket using directly the Host header. Some other choose the reverse of the IP used for the connection.
+So if Apache is configured using a virtual host, both principal for the virtual host and the FQDN pointed by the reverse of the IP should be created and added to the keytab.</p>
+
+<p>The authn file <code>/etc/ovirt-engine/extensions.d/apachesso-authn.properties</code> is :</p>
+
+<pre class="highlight plaintext"><code>ovirt.engine.extension.name = apachesso-authn&#x000A;ovirt.engine.extension.bindings.method = jbossmodule&#x000A;ovirt.engine.extension.binding.jbossmodule.module = org.ovirt.engine-extensions.aaa.misc&#x000A;ovirt.engine.extension.binding.jbossmodule.class = org.ovirt.engineextensions.aaa.misc.http.AuthnExtension&#x000A;ovirt.engine.extension.provides = org.ovirt.engine.api.extensions.aaa.Authn&#x000A;ovirt.engine.aaa.authn.profile.name = apachesso&#x000A;ovirt.engine.aaa.authn.authz.plugin = DOMAIN-authz&#x000A;config.artifact.name = HEADER&#x000A;config.artifact.arg = X-Remote-User&#x000A;</code></pre>
+
+<p>And the authz file <code>/etc/ovirt-engine/extensions.d/DOMAIN-authz.properties</code> is:</p>
+
+<pre class="highlight plaintext"><code>ovirt.engine.extension.name = DOMAIN-authz&#x000A;ovirt.engine.extension.bindings.method = jbossmodule&#x000A;ovirt.engine.extension.binding.jbossmodule.module = org.ovirt.engine-extensions.aaa.ldap&#x000A;ovirt.engine.extension.binding.jbossmodule.class = org.ovirt.engineextensions.aaa.ldap.AuthzExtension&#x000A;ovirt.engine.extension.provides = org.ovirt.engine.api.extensions.aaa.Authz&#x000A;config.profile.file.1 = ..../aaa/DOMAIN.properties&#x000A;</code></pre>
+
+<p>I had some difficulties with AD backend. A straightforward solution would have been :</p>
+
+<pre class="highlight plaintext"><code>include = &lt;ad.properties&gt;&#x000A;&#x000A;vars.domain = DOMAIN&#x000A;vars.user = BINDDN&#x000A;vars.password = BINDPWD&#x000A;vars.forest = domain.com&#x000A;&#x000A;pool.default.auth.simple.bindDN = ${global:vars.user}&#x000A;pool.default.auth.simple.password = ${global:vars.password}&#x000A;pool.default.serverset.type = srvrecord&#x000A;pool.default.serverset.srvrecord.domain = ${global:vars.domain}&#x000A;&#x000A;pool.default.ssl.startTLS = true&#x000A;pool.default.ssl.truststore.file = .../domain.jks&#x000A;pool.default.ssl.truststore.password = &#x000A;# Only TLSv1.2 is secure nowadays&#x000A;pool.default.ssl.startTLSProtocol = TLSv1.2&#x000A;&#x000A;# long time out should be avoided&#x000A;pool.default.connection-options.connectTimeoutMillis = 500&#x000A;</code></pre>
+
+<p>But if fails. We have a special setup with about 100 domain controlers and only two of them can be reached from the ovirt engine. So my first try was so defined them directly in the configuration file:</p>
+
+<pre class="highlight plaintext"><code>pool.default.serverset.type = failover&#x000A;pool.default.serverset.failover.1.server = dcX.domain.com&#x000A;pool.default.serverset.failover.2.server = dcY.domain.com&#x000A;</code></pre>
+
+<p>But that fails. oVirt-engine was still using a lot of unreachable domain controler. After some digging I found that other part of the ldap extension use a different serverset, I don’t know why it don’t reuse the default pool. It’s called <code>pool.default.dc-resolve</code> (it should be called <code>pool.dc-resolve</code>, as it’s not the default but a custom one), so I added in my configuration:</p>
+
+<pre class="highlight plaintext"><code>pool.default.dc-resolve.default.serverset.type = failover&#x000A;pool.default.dc-resolve.serverset.failover.1.server = dcX.domain.com&#x000A;pool.default.dc-resolve.serverset.failover.2.server = dcY.domain.com&#x000A;</code></pre>
+
+<p>I worked well, but there is a better solution as Ondra Machacek point it to me. In Active Directory, there is something called a “site”, with a subset of all the domain controler in it. It can be found under <code>CN=Sites,CN=Configuration,DC=DOMAIN,...</code>.</p>
+
+<p>To list them:</p>
+
+<pre class="highlight plaintext"><code>ldapsearch -H ldap://somedc -b CN=Sites,CN=Configuration,DC=DOMAIN -s one -o ldif-wrap=no cn&#x000A;</code></pre>
+
+<p>The information to write down is the <code>cn</code> returned</p>
+
+<p>You get a list of all sites, just pick the right one, remove all the serverset configuration and add :</p>
+
+<pre class="highlight plaintext"><code>pool.default.serverset.srvrecord.domain-conversion.type = regex&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.pattern = ^(?&lt;domain&gt;.*)$&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.replacement = GOOD_SITE._sites.${domain}&#x000A;</code></pre>
+
+<p>The entry <code>_sites.${domain}</code> don’t exist in the DNS, so to check that your regex is good, try instead:</p>
+
+<pre class="highlight plaintext"><code>dig +short _ldap._tcp.GOOD_SITE._sites.${domain} srv&#x000A;</code></pre>
+
+<p>It should return only reachable domain controlers.</p>
+
+<p>So the final <code>/etc/ovirt-engine/aaa/DOMAIN.properties</code> was :</p>
+
+<pre class="highlight plaintext"><code>include = &lt;ad.properties&gt;&#x000A;&#x000A;vars.domain = DOMAIN&#x000A;vars.user = BINDDN&#x000A;vars.password = BINDPWD&#x000A;vars.forest = domain.com&#x000A;&#x000A;pool.default.auth.simple.bindDN = ${global:vars.user}&#x000A;pool.default.auth.simple.password = ${global:vars.password}&#x000A;pool.default.serverset.type = srvrecord&#x000A;pool.default.serverset.srvrecord.domain = ${global:vars.domain}&#x000A;&#x000A;pool.default.ssl.startTLS = true&#x000A;pool.default.ssl.truststore.file = .../domain.jks&#x000A;pool.default.ssl.truststore.password = &#x000A;pool.default.ssl.startTLSProtocol = TLSv1.2&#x000A;&#x000A;pool.default.connection-options.connectTimeoutMillis = 500&#x000A;&#x000A;pool.default.serverset.srvrecord.domain-conversion.type = regex&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.pattern = ^(?&lt;domain&gt;.*)$&#x000A;pool.default.serverset.srvrecord.domain-conversion.regex.replacement = GOOD_SITE._sites.${domain}&#x000A;</code></pre>
+
+<p>With this setup, my <a href="https://github.com/fbacchella/ovirtcmd">python client</a> can connect to ovirt-engine using kerberos ticket, web users are authenticated using CAS. And there is no need to duplicate user base.</p>
+
+<a class="more-link view-article" href="/blog/2016/04/sso/">View article &raquo;</a>
+</section>
+<footer class='post-meta'>
+<div class='tags'>
+Tags:
+<ul class='taglist'></ul>
+<li><a href="/blog/tag/blog/">blog</a></li>
+<li><a href="/blog/tag/community/">community</a></li>
+<li><a href="/blog/tag/howto/">howto</a></li>
+</div>
+</footer>
+</article>
+
+<article class='post hentry'>
+<header class='post-header'>
+<h2 class='post-title entry-title'>
+<a href="/blog/2016/03/up-and-running-with-ovirt-3-6/">Up and Running with oVirt 3.6 and Gluster Storage</a>
+</h2>
+<header class='post-meta'>
+<span class='byline'>
+by
+<span class='author vcard'>
+<a href="/blog/author/jbrooks/">Jason Brooks</a>
+</span>
+</span>
+&ndash;
+<time class='published' datetime='2016-03-18T08:00:00Z'>
+Friday 18 March
+</time>
+</header>
+</header>
+<section class='post-content entry-content'>
+<p>In November, version 3.6 of oVirt, the open source virtualization management system, <a href="http://lists.ovirt.org/pipermail/announce/2015-November/000205.html">hit FTP mirrors</a> featuring a whole slate of <a href="/develop/release-management/releases/3.6/">fixes and enhancements</a>, including support for storing oVirt's self hosted management engine on a <a href="/develop/release-management/features/engine/self-hosted-engine-gluster-support/">Gluster volume</a>.</p>
+
+<p>This expanded Gluster support, along with the new <a href="https://gluster.readthedocs.org/en/latest/Administrator%20Guide/arbiter-volumes-and-quorum/">"arbiter volume"</a> feature added in <a href="http://blog.gluster.org/2015/05/glusterfs-3-7-0-has-been-released-introducing-many-new-features-and-improvements/">Gluster 3.7</a>, has allowed me to simplify (somewhat) the converged oVirt+Gluster installation <a href="http://community.redhat.com/blog/2014/11/up-and-running-with-ovirt-3-5-part-two/">that's powered</a> my <a href="http://community.redhat.com/blog/2014/05/ovirt-3-4-glusterized/">test lab</a> for the <a href="http://community.redhat.com/blog/2013/09/ovirt-3-3-glusterized/">past few years</a>.</p>
+
+<p>Read on to learn about my favored way of running oVirt, using a trio of servers to provide for the system's virtualization and storage needs, in a configuration that allows you to take one of the three hosts down at a time without disrupting your running VMs.</p>
+
+<p>IMPORTANT NOTE:</p>
+
+<p>I want to stress that this converged virtualization and storage scenario is a bleeding-edge configuration. Many of the ways you might use oVirt and Gluster are available in commercially-supported configurations using RHEV and RHS, but at this time, this oVirt+Gluster mashup isn't one of them. What's more, this configuration is not "supported" by the oVirt project proper, a state that should change somewhat once this <a href="http://www.ovirt.org/develop/release-management/features/engine/self-hosted-engine-hyper-converged-gluster-support">Self Hosted Engine Hyper Converged Gluster Support</a> feature lands in oVirt.</p>
+
+<p>If you're looking instead for a simpler, single-machine option for trying out oVirt, here are a pair of options:</p>
+
+<ul>
+  <li>
+    <p><a href="http://www.ovirt.org/OVirt_Live">oVirt Live ISO</a>: A LiveCD image that you can burn onto a blank CD or copy onto a USB stick to boot from and run oVirt. This is probably the fastest way to get up and running, but once you're up, this is definitely a low-performance option, and not suitable for extended use or expansion.</p>
+  </li>
+  <li>
+    <p><a href="http://www.ovirt.org/develop/release-management/features/integration/allinone/">oVirt All in One plugin</a>: Run the oVirt management server and virtualization host components on a single machine with local storage. The setup steps for AIO haven't changed much since I wrote about it <a href="http://community.redhat.com/blog/2013/09/up-and-running-with-ovirt-3-3/">two years ago</a>. This approach isn't too bad if you have limited hardware and don't mind bringing the whole thing down for maintenance, but oVirt really shines brightest with a cluster of virtualization hosts and some sort of shared storage.</p>
+  </li>
+</ul>
+
+<p>
+<a class="more-link read-more" href="/blog/2016/03/up-and-running-with-ovirt-3-6/">Read More &raquo;</a>
+</section>
+<footer class='post-meta'>
+<div class='tags'>
+Tags:
+<ul class='taglist'></ul>
+<li><a href="/blog/tag/centos/">centos</a></li>
+<li><a href="/blog/tag/gluster/">gluster</a></li>
+<li><a href="/blog/tag/ovirt/">ovirt</a></li>
+</div>
+</footer>
+</article>
+
+<article class='post hentry'>
+<header class='post-header'>
+<h2 class='post-title entry-title'>
+<a href="/blog/2016/03/devconf-2016/">My Devconf.CZ 2016 experience</a>
+</h2>
+<header class='post-meta'>
+<span class='byline'>
+by
+<span class='author vcard'>
+<a href="/blog/author/ykaul/">Yaniv Kaul</a>
+</span>
+</span>
+&ndash;
+<time class='published' datetime='2016-03-10T14:00:00Z'>
+Thursday 10 March
+</time>
+</header>
+</header>
+<section class='post-content entry-content'>
+<p>On the first weekend of February I had the pleasure of attending DevConf.CZ 2016, which took place in the wonderful city of Brno, Czech Republic.
+It's a relaxed, young and vibrant conference and it was fun and rewarding from my perspective.
+Here's a disorganized personal summary:</p>
+
+<ul>
+  <li>Met many community members from all over Europe. Was excited to see so many happy users of the project!</li>
+  <li>Attended <a title="in-depth look of virtual machine migration algorithms - Marcelo Tosatti" href="https://www.youtube.com/watch?v=XkMIMJKJeTY">in-depth look of virtual machine migration algorithms - Marcelo Tosatti</a>. I hope to see some of it in coming versions of QEMU, while we work on other improvements to this critical feature.</li>
+  <li><a title="Growing the ARM server ecosystem - Jim Perrin" href="https://www.youtube.com/watch?v=q4gU87wdRtI">Growing the ARM server ecosystem - Jim Perrin</a> was interesting. Seems like a great positive effort, but the road is still long for complete support. Would be cool to support ARM based hosts running virtual machines!</li>
+  <li>Attended <a title="Qemu Disk I/O: Which performs better, Native or Threads? - Pradeep K Surisetty" href="https://www.youtube.com/watch?v=Jx93riUF5_I">Qemu Disk I/O: Which performs better, Native or Threads? - Pradeep K Surisetty</a>. The results were not conclusive, though some improvements in native brought it close to, or in some cases better than threads. Seems that our default of heuristic for threads in file-based storage and native in block based storage is fine for the time being, but we'll watch closely for developments in this area.</li>
+  <li>Attended <a title="Debugging the Virtualization Layer (libvirt and QEMU) in OpenStack - Kashyap Chamarthy" href="https://www.youtube.com/watch?v=Dd2AGGMWXQM">Debugging the Virtualization Layer (libvirt and QEMU) in OpenStack - Kashyap Chamarthy</a> - I think (and asked) if libvirt can do a better job - in saving in a cyclic log the QMP commands sent and the response from the guest and dump it in case of a guest crash.</li>
+  <li>Paid a visit to <a title="Cockpit Hackfest - Dominik Perpeet, Marius Vollmer, Peter Volpe, Stef Walter" href="https://www.youtube.com/watch?v=TNDe90WSZow">Cockpit Hackfest - Dominik Perpeet, Marius Vollmer, Peter Volpe, Stef Walter</a> - as we intend to use Cockpit as our UI for oVirt Next Generation Node, it was great to present our use case and exchange thoughts, ideas and directions. Few bugs were filed during the hackfest per our comments.</li>
+  <li>Attended <a title="Dockerizing JBoss Products - David Becvarik" href="https://www.youtube.com/watch?v=NpyEoFlDzOQ">Dockerizing JBoss Products - David Becvarik</a>. Great work done by the JBoss team to improve and streamline packaging of JBoss into containers.</li>
+  <li>Attended <a title="Upstream First Testing - Tim Flink" href="https://www.youtube.com/watch?v=15-yXOJuonQ">Upstream First Testing - Tim Flink</a>. I discussed with the presenter the possibility to run oVirt with <a title="Lago project on GitHub" href="https://github.com/lago-project/lago">Lago project on GitHub</a> in Fedora, in a CI way, by monitoring distgit changes for relevant packages (such as lvm2, device-mapper*, libvirt and others.</li>
+  <li>Attended <a title="High performance VMs in OpenStack - Nikola Dipanov" href="https://www.youtube.com/watch?v=9J_sEdlpIlQ">High performance VMs in OpenStack - Nikola Dipanov</a> - looks like oVirt is already doing a lot of what OpenStack is working on to achieve high-performance from KVM!</li>
+  <li>Preached on running Lago with OpenStack, Gluster and Cockpit. At least the first two items look really promising and I'm looking forward to a collaboration in those efforts. I might just try to do the Gluster one myself.</li>
+  <li><a title="Avocado and Jenkins: Test Automation and CI - Lukáš Doktor, Yash Mankad" href="https://www.youtube.com/watch?v=rqavfmPAt7o">Avocado and Jenkins: Test Automation and CI - Lukáš Doktor, Yash Mankad</a> was interesting for me, as Avocado seems like a cool, mature testing framework - which I hope we can use in the future in CI testing.</li>
+  <li>
+    <p>Having used the <a href="download/ovirt-live/&quot;download/ovirt-live/&quot;">oVirt Live</a> USB DoK image in both FOSDEM and DevConf, I've found several items where we can improve in and filed relevant RFEs for them [1][2].</p>
+  </li>
+  <li>The oVirt team has delivered numerous presentations in the virtualization track:
+<a title="Smart VM Scheduling - Martin Sivák" href="https://www.youtube.com/watch?v=cQqJEiK7-Ug">Smart VM Scheduling - Martin Sivák</a>
+<a title="Host fencing in oVirt - Fixing the unknown and allowing VMs to be highly available - Martin Peřina" href="https://www.youtube.com/watch?v=V1JQtmdleaM">Host fencing in oVirt - Fixing the unknown and allowing VMs to be highly available - Martin Peřina</a> ,
+<a title="Ceph integration with oVirt using Cinder - Nir Soffer" href="https://www.youtube.com/watch?v=4CbHTAkVDZo">Ceph integration with oVirt using Cinder - Nir Soffer</a>.</li>
+  <li>The Gluster team has additionally provided more presentations:
+<a title="oVirt and Gluster Hyperconvergence - Ramesh Nachimuthu" href="https://www.youtube.com/watch?v=XudYwEWQF7U">oVirt and Gluster Hyperconvergence - Ramesh Nachimuthu</a> ,
+<a title="Improvements in gluster for virtualization use case - Prasanna Kumar Kalever" href="https://www.youtube.com/watch?v=TczVVCbm8NE">Improvements in gluster for virtualization use case - Prasanna Kumar Kalever</a>, which were all well received.</li>
+</ul>
+
+<p>I'd like to thank our project's current community manager Mikey Ariel, and former community manager Brian Proffitt for once again, just one week after FOSDEM, leading the effort of representing the oVirt project and community in this event.</p>
+
+<p>1.<a title="[RFE] register .vv files so they'll be opened automatically with remote-viewer" href="https://bugzilla.redhat.com/show_bug.cgi?id=1307261">[RFE] register .vv files so they'll be opened automatically with remote-viewer</a>
+2. <a title="[RFE] Disable power management (display and computer" href="https://bugzilla.redhat.com/show_bug.cgi?id=1307262">[RFE] Disable power management (display and computer</a></p>
+
+<a class="more-link view-article" href="/blog/2016/03/devconf-2016/">View article &raquo;</a>
+</section>
+<footer class='post-meta'>
+<div class='tags'>
+Tags:
+<ul class='taglist'></ul>
+<li><a href="/blog/tag/blog/">blog</a></li>
+<li><a href="/blog/tag/community/">community</a></li>
+<li><a href="/blog/tag/news/">news</a></li>
+</div>
+</footer>
+</article>
+
+<article class='post hentry'>
+<header class='post-header'>
+<h2 class='post-title entry-title'>
+<a href="/blog/2016/02/welcome-to-new-ovirt-site/">Welcome to the new oVirt.org website!</a>
+</h2>
+<header class='post-meta'>
+<span class='byline'>
+by
+<span class='author vcard'>
+<a href="/blog/author/mariel/">mariel</a>
+</span>
+</span>
+&ndash;
+<time class='published' datetime='2016-02-19T14:00:00Z'>
+Friday 19 February
+</time>
+</header>
+</header>
+<section class='post-content entry-content'>
+<p>As part of our efforts to upgrade the ovirt.org website and improve the community experience, we migrated the oVirt website from a MediaWiki site to a static site, authored in <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/">Markdown</a> and published with <a href="https://middlemanapp.com/">Middleman</a>. This was a major project that took more than 6 months and involved many contributors from all aspects of the project.</p>
+
+<p>I'd like to take this opportunity to thank all the people who were involved with this migration, from content reviewers to UX designers and Website admins who gave their time and brain power to make this happen.</p>
+
+<p>The old MediaWiki site is <a href="http://old.ovirt.org/Home">still available in read-only</a>, and will be taken offline once we fix some pending issues, including handling PDF files and such.</p>
+
+<h2 id="whats-new">What's new?</h2>
+
+<p>The new Website is full of improvements and enhancements, check out these highlights:</p>
+
+<ul>
+  <li>Source content is now formatted in Markdown instead of MediaWiki. This means that you can create and edit documentation, blog posts, and feature pages with the same Markdown syntax you know.</li>
+  <li>The Website is deployed with Middleman and stored on GitHub. This means that you can make changes to content with the same GitHub contribution workflow that you know (fork, clone, edit, commit, submit pull request). We even have an "Edit this page on GitHub" link at the bottom of every page!</li>
+  <li>New layout and design, from breadcrumbs to sidebards and an upgraded landing page.</li>
+  <li>Automatic redirects from the old MediaWiki site. This means that if the wiki page exists in the new website, previously-released URLs will redirect to that page. If the page was removed, the Search page will open with the page title auto-filled in the search box.</li>
+  <li>Hierarchical content structure. This means that instead of flat Wiki-style files, the deployed Website reflects an organized source repo with content sorted into directories and sub-directories.</li>
+  <li>Official oVirt blog! This first post marks the beginning of our new blog, and we welcome contributions. This means that if you solved a problem with oVirt, want to share your oVirt story, or describe a cool integration, you can submit a blog post and we will provide editorial reviews and help publish your posts.</li>
+  <li>Standardized contribution process. The GitHub repo now includes a <a href="https://github.com/oVirt/ovirt-site/blob/master/README.md">README.md</a> file that you can use to learn about how to add and edit content on the website. We welcome pull requests!</li>
+</ul>
+
+<h1 id="known-issues">Known Issues</h1>
+
+<p>Despite our best efforts, there are still a few kinks with the new website that you should be aware of:</p>
+
+<ul>
+  <li>Attempting to navigate to ovirt.org (without www.) leads to a redirect loop. We have a ticket open with OpenShift, our hosting service to fix this.</li>
+  <li>Only http is available. We also have a ticket with OpenShift to add SSL and enable https.</li>
+  <li>Home page and Download page are still being upgraded by our UX team, expect some cool new changes soon!</li>
+  <li>Feature pages look-and-feel is still under construction. You can still edit and push feature pages as usual.</li>
+</ul>
+
+<h1 id="whats-next">What's Next</h1>
+
+<p>Even though the Website is live, the work is hardly over. We'd like to ask for your help in:</p>
+
+<ul>
+  <li>Reviewing content for anything obsolete or outdated; each page in the new website includes a header toolbar with metadata from the original wiki page for your convenience</li>
+  <li>Submitting blog posts or any other content that you wish to share with the oVirt community</li>
+  <li>Reporting bugs and proposing enhancements, for example broken links or missing pages</li>
+</ul>
+
+<p>We hope you will enjoy the new oVirt Website, looking forward to your feedback and contributions!</p>
+
+<a class="more-link view-article" href="/blog/2016/02/welcome-to-new-ovirt-site/">View article &raquo;</a>
+</section>
+<footer class='post-meta'>
+<div class='tags'>
+Tags:
+<ul class='taglist'></ul>
+<li><a href="/blog/tag/community/">community</a></li>
+<li><a href="/blog/tag/documentation/">documentation</a></li>
+<li><a href="/blog/tag/infrastructure/">infrastructure</a></li>
+<li><a href="/blog/tag/news/">news</a></li>
+</div>
+</footer>
+</article>
+
+
+</section>
+
+<a href="/blog/">See all blog posts</a>
+</section>
+</div>
+<div class='col-md-4'>
+<h2>Upcoming events</h2>
+<dl class='upcoming-list'>
+</dl>
+
+<div class='more'><a href="/events/">View all current events&hellip;</a></div>
+</div>
+</div>
+<div class='row'>
+<div class='col-md-6'>
+<h2 id="case-study">Case Study</h2>
+
+<div class="case-study">
+    <h3 id="universidad-de-sevilla">Universidad de Sevilla</h3>
+
+    <p><img alt="" src="/images/logos/Sevilla.png" /></p>
+
+    <p>When one of the largest universities in Spain needed a virtualization solution to host their virtual desktop interface program, <a href="https://www.udsenterprise.com/">UDS Enterprise</a> helped the institution find a virtualization solution that delivered superior flexibility at a much lower cost than proprietary solutions.</p>
+
+    <p>That solution would be oVirt. Today, more than 3,000 students use this virtual desktop infrastructure, with the prospect of the rest of the student body participating as the program grows.</p>
+
+    <p>Read the full <a href="/community/user-stories/universidad-de-sevilla-case-study/"> Universidad de Sevilla case study</a></p>
+
+  </div>
+
+<p class="pull-right"><a href="/community/user-stories/user-stories/">View all case studies</a></p>
+
+
+</div>
+<div class='col-md-6'>
+<h2 id="packed-with-features">Packed with Features</h2>
+
+<ul class="feature-list">
+  <li>Choice of stand-alone Hypervisor or install-on-top of your existing Linux installation</li>
+  <li>High availability</li>
+  <li>Live migration</li>
+  <li>Load balancing</li>
+  <li>Web-based management interface</li>
+  <li>Self-hosted engine</li>
+  <li>iSCSI, FC, NFS, and local storage</li>
+  <li>Enhanced security: SELinux and Mandatory Access Control for VMs and hypervisor</li>
+  <li>Scalability: up to 64 vCPU and 2TB vRAM per guest</li>
+  <li>Memory overcommit support (Kernel Samepage Merging)</li>
+  <li>Developer SDK for ovirt-engine, written in Python</li>
+</ul>
+
+<p class="pull-right"><a href="/develop/release-management/features/">View all features…</a></p>
+</div>
+</div>
+<div class='row'>
+<div class='col-md-6'>
+<h3 id="community-is-key">Community is Key</h3>
+
+<p>Everyone is encouraged to <a href="/community/"> join the oVirt community</a>, and help us bring our open source software to virtual datacenters worldwide.</p>
+
+<p>Community can be found in many places in the global community. Keep track of the latest happenings in the oVirt community, including new release announcements, and send your thoughts and links to virtualization-related topics on these social media channels:</p>
+
+<ul class="icon-list">
+  <li><a class="icon-twitter" href="//twitter.com/ovirt">Twitter</a></li>
+  <li><a class="icon-google-plus" href="//plus.google.com/u/0/communities/109346090491400112913">Google+</a></li>
+  <li><a class="icon-facebook" href="//www.facebook.com/groups/ovirt.openvirtualization/">Facebook</a></li>
+  <li><a class="icon-youtube" href="//www.youtube.com/user/ovirtproject">YouTube</a></li>
+</ul>
+</div>
+<div class='col-md-6'>
+<div class='twitter-widget'>
+<h2>@oVirt on Twitter</h2>
+<script>
+  // Load the Twitter widget JS in a <script> at the top of the doc
+  !function (doc, tag, id) {
+    var scriptTag,
+        firstScriptTag = doc.getElementsByTagName(tag) [0];
+  
+    if (!doc.getElementById(id)) {
+      scriptTag = doc.createElement(tag);
+      scriptTag.id = id;
+      scriptTag.src = '//platform.twitter.com/widgets.js';
+      firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
+    }
+  }(document, 'script', 'twitter-wjs');
+</script>
+<div class='twitter-timeline' data-chrome='noheader nofooter noborders noscrollbar transparent' data-dnt data-link-color='#61b60e' data-tweet-limit='3' data-widget-id='615488920038420480' href='https://twitter.com/ovirt'>
+<noscript>The embedded Twitter timeline requires JavaScript.</noscript>
+</div>
+<div class='more-link pull-right'>
+<a href='https://twitter.com/ovirt'>More tweets by @oVirt&hellip;</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/index.html.haml"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Mon 23 May 2016 15:25 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+<script>
+  (function() {
+    $(function() {
+      return $('span.btn').on('click', function(e) {
+        if (this === e.target) {
+          return window.location = $('a', this).attr('href');
+        }
+      });
+    });
+  
+  }).call(this);
+</script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>

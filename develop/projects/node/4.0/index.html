@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en-us"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en-us"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if IE 9]> <html class="no-js lt-ie10 lt-ie9" lang="en-us"> <![endif]-->
+<!--[if lt IE 10]> <html class="no-js lt-ie10" lang="en-us"> <![endif]-->
+<!--[if !IE]> > <![endif]-->
+<html class='no-js' lang='en'>
+<!-- <![endif] -->
+<head>
+<title>
+4.0 &mdash;
+oVirt
+</title>
+<meta charset='utf-8'>
+<meta content='' name='description'>
+<meta content='' name='author'>
+<meta content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width' name='viewport'>
+
+<link href='/images/favicon.ico' rel='shortcut icon'>
+<link href='/images/apple-touch-icon-precomposed.png' rel='apple-touch-icon-precomposed'>
+<link href='/images/apple-touch-icon-57x57-precomposed.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+<link href='/images/apple-touch-icon-72x72-precomposed.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+<link href='/images/apple-touch-icon-114x114-precomposed.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+<link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+<body class=' source-md'>
+<header class='masthead hidden-print' id='branding' role='banner'>
+<section class='hgroup'>
+<h1>
+<a href="/"><img id="logo" class="logo is-svg" alt="oVirt" src="/images/logo.svg" />
+</a></h1>
+</section>
+<div id='access'>
+<nav role='navigation'>
+<ul class='nav nav-pills'>
+<li class='nav-link-home' role='menuitem'>
+<a href='/'>Home</a>
+</li>
+
+<li class='nav-link-blog' role='menuitem'>
+<a href='/blog/'>Blog</a>
+</li>
+
+<li class='nav-link-download' role='menuitem'>
+<a href='/download/'>Download</a>
+</li>
+
+<li class='nav-link-documentation' role='menuitem'>
+<a href='/documentation/'>Documentation</a>
+</li>
+
+<li class='nav-link-develop' role='menuitem'>
+<a href='/develop/'>Develop</a>
+</li>
+
+<li class='nav-link-community' role='menuitem'>
+<a href='/community/'>Community</a>
+</li>
+
+<li class='nav-link-search' role='menuitem'>
+<a href='/search/'>Search</a>
+</li>
+
+</ul>
+</nav>
+
+</div>
+</header>
+
+<section class='page-wrap' id='page-wrap'>
+<section class='page' id='page'>
+<ul class='breadcrumb'>
+<li><a href="/develop/">Develop</a></li>
+<li><a href="/develop/projects/">Projects</a></li>
+<li><a href="/develop/projects/node/">Node</a></li>
+<li class='active'>4.0</li>
+</ul>
+
+<section class='container content' id='content'>
+<div class='alert alert-warning'>
+<div class='pull-right'>
+<a>Hover for more info</a>
+</div>
+<div class='frontmatter-metadata'>
+<table class='metadata'>
+<caption>Frontmatter Metadata</caption>
+<tr>
+<th>title</th>
+<td>4.0</td>
+</tr>
+<tr>
+<th>authors</th>
+<td>fabiand</td>
+</tr>
+<tr>
+<th>wiki_title</th>
+<td>Node/4.0</td>
+</tr>
+<tr>
+<th>wiki_revision_count</th>
+<td>5</td>
+</tr>
+<tr>
+<th>wiki_last_updated</th>
+<td>2015-11-18</td>
+</tr>
+</table>
+</div>
+Original Wiki page:
+<a href='http://old.ovirt.org/Node/4.0' target='_blank'>
+Node/4.0
+</a>
+</div>
+
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser.
+<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+<h1 id="section">4.0</h1>
+
+<p>Node 4.0 will be based on a different architecture compared to the previous Node implementation.</p>
+
+<p>Node 4 will leverage anaconda for installation, LVM for image management, and cockpit for administration.</p>
+
+<h2 id="principles">Principles</h2>
+
+<ul>
+  <li>Re-use existing and mature technologies (anaconda, lvm, cockpit)</li>
+  <li>Fix upstream to fit our design</li>
+  <li>Keep it simple</li>
+  <li>Separate areas of responsibility (image vs installation vs image management &amp; upgrade)</li>
+</ul>
+
+<h2 id="getting-started">Getting started</h2>
+
+<ul>
+  <li><a href="http://lists.ovirt.org/pipermail/devel/2016-January/012073.html">How to install the early preview</a></li>
+</ul>
+
+<h2 id="design">Design</h2>
+
+<p><img alt="Installer" title="fig:Installer" src="/images/Inst-welcome.png" /> <img alt="Cockpit" title="fig:Cockpit" src="/images/Screenshot-storage.png" /> <img alt="Cockpit w/ Node branding" title="fig:Cockpit w/ Node branding" src="/images/cockpit-node.png" /></p>
+
+<ul>
+  <li>Anaconda to install</li>
+  <li>LVM to store and manage images
+    <ul>
+      <li>High-Level management using imgbase (enforcing a specific LVM usage pattern)</li>
+    </ul>
+  </li>
+  <li>Leveraging emerging concepts to simplify persistence
+    <ul>
+      <li>Persistent /etc and /var, otherwise read-only or stateless</li>
+      <li>Combined with the LVM layout this provides a solid upgrade and rollback story</li>
+    </ul>
+  </li>
+  <li>Administration through Cockpit
+    <ul>
+      <li>oVirt specific bit's through a cockpit plugin</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li>Feature tracker: <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1140646">https://bugzilla.redhat.com/show_bug.cgi?id=1140646</a></li>
+  <li>Sources
+    <ul>
+      <li>Image: <a href="https://gerrit.ovirt.org/gitweb?p=ovirt-node-ng.git">https://gerrit.ovirt.org/gitweb?p=ovirt-node-ng.git</a></li>
+      <li>Image management: <a href="https://gerrit.ovirt.org/gitweb?p=imgbased.git">https://gerrit.ovirt.org/gitweb?p=imgbased.git</a></li>
+    </ul>
+  </li>
+  <li>Development Guide (WIP)
+    <ul>
+      <li>Book: <a href="https://www.gitbook.com/book/ovirt/ovirt-node-development-guide/details">https://www.gitbook.com/book/ovirt/ovirt-node-development-guide/details</a></li>
+      <li>Source: <a href="https://gerrit.ovirt.org/gitweb?p=ovirt-node-ng.git">https://gerrit.ovirt.org/gitweb?p=ovirt-node-ng.git</a> in docs/book</li>
+    </ul>
+  </li>
+  <li>Integration Tests: <a href="https://gerrit.ovirt.org/gitweb?p=ovirt-appliance.git;a=tree;f=tests;hb=HEAD">https://gerrit.ovirt.org/gitweb?p=ovirt-appliance.git;a=tree;f=tests;hb=HEAD</a></li>
+</ul>
+
+</section>
+</section>
+</section>
+<footer class='text-center' id='footer'>
+<hr class='visible-print'>
+<ul class='footer-nav-list'>
+<li><a target="_blank" href="/privacy/">Privacy policy</a></li>
+<li><a target="_blank" href="/about/">About</a></li>
+<li><a target="_blank" href="/disclaimers/">Disclaimers</a></li>
+</ul>
+
+&copy; 2013&ndash;2016 oVirt
+<div class='edit-this-page'>
+<a target="_blank" href="https://github.com/oVirt/ovirt-site/edit/master/source/develop/projects/node/4.0.html.md"><i class="icon fa fa-pencil"></i>Edit this page on GitHub</a>
+</div>
+<div class='last-modified'>
+Page last modified
+Fri 15 Jan 2016 12:03 UTC
+</div>
+</footer>
+
+
+<script src="/javascripts/application.js" type="text/javascript"></script>
+
+<!-- eloqua -->
+<script src='//www.redhat.com/j/elqNow/elqCfg.js' type='text/javascript'></script>
+<script src='//www.redhat.com/j/elqNow/elqImg.js' type='text/javascript'></script>
+
+</body>
+</html>
