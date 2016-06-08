@@ -974,3 +974,4 @@ Redirect 301 /Workshop_schedule /search/#Workshop%20schedule
 Redirect 301 /Workshop_travel /search/#Workshop%20travel
 Redirect 301 /Www.ovirt.org-Configuration /develop/infra/www.ovirt.org-configuration/
 Redirect 301 /Xen /documentation/how-to/xen/
+Redirect 301 /Feature /search/#Feature

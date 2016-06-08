@@ -198,7 +198,7 @@ OVirt 3.2 release notes
 <h3 id="virtualization">Virtualization</h3>
 
 <ul>
-  <li>Improvements have been made to the quota implementation, including its logic, calculation, and monitoring. Details can be found at <a href="Features/Quota-3.2">Features/Quota-3.2</a>.</li>
+  <li>Improvements have been made to the quota implementation, including its logic, calculation, and monitoring. Details can be found at <a href="/develop/release-management/features/ux/quota-3.2/">Features/Quota-3.2</a>.</li>
   <li>Clusters can now be configured to treat host CPU threads as cores for the purposes of virtual machine resource allocation and migration. This replaces the previous behaviour where VDSM only reported physical cores by default, and users could manually force VDSM to report host threads instead of physical cores.</li>
   <li>VDSM hooks have been added for hot plugging and unplugging network interface cards.</li>
   <li>Virtual machines can now utilize the host's CPU flags, which enables better performance in virtual machines. However, as this option provides the host's CPU capabilities to the virtual machine's CPU, virtual machines with this option enabled cannot be migrated to hosts of a different CPU model (<a href="/develop/release-management/features/sla/cpu-host-support/">Features/Cpu-host_Support</a>).</li>
@@ -215,7 +215,7 @@ OVirt 3.2 release notes
   <li>New administrative and user permissions have been added for networks, which can be granted from the web administration portal or the REST API (<a href="/develop/release-management/features/network/networkpermissions/">Feature/NetworkPermissions</a>).</li>
   <li>A delete protection entity has been added for virtual machines and templates. When it is enabled in the web administration portal or REST API, the virtual machine or template cannot be deleted.</li>
   <li>Users can now view advanced details on Gluster volumes, including the services running in the hosts of the cluster and volume brick details (<a href="/develop/release-management/features/storage/glustervolumeadvanceddetails/">Features/GlusterVolumeAdvancedDetails</a>).</li>
-  <li>Quota information has been added to the Resources pane in the user portal, so users can monitor vCPU, memory, and storage consumption (<a href="Features/Quota-3.2">Features/Quota-3.2</a>).</li>
+  <li>Quota information has been added to the Resources pane in the user portal, so users can monitor vCPU, memory, and storage consumption (<a href="/develop/release-management/features/ux/quota-3.2/">Features/Quota-3.2</a>).</li>
   <li>oVirt Engine now retrieves and displays host BIOS information when a host is added to the engine (<a href="/develop/release-management/features/ux/hostbiosinfo/">Features/Design/HostBiosInfo</a>).</li>
   <li>The web reports portal now displays the number of storage domains in each data center and throughout the system.</li>
 </ul>
@@ -224,7 +224,7 @@ OVirt 3.2 release notes
 
 <ul>
   <li>Users can now dynamically change the network of a running virtual machine without unplugging the virtual network interface card (vNIC), and maintain the device address of the vNIC (<a href="/develop/release-management/features/network/networklinking/">Feature/NetworkLinking</a>).</li>
-  <li>The Guest Agent now reports the IP addresses and internal name of the vNIC to the oVirt Engine (<a href="Feature/ReportingVnicImplementation">Feature/ReportingVnicImplementation</a>).</li>
+  <li>The Guest Agent now reports the IP addresses and internal name of the vNIC to the oVirt Engine (<a href="/develop/release-management/features/network/reportingvnicinformation/">Feature/ReportingVnicImplementation</a>).</li>
 </ul>
 
 <h3 id="power-management">Power Management</h3>

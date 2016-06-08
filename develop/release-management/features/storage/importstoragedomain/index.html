@@ -1837,7 +1837,7 @@ As long as the setup contains 3.5v Data Centers, the Import Storage Domain featu
       <li>Regarding quota enforcement Data Centers, the user will choose for each disk the quota he/she will want to consume from, when it will choose a VM/Template to register in the setup.</li>
     </ul>
   </li>
-  <li>OVF on any Storage Domain - <a href="Feature/OvfOnWantedDomains">http://www.ovirt.org/Feature/OvfOnWantedDomains</a>
+  <li>OVF on any Storage Domain - <a href="/develop/release-management/features/storage/ovfonanydomain/">http://www.ovirt.org/Feature/OvfOnWantedDomains</a>
     <ul>
       <li>The user can import a Storage Domains and attach it directly to a Data Center, or it can be imported as 'unattached' Storage Domain, and later the user can attach it to a Data Center he desires.</li>
       <li>When attaching a Storage Domain to a Data Center, all the entities (VMs, Templates) from the OVF_STORE disk should be retrieved from the tar file and into the Data Base table unregistered_ovf_of_entities, later the user can decide how to register them into the Data Center (see <a href="/develop/release-management/features/engine/importunregisteredentities/#General_Functionality">http://www.ovirt.org/Features/ImportUnregisteredEntities#General_Functionality</a>)</li>
